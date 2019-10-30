@@ -27,7 +27,7 @@ public class SkullUtils {
       } else if (Utils.isValidURL(skullOwner)) {
         itemMeta = getSkull(skullOwner, (SkullMeta) itemMeta);
       } else {
-          ((SkullMeta) itemMeta).setOwner(skullOwner);
+        ((SkullMeta) itemMeta).setOwner(skullOwner);
       }
       // In case the meta has lore, remove it
       itemMeta.setLore(Utils.newArrayList());
@@ -36,10 +36,12 @@ public class SkullUtils {
   }
 
   public static SkullMeta getSkull(String url, SkullMeta skullMeta) {
-    if (url == null || url.isEmpty())
+    if (url == null || url.isEmpty()) {
       return skullMeta;
+    }
     GameProfile profile = new GameProfile(UUID.randomUUID(), null);
-    byte[] encodedData = Base64.getEncoder().encode(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes());
+    byte[] encodedData = Base64.getEncoder()
+        .encode(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes());
     profile.getProperties().put("textures", new Property("textures", new String(encodedData)));
     Field profileField = null;
     try {
