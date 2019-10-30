@@ -1,5 +1,6 @@
 package com.gmail.filoghost.chestcommands.util;
 
+import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.bridge.EpicHeadsBridge;
 import com.gmail.filoghost.chestcommands.bridge.HeadDatabaseBridge;
 import com.gmail.filoghost.chestcommands.bridge.HeadsPlusBridge;
@@ -8,6 +9,7 @@ import com.mojang.authlib.properties.Property;
 import java.lang.reflect.Field;
 import java.util.Base64;
 import java.util.UUID;
+import java.util.logging.Level;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -47,13 +49,15 @@ public class SkullUtils {
     try {
       profileField = skullMeta.getClass().getDeclaredField("profile");
     } catch (NoSuchFieldException | SecurityException e) {
-      e.printStackTrace();
+      ChestCommands.getInstance().getLogger()
+          .log(Level.FINE, "Unexpected error when getting skull", e);
     }
     profileField.setAccessible(true);
     try {
       profileField.set(skullMeta, profile);
     } catch (IllegalArgumentException | IllegalAccessException e) {
-      e.printStackTrace();
+      ChestCommands.getInstance().getLogger()
+          .log(Level.FINE, "Unexpected error when getting skull", e);
     }
     return skullMeta;
   }

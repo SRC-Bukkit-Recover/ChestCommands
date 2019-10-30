@@ -1,10 +1,12 @@
 package com.gmail.filoghost.chestcommands.util;
 
+import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.google.common.collect.ImmutableList;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -36,7 +38,8 @@ public final class BukkitUtils {
         return ImmutableList.copyOf(playersArray);
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      ChestCommands.getInstance().getLogger()
+          .log(Level.FINE, "Unexpected error when getting online players", e);
       return Collections.emptyList();
     }
   }
@@ -75,7 +78,8 @@ public final class BukkitUtils {
       Object entityPlayer = player.getClass().getMethod("getHandle").invoke(player);
       return String.valueOf((int) entityPlayer.getClass().getField("ping").get(entityPlayer));
     } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException | NoSuchFieldException e) {
-      e.printStackTrace();
+      ChestCommands.getInstance().getLogger()
+          .log(Level.FINE, "Unexpected error when getting ping", e);
       return "ERROR GETTING PING";
     }
   }

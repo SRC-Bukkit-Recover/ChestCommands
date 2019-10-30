@@ -14,12 +14,14 @@
  */
 package com.gmail.filoghost.chestcommands.config.yaml;
 
+import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.util.FormatUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
 
 /**
  * A special configuration wrapper that reads the values using reflection. It will also save default
@@ -64,7 +66,8 @@ public class SpecialConfig {
           }
 
         } catch (Exception ex) {
-          ex.printStackTrace();
+          ChestCommands.getInstance().getLogger()
+              .log(Level.FINE, "Unexpected error when loading field", ex);
         }
       }
     }

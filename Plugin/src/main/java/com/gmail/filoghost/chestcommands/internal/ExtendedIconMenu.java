@@ -22,6 +22,7 @@ import com.gmail.filoghost.chestcommands.internal.icon.ExtendedIcon;
 import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
 import com.gmail.filoghost.chestcommands.util.ItemUtils;
 import java.util.List;
+import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -106,7 +107,8 @@ public class ExtendedIconMenu extends IconMenu {
 
       player.openInventory(inventory);
     } catch (Exception e) {
-      e.printStackTrace();
+      ChestCommands.getInstance().getLogger()
+          .log(Level.FINER, "Unexpected error when opening the menu", e);
       player.sendMessage(ChatColor.RED
           + "An internal error occurred while opening the menu. The staff should check the console for errors.");
     }
@@ -142,7 +144,8 @@ public class ExtendedIconMenu extends IconMenu {
         }
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      ChestCommands.getInstance().getLogger()
+          .log(Level.FINER, "Unexpected error when refreshing the menu", e);
       player.sendMessage(ChatColor.RED
           + "An internal error occurred while refreshing the menu. The staff should check the console for errors.");
     }

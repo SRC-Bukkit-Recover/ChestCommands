@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.bukkit.Bukkit;
@@ -87,8 +88,8 @@ public final class SimpleUpdater {
                 + ".");
         plugin.getLogger().warning("Please notify the author of this error.");
       } catch (Exception e) {
-        e.printStackTrace();
-        plugin.getLogger().warning("Unable to check for updates: unhandled exception.");
+        plugin.getLogger()
+            .log(Level.WARNING, "Unable to check for updates: unhandled exception.", e);
       }
 
     });

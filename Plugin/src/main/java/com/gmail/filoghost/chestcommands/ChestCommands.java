@@ -52,6 +52,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Level;
 import org.bstats.bukkit.MetricsLite;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -259,42 +260,41 @@ public class ChestCommands extends JavaPlugin {
     try {
       settings.load();
     } catch (IOException e) {
-      e.printStackTrace();
-      getLogger().warning("I/O error while using the configuration. Default values will be used.");
+      getLogger().log(Level.WARNING,
+          "I/O error while using the configuration. Default values will be used.", e);
     } catch (InvalidConfigurationException e) {
-      e.printStackTrace();
-      getLogger().warning(
-          "The config.yml was not a valid YAML, please look at the error above. Default values will be used.");
+      getLogger().log(Level.WARNING,
+          "The config.yml was not a valid YAML, please look at the error above. Default values will be used.",
+          e);
     } catch (Exception e) {
-      e.printStackTrace();
-      getLogger().warning(
-          "Unhandled error while reading the values for the configuration! Please inform the developer.");
+      getLogger().log(Level.WARNING,
+          "Unhandled error while reading the values for the configuration! Please inform the developer.",
+          e);
     }
 
     try {
       lang.load();
     } catch (IOException e) {
-      e.printStackTrace();
-      getLogger().warning("I/O error while using the language file. Default values will be used.");
+      getLogger().log(Level.WARNING,
+          "I/O error while using the language file. Default values will be used.", e);
     } catch (InvalidConfigurationException e) {
-      e.printStackTrace();
-      getLogger().warning(
-          "The lang.yml was not a valid YAML, please look at the error above. Default values will be used.");
+      getLogger().log(Level.WARNING,
+          "The lang.yml was not a valid YAML, please look at the error above. Default values will be used.",
+          e);
     } catch (Exception e) {
-      e.printStackTrace();
-      getLogger().warning(
-          "Unhandled error while reading the values for the configuration! Please inform the developer.");
+      getLogger().log(Level.WARNING,
+          "Unhandled error while reading the values for the language file! Please inform the developer.",
+          e);
     }
 
     try {
       AsciiPlaceholders.load(errorLogger);
     } catch (IOException e) {
-      e.printStackTrace();
-      getLogger().warning("I/O error while reading the placeholders. They will not work.");
-    } catch (Exception e) {
-      e.printStackTrace();
       getLogger()
-          .warning("Unhandled error while reading the placeholders! Please inform the developer.");
+          .log(Level.WARNING, "I/O error while reading the placeholders. They will not work.", e);
+    } catch (Exception e) {
+      getLogger().log(Level.WARNING,
+          "Unhandled error while reading the placeholders! Please inform the developer.", e);
     }
 
     // Load the menus
@@ -312,12 +312,14 @@ public class ChestCommands extends JavaPlugin {
       try {
         menuConfig.load();
       } catch (IOException e) {
-        e.printStackTrace();
+        getLogger().log(Level.WARNING,
+            "I/O error while loading the menu \"" + menuConfig.getFileName() + "\"", e);
         errorLogger.addError("I/O error while loading the menu \"" + menuConfig.getFileName()
             + "\". Is the file in use?");
         continue;
       } catch (InvalidConfigurationException e) {
-        e.printStackTrace();
+        getLogger().log(Level.WARNING,
+            "Invalid YAML configuration for the menu \"" + menuConfig.getFileName() + "\"", e);
         errorLogger.addError("Invalid YAML configuration for the menu \"" + menuConfig.getFileName()
             + "\". Please look at the error above, or use an online YAML parser (google is your friend).");
         continue;

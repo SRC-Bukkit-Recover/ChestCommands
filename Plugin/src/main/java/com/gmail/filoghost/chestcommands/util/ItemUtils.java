@@ -14,10 +14,12 @@
  */
 package com.gmail.filoghost.chestcommands.util;
 
+import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.exception.FormatException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.FireworkEffect;
@@ -73,8 +75,9 @@ public final class ItemUtils {
 
       success = true;
     } catch (Exception e) {
-      new IllegalStateException("Could not enable the attribute remover for this version." +
-          "Attributes will show up on items.", e).printStackTrace();
+      ChestCommands.getInstance().getLogger()
+          .log(Level.WARNING, "Could not enable the attribute remover for this version." +
+              "Attributes will show up on items.", e);
       success = false;
     }
     USE_ITEM_FLAGS_REFLECTION = success;
@@ -167,8 +170,9 @@ public final class ItemUtils {
       Object nmsNbtTagCompoundObj = nbtTagCompoundClass.getDeclaredConstructor().newInstance();
       Object nmsItemStackObj = asNmsCopyMethod.invoke(null, item);
       itemAsJsonObject = saveNmsItemStackMethod.invoke(nmsItemStackObj, nmsNbtTagCompoundObj);
-    } catch (Exception t) {
-      new IllegalStateException("Could not convert ItemStack to JSON", t).printStackTrace();
+    } catch (Exception e) {
+      ChestCommands.getInstance().getLogger()
+          .log(Level.WARNING, "Could not convert ItemStack to JSON", e);
       return null;
     }
     return itemAsJsonObject.toString();

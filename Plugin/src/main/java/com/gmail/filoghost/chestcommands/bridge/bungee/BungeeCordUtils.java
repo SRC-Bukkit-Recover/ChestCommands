@@ -17,6 +17,7 @@ package com.gmail.filoghost.chestcommands.bridge.bungee;
 import com.gmail.filoghost.chestcommands.ChestCommands;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.util.logging.Level;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -42,9 +43,8 @@ public class BungeeCordUtils {
     } catch (Exception ex) {
       player.sendMessage(ChatColor.RED
           + "An unexpected exception has occurred. Please notify the server's staff about this. (They should look at the console).");
-      ex.printStackTrace();
-      ChestCommands.getInstance().getLogger().warning(
-          "Could not connect \"" + player.getName() + "\" to the server \"" + server + "\".");
+      ChestCommands.getInstance().getLogger().log(Level.FINE,
+          "Could not connect \"" + player.getName() + "\" to the server \"" + server + "\".", ex);
       return false;
     }
 
