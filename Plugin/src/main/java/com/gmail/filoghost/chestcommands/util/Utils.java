@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -124,4 +125,12 @@ public final class Utils {
     return collection == null || collection.isEmpty();
   }
 
+  public static boolean isValidURL(String input) {
+    try {
+      new URL(input).toURI();
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
+  }
 }

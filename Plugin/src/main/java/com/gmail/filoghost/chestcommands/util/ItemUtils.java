@@ -14,9 +14,6 @@
  */
 package com.gmail.filoghost.chestcommands.util;
 
-import com.gmail.filoghost.chestcommands.bridge.EpicHeadsBridge;
-import com.gmail.filoghost.chestcommands.bridge.HeadDatabaseBridge;
-import com.gmail.filoghost.chestcommands.bridge.HeadsPlusBridge;
 import com.gmail.filoghost.chestcommands.exception.FormatException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -29,7 +26,6 @@ import org.bukkit.block.banner.PatternType;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 public final class ItemUtils {
 
@@ -265,25 +261,5 @@ public final class ItemUtils {
     builder.trail(Boolean.parseBoolean(data[4]));
 
     return builder.build();
-  }
-
-  public static ItemMeta parseSkull(ItemMeta itemMeta, String skullOwner) {
-    if (itemMeta instanceof SkullMeta) {
-      if (skullOwner.startsWith("hdb-") && HeadDatabaseBridge
-          .hasValidID(skullOwner.replace("hdb-", ""))) {
-        itemMeta = HeadDatabaseBridge.getItem(skullOwner.replace("hdb-", "")).getItemMeta();
-      } else if (skullOwner.startsWith("hp-") && HeadsPlusBridge
-          .hasValidID(skullOwner.replace("hp-", ""))) {
-        itemMeta = HeadsPlusBridge.getItem(skullOwner.replace("hp-", "")).getItemMeta();
-      } else if (skullOwner.startsWith("eh-") && EpicHeadsBridge
-          .hasValidID(skullOwner.replace("eh-", ""))) {
-        itemMeta = EpicHeadsBridge.getItem(skullOwner.replace("eh-", "")).getItemMeta();
-      } else {
-        ((SkullMeta) itemMeta).setOwner(skullOwner);
-      }
-      // In case the meta has lore, remove it
-      itemMeta.setLore(Utils.newArrayList());
-    }
-    return itemMeta;
   }
 }

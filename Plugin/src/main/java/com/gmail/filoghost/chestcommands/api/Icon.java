@@ -16,7 +16,7 @@ package com.gmail.filoghost.chestcommands.api;
 
 import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.internal.VariableManager;
-import com.gmail.filoghost.chestcommands.util.ItemUtils;
+import com.gmail.filoghost.chestcommands.util.SkullUtils;
 import com.gmail.filoghost.chestcommands.util.Utils;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -342,7 +342,7 @@ public class Icon {
       if (skullOwnerHasVariables) {
         skullOwner = VariableManager.setVariables(skullOwner, pov);
       }
-      itemMeta = ItemUtils.parseSkull(itemMeta, skullOwner);
+      itemMeta = SkullUtils.parseSkull(itemMeta, skullOwner);
     }
     // In case the meta has lore, remove it
     itemMeta.setLore(Utils.newArrayList());

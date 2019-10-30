@@ -175,6 +175,14 @@
 			<version>v6.6.2-SNAPSHOT-1</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.mojang</groupId>
+			<artifactId>authlib</artifactId>
+			<version>1.5.13</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/authlib.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>

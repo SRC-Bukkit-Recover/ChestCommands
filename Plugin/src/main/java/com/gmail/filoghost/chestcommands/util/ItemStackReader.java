@@ -173,7 +173,7 @@ public class ItemStackReader {
   // <skull>
   private void parseSkull(String input) {
     String skullOwner = input.substring(Nodes.SKULL.length()).trim();
-    itemMeta = ItemUtils.parseSkull(itemMeta, skullOwner);
+    itemMeta = SkullUtils.parseSkull(itemMeta, skullOwner);
   }
 
   // Item flags
