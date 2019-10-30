@@ -27,7 +27,7 @@ public class SkullUtils {
           .hasValidID(skullOwner.replace("eh-", ""))) {
         itemMeta = EpicHeadsBridge.getItem(skullOwner.replace("eh-", "")).getItemMeta();
       } else if (Utils.isValidURL(skullOwner)) {
-        itemMeta = getSkull(skullOwner, (SkullMeta) itemMeta);
+        setSkullWithURL((SkullMeta) itemMeta, skullOwner);
       } else {
         ((SkullMeta) itemMeta).setOwner(skullOwner);
       }
@@ -37,28 +37,19 @@ public class SkullUtils {
     return itemMeta;
   }
 
-  public static SkullMeta getSkull(String url, SkullMeta skullMeta) {
-    if (url == null || url.isEmpty()) {
-      return skullMeta;
-    }
+  public static void setSkullWithURL(SkullMeta skullMeta, String url) {
     GameProfile profile = new GameProfile(UUID.randomUUID(), null);
     byte[] encodedData = Base64.getEncoder()
         .encode(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes());
     profile.getProperties().put("textures", new Property("textures", new String(encodedData)));
-    Field profileField = null;
     try {
+      Field profileField;
       profileField = skullMeta.getClass().getDeclaredField("profile");
-    } catch (NoSuchFieldException | SecurityException e) {
-      ChestCommands.getInstance().getLogger()
-          .log(Level.FINE, "Unexpected error when getting skull", e);
-    }
-    profileField.setAccessible(true);
-    try {
+      profileField.setAccessible(true);
       profileField.set(skullMeta, profile);
-    } catch (IllegalArgumentException | IllegalAccessException e) {
+    } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
       ChestCommands.getInstance().getLogger()
           .log(Level.FINE, "Unexpected error when getting skull", e);
     }
-    return skullMeta;
   }
 }
