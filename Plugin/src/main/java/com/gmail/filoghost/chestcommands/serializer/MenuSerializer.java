@@ -41,7 +41,7 @@ public class MenuSerializer {
         continue;
       }
 
-      if (subSectionName.equalsIgnoreCase("default-item")) {
+      if (subSectionName.equalsIgnoreCase("default-icon")) {
         Icon icon = IconSerializer
             .loadIconFromSection(config.getConfigurationSection(Nodes.DEFAULT_ITEM), "default-item",
                 config.getFileName(), errorLogger);
