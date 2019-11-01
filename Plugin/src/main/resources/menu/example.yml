@@ -12,7 +12,7 @@ menu-settings:
 
   # REQUIRED
   # The number of rows in the menu.
-  rows: 4
+  rows: 6
 
   # OPTIONAL (you can remove this or set it to '')
   # Bind multiple commands using ; (command: 'menu; m; me')
@@ -34,6 +34,17 @@ menu-settings:
     id: compass
     left-click: false
     right-click: true
+
+
+######################
+#+                  +#
+#    DEFAULT ICON    #
+#+                  +#
+######################
+default-icon:
+  NAME: ' '
+  ID: STAINED_GLASS_PANE
+  KEEP-OPEN: true
 
 
 ######################
@@ -474,6 +485,16 @@ requirement-with-expression:
   POSITION-Y: 4
 
 
+multislot:
+  NAME: 'Multi Slot'
+  LORE:
+    - 'This is a part of Multi Slot'
+  ID: STAINED_GLASS_PANE
+  DATA-VALUE: 3
+  SLOT: '46,48-51,53'
+  KEEP-OPEN: true
+
+
 menu-close-no-commands-no-lore:
   NAME: '&6Close the menu'
   ID: redstone lamp
@@ -481,4 +502,4 @@ menu-close-no-commands-no-lore:
     - 'Create an item without command,'
     - 'the GUI will just close.'
   POSITION-X: 9
-  POSITION-Y: 4
+  POSITION-Y: 5
