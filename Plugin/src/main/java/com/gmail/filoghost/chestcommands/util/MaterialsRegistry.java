@@ -110,6 +110,7 @@ public final class MaterialsRegistry {
     tryAddMaterialAlias("clock", "WATCH");
     tryAddMaterialAlias("firework", "FIREWORK_ROCKET");
     tryAddMaterialAlias("sign", "ACACIA_SIGN");
+    tryAddMaterialAlias("stained glass pane", "WHITE_STAINED_GLASS_PANE");
   }
 
   private MaterialsRegistry() {

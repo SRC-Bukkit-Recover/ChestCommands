@@ -43,7 +43,7 @@ menu-settings:
 ######################
 default-icon:
   NAME: ' '
-  ID: STAINED_GLASS_PANE
+  ID: stained glass pane
   KEEP-OPEN: true
 
 
@@ -489,7 +489,7 @@ multislot:
   NAME: 'Multi Slot'
   LORE:
     - 'This is a part of Multi Slot'
-  ID: STAINED_GLASS_PANE
+  ID: stained glass pane
   DATA-VALUE: 3
   SLOT: '46,48-51,53'
   KEEP-OPEN: true
