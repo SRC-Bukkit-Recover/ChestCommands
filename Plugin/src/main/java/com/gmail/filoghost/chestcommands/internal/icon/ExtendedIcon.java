@@ -16,8 +16,8 @@ package com.gmail.filoghost.chestcommands.internal.icon;
 
 import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.api.Icon;
-import com.gmail.filoghost.chestcommands.bridge.PlayerPointsBridge;
-import com.gmail.filoghost.chestcommands.bridge.TokenManagerBridge;
+import com.gmail.filoghost.chestcommands.bridge.currency.PlayerPointsBridge;
+import com.gmail.filoghost.chestcommands.bridge.currency.TokenManagerBridge;
 import com.gmail.filoghost.chestcommands.bridge.VaultBridge;
 import com.gmail.filoghost.chestcommands.internal.ExtendedIconMenu;
 import com.gmail.filoghost.chestcommands.internal.MenuInventoryHolder;

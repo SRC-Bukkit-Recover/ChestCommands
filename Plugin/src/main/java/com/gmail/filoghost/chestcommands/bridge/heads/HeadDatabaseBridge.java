@@ -1,4 +1,4 @@
-package com.gmail.filoghost.chestcommands.bridge;
+package com.gmail.filoghost.chestcommands.bridge.heads;
 
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.Bukkit;

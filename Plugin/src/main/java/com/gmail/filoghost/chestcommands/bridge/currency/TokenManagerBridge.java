@@ -1,4 +1,4 @@
-package com.gmail.filoghost.chestcommands.bridge;
+package com.gmail.filoghost.chestcommands.bridge.currency;
 
 import com.gmail.filoghost.chestcommands.util.MenuUtils;
 import me.realized.tokenmanager.api.TokenManager;

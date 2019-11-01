@@ -1,4 +1,4 @@
-package com.gmail.filoghost.chestcommands.bridge;
+package com.gmail.filoghost.chestcommands.bridge.currency;
 
 import com.gmail.filoghost.chestcommands.util.MenuUtils;
 import org.black_ixx.playerpoints.PlayerPoints;

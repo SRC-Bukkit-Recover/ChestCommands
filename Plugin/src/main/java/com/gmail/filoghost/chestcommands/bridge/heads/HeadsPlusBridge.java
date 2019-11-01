@@ -1,4 +1,4 @@
-package com.gmail.filoghost.chestcommands.bridge;
+package com.gmail.filoghost.chestcommands.bridge.heads;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import org.bukkit.Bukkit;

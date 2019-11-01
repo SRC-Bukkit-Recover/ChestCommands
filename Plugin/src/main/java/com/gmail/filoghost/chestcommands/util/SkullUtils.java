@@ -1,9 +1,9 @@
 package com.gmail.filoghost.chestcommands.util;
 
 import com.gmail.filoghost.chestcommands.ChestCommands;
-import com.gmail.filoghost.chestcommands.bridge.EpicHeadsBridge;
-import com.gmail.filoghost.chestcommands.bridge.HeadDatabaseBridge;
-import com.gmail.filoghost.chestcommands.bridge.HeadsPlusBridge;
+import com.gmail.filoghost.chestcommands.bridge.heads.EpicHeadsBridge;
+import com.gmail.filoghost.chestcommands.bridge.heads.HeadDatabaseBridge;
+import com.gmail.filoghost.chestcommands.bridge.heads.HeadsPlusBridge;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import java.lang.reflect.Field;

@@ -1,4 +1,4 @@
-package com.gmail.filoghost.chestcommands.bridge;
+package com.gmail.filoghost.chestcommands.bridge.heads;
 
 import com.songoda.epicheads.EpicHeads;
 import com.songoda.epicheads.head.Head;
