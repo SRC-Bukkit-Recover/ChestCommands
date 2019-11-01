@@ -41,18 +41,16 @@ public class MenuSerializer {
         continue;
       }
 
-      if (subSectionName.equalsIgnoreCase("default-icon")) {
-        Icon icon = IconSerializer
-            .loadIconFromSection(config.getConfigurationSection(Nodes.DEFAULT_ITEM), "default-item",
-                config.getFileName(), errorLogger);
-        iconMenu.fillIcon(icon);
-        continue;
-      }
-
       ConfigurationSection iconSection = config.getConfigurationSection(subSectionName);
 
       Icon icon = IconSerializer
           .loadIconFromSection(iconSection, subSectionName, config.getFileName(), errorLogger);
+
+      if (subSectionName.equalsIgnoreCase("default-icon")) {
+        iconMenu.fillIcon(icon);
+        continue;
+      }
+
       for (Coords coords : IconSerializer.loadCoordsFromSection(iconSection)) {
         if (!coords.isSetX() || !coords.isSetY()) {
           errorLogger.addError(
@@ -188,8 +186,6 @@ public class MenuSerializer {
     static final String OPEN_ITEM_RIGHT_CLICK = "menu-settings.open-with-item.right-click";
 
     static final String AUTO_REFRESH = "menu-settings.auto-refresh";
-
-    static final String DEFAULT_ITEM = "menu-settings.default-item";
   }
 
 }
