@@ -383,26 +383,26 @@ public class IconSerializer {
     return icon;
   }
 
-  public static Coords loadCoordsFromSection(ConfigurationSection section) {
+  public static List<Coords> loadCoordsFromSection(ConfigurationSection section) {
     Validate.notNull(section, "ConfigurationSection cannot be null");
 
-    Integer x = null;
-    Integer y = null;
+    List<Coords> coords = Utils.newArrayList();
 
-    if (section.isInt(Nodes.SLOT)) {
-      int slot = section.getInt(Nodes.SLOT);
-      if (slot > 9) {
-        x = slot;
-        y = 1;
-        while (x > 9) {
-          y += 1;
-          x -= 9;
+    if (section.isSet(Nodes.SLOT)) {
+      if (section.isInt(Nodes.SLOT)) {
+        int slot = section.getInt(Nodes.SLOT);
+        coords.add(toCoords(slot));
+      } else if (section.isList(Nodes.SLOT)) {
+        for (String string : section.getStringList(Nodes.SLOT)) {
+          coords.addAll(toCoords(string));
         }
-      } else {
-        x = slot;
-        y = 1;
+      } else if (section.isString(Nodes.SLOT)) {
+        coords.addAll(toCoords(section.getString(Nodes.SLOT)));
       }
     } else {
+      Integer x = null;
+      Integer y = null;
+
       if (section.isInt(Nodes.POSITION_X)) {
         x = section.getInt(Nodes.POSITION_X);
       }
@@ -410,80 +410,119 @@ public class IconSerializer {
       if (section.isInt(Nodes.POSITION_Y)) {
         y = section.getInt(Nodes.POSITION_Y);
       }
+
+      coords.add(new Coords(x, y));
     }
 
+    return coords;
+  }
+
+  private static Coords toCoords(int slot) {
+    int x;
+    int y;
+    if (slot > 9) {
+      x = slot;
+      y = 1;
+      while (x > 9) {
+        y += 1;
+        x -= 9;
+      }
+    } else {
+      x = slot;
+      y = 1;
+    }
     return new Coords(x, y);
   }
 
-  public static class Coords {
+  private static List<Coords> toCoords(String input) {
+    List<Coords> coords = Utils.newArrayList();
+    for (String string : input.split(",")) {
+      if (Utils.isValidInteger(string)) {
+        coords.add(toCoords(Integer.parseInt(string)));
+      } else {
+        String[] split = string.split("-", 2);
+        if (Utils.isValidInteger(split[0]) && Utils.isValidInteger(split[1])) {
+          int s1 = Integer.parseInt(split[0]);
+          int s2 = Integer.parseInt(split[1]);
+          int start = Math.min(s1, s2);
+          int end = Math.max(s1, s2);
+          for (int i = start; i <= end; i++) {
+            coords.add(toCoords(i));
+          }
+        }
+      }
+    }
+    return coords;
+  }
+
+  static class Coords {
 
     private Integer x, y;
 
-    protected Coords(Integer x, Integer y) {
+    Coords(Integer x, Integer y) {
       this.x = x;
       this.y = y;
     }
 
-    public boolean isSetX() {
+    boolean isSetX() {
       return x != null;
     }
 
-    public boolean isSetY() {
+    boolean isSetY() {
       return y != null;
     }
 
-    public Integer getX() {
+    Integer getX() {
       return x;
     }
 
-    public Integer getY() {
+    Integer getY() {
       return y;
     }
   }
 
   private static class Nodes {
 
-    public static final String
-        ID = "ID",
-        AMOUNT = "AMOUNT",
-        DATA_VALUE = "DATA-VALUE",
-        DURABILITY = "DURABILITY",
-        NBT_DATA = "NBT-DATA",
-        NAME = "NAME",
-        LORE = "LORE",
-        ENCHANT = "ENCHANTMENT",
-        COLOR = "COLOR",
-        SKULL_OWNER = "SKULL-OWNER",
-        BANNER_COLOR = "BANNER-COLOUR",
-        BANNER_PATTERNS = "BANNER-PATTERNS",
-        COMMAND = "COMMAND",
-        COMMAND_LEFT = "COMMAND.LEFT",
-        COMMAND_RIGHT = "COMMAND.RIGHT",
-        COMMAND_MIDDLE = "COMMAND.MIDDLE",
-        PRICE = "PRICE",
-        POINTS = "POINTS",
-        TOKENS = "TOKENS",
-        EXP_LEVELS = "LEVELS",
-        REQUIRED_ITEM = "REQUIRED-ITEM",
-        REQUIRED_ITEM_LEFT = "REQUIRED-ITEM.LEFT",
-        REQUIRED_ITEM_RIGHT = "REQUIRED-ITEM.RIGHT",
-        REQUIRED_ITEM_MIDDLE = "REQUIRED-ITEM.MIDDLE",
-        PERMISSION = "PERMISSION",
-        PERMISSION_MESSAGE = "PERMISSION-MESSAGE",
-        VIEW_PERMISSION = "VIEW-PERMISSION",
-        KEEP_OPEN = "KEEP-OPEN",
-        SLOT = "SLOT",
-        POSITION_X = "POSITION-X",
-        POSITION_Y = "POSITION-Y",
-        FIREWORK = "FIREWORK",
-        COOLDOWN = "COOLDOWN",
-        COOLDOWN_LEFT = "COOLDOWN.LEFT",
-        COOLDOWN_RIGHT = "COOLDOWN.RIGHT",
-        COOLDOWN_MIDDLE = "COOLDOWN.MIDDLE",
-        COOLDOWN_MESSAGE = "COOLDOWN-MESSAGE",
-        VIEW_REQUIREMENT = "VIEW-REQUIREMENT",
-        CLICK_REQUIREMENT = "CLICK-REQUIREMENT",
-        CLICK_REQUIREMENT_MESSAGE = "CLICK-REQUIREMENT-MESSAGE";
+    static final String ID = "ID";
+    static final String AMOUNT = "AMOUNT";
+    static final String DATA_VALUE = "DATA-VALUE";
+    static final String DURABILITY = "DURABILITY";
+    static final String NBT_DATA = "NBT-DATA";
+    static final String NAME = "NAME";
+    static final String LORE = "LORE";
+    static final String ENCHANT = "ENCHANTMENT";
+    static final String COLOR = "COLOR";
+    static final String SKULL_OWNER = "SKULL-OWNER";
+    static final String BANNER_COLOR = "BANNER-COLOUR";
+    static final String BANNER_PATTERNS = "BANNER-PATTERNS";
+    static final String COMMAND = "COMMAND";
+    static final String COMMAND_LEFT = "COMMAND.LEFT";
+    static final String COMMAND_RIGHT = "COMMAND.RIGHT";
+    static final String COMMAND_MIDDLE = "COMMAND.MIDDLE";
+    static final String PRICE = "PRICE";
+    static final String POINTS = "POINTS";
+    static final String TOKENS = "TOKENS";
+    static final String EXP_LEVELS = "LEVELS";
+    static final String REQUIRED_ITEM = "REQUIRED-ITEM";
+    static final String REQUIRED_ITEM_LEFT = "REQUIRED-ITEM.LEFT";
+    static final String REQUIRED_ITEM_RIGHT = "REQUIRED-ITEM.RIGHT";
+    static final String REQUIRED_ITEM_MIDDLE = "REQUIRED-ITEM.MIDDLE";
+    static final String PERMISSION = "PERMISSION";
+    static final String PERMISSION_MESSAGE = "PERMISSION-MESSAGE";
+    static final String VIEW_PERMISSION = "VIEW-PERMISSION";
+    static final String KEEP_OPEN = "KEEP-OPEN";
+    static final String SLOT = "SLOT";
+    static final String POSITION_X = "POSITION-X";
+    static final String POSITION_Y = "POSITION-Y";
+    static final String FIREWORK = "FIREWORK";
+    static final String COOLDOWN = "COOLDOWN";
+    static final String COOLDOWN_LEFT = "COOLDOWN.LEFT";
+    static final String COOLDOWN_RIGHT = "COOLDOWN.RIGHT";
+    static final String COOLDOWN_MIDDLE = "COOLDOWN.MIDDLE";
+    static final String COOLDOWN_MESSAGE = "COOLDOWN-MESSAGE";
+    static final String VIEW_REQUIREMENT = "VIEW-REQUIREMENT";
+    static final String CLICK_REQUIREMENT = "CLICK-REQUIREMENT";
+    static final String CLICK_REQUIREMENT_MESSAGE = "CLICK-REQUIREMENT-MESSAGE";
   }
 
 }

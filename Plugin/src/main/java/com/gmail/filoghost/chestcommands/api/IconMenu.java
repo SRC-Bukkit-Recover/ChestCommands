@@ -46,6 +46,14 @@ public class IconMenu {
     icons = new Icon[slots];
   }
 
+  public void fillIcon(Icon icon) {
+    for (int i = 0; i < icons.length; i++) {
+      if (icons[i] == null) {
+        icons[i] = icon;
+      }
+    }
+  }
+
   public void setIcon(int x, int y, Icon icon) {
     int slot = Utils.makePositive(y - 1) * 9 + Utils.makePositive(x - 1);
     setIconRaw(slot, icon);

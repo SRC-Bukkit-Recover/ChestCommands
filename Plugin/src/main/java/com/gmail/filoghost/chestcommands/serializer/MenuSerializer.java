@@ -41,26 +41,28 @@ public class MenuSerializer {
         continue;
       }
 
+      if (subSectionName.equalsIgnoreCase("default-item")) {
+        Icon icon = IconSerializer
+            .loadIconFromSection(config.getConfigurationSection(Nodes.DEFAULT_ITEM), "default-item",
+                config.getFileName(), errorLogger);
+        iconMenu.fillIcon(icon);
+        continue;
+      }
+
       ConfigurationSection iconSection = config.getConfigurationSection(subSectionName);
 
       Icon icon = IconSerializer
           .loadIconFromSection(iconSection, subSectionName, config.getFileName(), errorLogger);
-      Coords coords = IconSerializer.loadCoordsFromSection(iconSection);
+      for (Coords coords : IconSerializer.loadCoordsFromSection(iconSection)) {
+        if (!coords.isSetX() || !coords.isSetY()) {
+          errorLogger.addError(
+              "The icon \"" + subSectionName + "\" in the menu \"" + config.getFileName()
+                  + " is missing POSITION-X and/or POSITION-Y.");
+          continue;
+        }
 
-      if (!coords.isSetX() || !coords.isSetY()) {
-        errorLogger.addError(
-            "The icon \"" + subSectionName + "\" in the menu \"" + config.getFileName()
-                + " is missing POSITION-X and/or POSITION-Y.");
-        continue;
+        iconMenu.setIcon(coords.getX(), coords.getY(), icon);
       }
-
-      if (iconMenu.getIcon(coords.getX(), coords.getY()) != null) {
-        errorLogger.addError(
-            "The icon \"" + subSectionName + "\" in the menu \"" + config.getFileName()
-                + " is overriding another icon with the same position.");
-      }
-
-      iconMenu.setIcon(coords.getX(), coords.getY(), icon);
     }
 
     return iconMenu;
@@ -99,11 +101,8 @@ public class MenuSerializer {
             + "\" contains an illegal inventory type, it will be CHEST by default");
       }
       switch (inventoryType) {
-        default:
-          errorLogger.addError("The menu \"" + config.getFileName()
-              + "\"'s inventory type is not supported, it will be CHEST by default");
-          // TODO: Figure out why Anvil doesn't work
-          // case ANVIL:
+        // TODO: Figure out why Anvil doesn't work
+        // case ANVIL:
         case FURNACE:
           slots = 3;
           break;
@@ -121,6 +120,9 @@ public class MenuSerializer {
         case DROPPER:
           slots = 9;
           break;
+        default:
+          errorLogger.addError("The menu \"" + config.getFileName()
+              + "\"'s inventory type is not supported, it will be CHEST by default");
       }
     } else {
       slots = 6 * 9; // Defaults to 6 rows
@@ -174,19 +176,20 @@ public class MenuSerializer {
 
   private static class Nodes {
 
-    public static final String MENU_NAME = "menu-settings.name";
-    public static final String MENU_ROWS = "menu-settings.rows";
-    public static final String MENU_INV_TYPE = "menu-settings.inventory-type";
-    public static final String MENU_COMMAND = "menu-settings.command";
+    static final String MENU_NAME = "menu-settings.name";
+    static final String MENU_ROWS = "menu-settings.rows";
+    static final String MENU_INV_TYPE = "menu-settings.inventory-type";
+    static final String MENU_COMMAND = "menu-settings.command";
 
-    public static final String OPEN_ACTION = "menu-settings.open-action";
+    static final String OPEN_ACTION = "menu-settings.open-action";
 
-    public static final String OPEN_ITEM_MATERIAL = "menu-settings.open-with-item.id";
-    public static final String OPEN_ITEM_LEFT_CLICK = "menu-settings.open-with-item.left-click";
-    public static final String OPEN_ITEM_RIGHT_CLICK = "menu-settings.open-with-item.right-click";
+    static final String OPEN_ITEM_MATERIAL = "menu-settings.open-with-item.id";
+    static final String OPEN_ITEM_LEFT_CLICK = "menu-settings.open-with-item.left-click";
+    static final String OPEN_ITEM_RIGHT_CLICK = "menu-settings.open-with-item.right-click";
 
-    public static final String AUTO_REFRESH = "menu-settings.auto-refresh";
+    static final String AUTO_REFRESH = "menu-settings.auto-refresh";
 
+    static final String DEFAULT_ITEM = "menu-settings.default-item";
   }
 
 }

@@ -328,17 +328,16 @@ public class ItemStackReader {
 
   private class Nodes {
 
-    public static final String
-        LORE = "lore:",
-        NAME = "name:",
-        SKULL = "skull:",
-        PATTERN = "pattern:",
-        BASE_COLOR = "base-color:",
-        ENCHANT = "enchant:",
-        POTION = "effect:",
-        FLAG = "flag:",
-        COLOR = "color:",
-        FIREWORK = "firework:",
-        UNBREAKABLE = "unbreakable";
+    static final String LORE = "lore:";
+    static final String NAME = "name:";
+    static final String SKULL = "skull:";
+    static final String PATTERN = "pattern:";
+    static final String BASE_COLOR = "base-color:";
+    static final String ENCHANT = "enchant:";
+    static final String POTION = "effect:";
+    static final String FLAG = "flag:";
+    static final String COLOR = "color:";
+    static final String FIREWORK = "firework:";
+    static final String UNBREAKABLE = "unbreakable";
   }
 }
