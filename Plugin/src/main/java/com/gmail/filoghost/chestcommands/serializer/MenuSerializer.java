@@ -30,6 +30,10 @@ import org.bukkit.event.inventory.InventoryType;
 
 public class MenuSerializer {
 
+  private MenuSerializer() {
+
+  }
+
   public static ExtendedIconMenu loadMenu(PluginConfig config, String title, int slots,
       InventoryType inventoryType,
       ErrorLogger errorLogger) {

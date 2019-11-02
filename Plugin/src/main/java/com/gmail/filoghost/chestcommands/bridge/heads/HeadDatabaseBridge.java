@@ -8,6 +8,10 @@ public class HeadDatabaseBridge {
 
   private static HeadDatabaseAPI api;
 
+  private HeadDatabaseBridge() {
+
+  }
+
   public static boolean setupPlugin() {
     if (!Bukkit.getServer().getPluginManager().isPluginEnabled("HeadDatabase")) {
       return false;

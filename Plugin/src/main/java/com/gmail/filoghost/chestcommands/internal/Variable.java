@@ -15,9 +15,9 @@
 package com.gmail.filoghost.chestcommands.internal;
 
 import com.gmail.filoghost.chestcommands.ChestCommands;
+import com.gmail.filoghost.chestcommands.bridge.VaultBridge;
 import com.gmail.filoghost.chestcommands.bridge.currency.PlayerPointsBridge;
 import com.gmail.filoghost.chestcommands.bridge.currency.TokenManagerBridge;
-import com.gmail.filoghost.chestcommands.bridge.VaultBridge;
 import com.gmail.filoghost.chestcommands.util.BukkitUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

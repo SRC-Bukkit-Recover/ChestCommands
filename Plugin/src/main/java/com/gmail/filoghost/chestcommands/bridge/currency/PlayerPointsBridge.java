@@ -11,6 +11,10 @@ public class PlayerPointsBridge {
 
   private static PlayerPoints playerPoints;
 
+  private PlayerPointsBridge() {
+
+  }
+
   public static boolean setupPlugin() {
     if (!Bukkit.getServer().getPluginManager().isPluginEnabled("PlayerPoints")) {
       return false;

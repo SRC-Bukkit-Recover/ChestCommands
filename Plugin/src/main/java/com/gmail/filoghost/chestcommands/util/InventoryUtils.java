@@ -21,6 +21,10 @@ import org.bukkit.inventory.ItemStack;
 
 public class InventoryUtils {
 
+  private InventoryUtils() {
+
+  }
+
   public static boolean hasInventoryFull(Player player) {
     return player.getInventory().firstEmpty() == -1;
   }

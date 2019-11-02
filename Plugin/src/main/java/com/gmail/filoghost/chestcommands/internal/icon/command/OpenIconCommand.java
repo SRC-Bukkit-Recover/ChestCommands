@@ -37,19 +37,19 @@ public class OpenIconCommand extends IconCommand {
       return;
     }
 
-    taskChain.sync(() -> {
-      /*
-       * Delay the task, since this command is executed in ClickInventoryEvent
-       * and opening another inventory in the same moment is not a good idea.
-       */
-      Bukkit.getScheduler().scheduleSyncDelayedTask(ChestCommands.getInstance(), () -> {
-        if (player.hasPermission(menu.getPermission())) {
-          menu.open(player);
-        } else {
-          menu.sendNoPermissionMessage(player);
-        }
-      });
-    });
+    taskChain.sync(() ->
+        /*
+         * Delay the task, since this command is executed in ClickInventoryEvent
+         * and opening another inventory in the same moment is not a good idea.
+         */
+        Bukkit.getScheduler().scheduleSyncDelayedTask(ChestCommands.getInstance(), () -> {
+          if (player.hasPermission(menu.getPermission())) {
+            menu.open(player);
+          } else {
+            menu.sendNoPermissionMessage(player);
+          }
+        })
+    );
   }
 
 }

@@ -36,7 +36,7 @@ import org.json.simple.JSONValue;
  */
 public final class SimpleUpdater {
 
-  private static Pattern VERSION_PATTERN = Pattern.compile("v?([0-9\\.]+)");
+  private static Pattern VERSION_PATTERN = Pattern.compile("v?([0-9.]+)");
 
   private Plugin plugin;
   private int projectId;

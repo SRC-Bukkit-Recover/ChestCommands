@@ -10,6 +10,10 @@ public class PlaceholderAPIBridge {
 
   private static PlaceholderAPIPlugin placeholderAPI;
 
+  private PlaceholderAPIBridge() {
+
+  }
+
   public static boolean setupPlugin() {
     if (!Bukkit.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
       return false;

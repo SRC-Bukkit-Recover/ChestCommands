@@ -13,6 +13,10 @@ public class EpicHeadsBridge {
 
   private static HeadManager manager;
 
+  private EpicHeadsBridge() {
+
+  }
+
   public static boolean setupPlugin() {
     if (!Bukkit.getServer().getPluginManager().isPluginEnabled("EpicHeads")) {
       return false;

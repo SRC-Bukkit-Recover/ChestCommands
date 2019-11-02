@@ -5,6 +5,7 @@ import com.gmail.filoghost.chestcommands.bridge.currency.PlayerPointsBridge;
 import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
 import com.gmail.filoghost.chestcommands.util.ExpressionUtils;
 import com.gmail.filoghost.chestcommands.util.Utils;
+import java.util.Objects;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -23,7 +24,7 @@ public class GivePointsIconCommand extends IconCommand {
     if (Utils.isValidPositiveInteger(parsed)) {
       pointsToGive = Integer.parseInt(parsed);
     } else if (ExpressionUtils.isValidExpression(parsed)) {
-      pointsToGive = ExpressionUtils.getResult(parsed).intValue();
+      pointsToGive = Objects.requireNonNull(ExpressionUtils.getResult(parsed)).intValue();
     } else {
       errorMessage = ChatColor.RED + "Invalid points amount: " + command;
     }

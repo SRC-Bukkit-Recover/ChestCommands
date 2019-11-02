@@ -55,6 +55,7 @@ public final class BukkitUtils {
     try {
       plugin.saveResource(name, false);
     } catch (Exception ignored) {
+      // IGNORED
     }
   }
 

@@ -59,6 +59,10 @@ public class EnchantmentSerializer {
     }
   }
 
+  private EnchantmentSerializer() {
+
+  }
+
   private static String formatLowercase(String string) {
     return StringUtils.stripChars(string, " _-").toLowerCase();
   }

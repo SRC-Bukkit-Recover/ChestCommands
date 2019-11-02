@@ -32,6 +32,9 @@ public class AsciiPlaceholders {
 
   private static Map<String, String> placeholders = Utils.newHashMap();
 
+  private AsciiPlaceholders() {
+
+  }
 
   public static void load(ErrorLogger errorLogger) throws Exception {
 
@@ -79,7 +82,7 @@ public class AsciiPlaceholders {
 
   public static List<String> placeholdersToSymbols(List<String> input) {
     if (input == null) {
-      return null;
+      return Utils.newArrayList();
     }
     for (int i = 0; i < input.size(); i++) {
       input.set(i, placeholdersToSymbols(input.get(i)));
@@ -112,9 +115,8 @@ public class AsciiPlaceholders {
       // Cannot be quoted
       return input;
     }
-    if (input.startsWith("'") && input.endsWith("'")) {
-      return input.substring(1, input.length() - 1);
-    } else if (input.startsWith("\"") && input.endsWith("\"")) {
+    if ((input.startsWith("'") && input.endsWith("'")) || (input.startsWith("\"") && input
+        .endsWith("\""))) {
       return input.substring(1, input.length() - 1);
     }
 

@@ -15,6 +15,10 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 public class SkullUtils {
 
+  private SkullUtils() {
+
+  }
+
   public static ItemMeta parseSkull(ItemMeta itemMeta, String skullOwner) {
     if (itemMeta instanceof SkullMeta) {
       if (skullOwner.startsWith("hdb-") && HeadDatabaseBridge

@@ -26,6 +26,9 @@ public class VaultBridge {
 
   private static Economy economy;
   private static Permission permission;
+  private VaultBridge() {
+
+  }
 
   /*
   ECONOMY

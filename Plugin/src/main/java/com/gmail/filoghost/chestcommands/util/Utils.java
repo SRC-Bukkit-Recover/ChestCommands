@@ -71,17 +71,14 @@ public final class Utils {
     }
   }
 
-  public static List<String> readLines(File file) throws Exception {
-    BufferedReader br = null;
+  public static List<String> readLines(File file) throws IOException {
+    if (!file.exists()) {
+      throw new FileNotFoundException();
+    }
 
-    try {
+    try (BufferedReader br = new BufferedReader(new FileReader(file))) {
       List<String> lines = newArrayList();
 
-      if (!file.exists()) {
-        throw new FileNotFoundException();
-      }
-
-      br = new BufferedReader(new FileReader(file));
       String line = br.readLine();
 
       while (line != null) {
@@ -90,13 +87,6 @@ public final class Utils {
       }
 
       return lines;
-    } finally {
-      if (br != null) {
-        try {
-          br.close();
-        } catch (IOException ignored) {
-        }
-      }
     }
   }
 

@@ -23,13 +23,17 @@ import org.bukkit.entity.Player;
 
 public class BungeeCordUtils {
 
-  public static boolean connect(Player player, String server) {
+  private BungeeCordUtils() {
+
+  }
+
+  public static void connect(Player player, String server) {
 
     try {
 
       if (server.length() == 0) {
         player.sendMessage("§cTarget server was \"\" (empty string) cannot connect to it.");
-        return false;
+        return;
       }
 
       ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
@@ -45,10 +49,8 @@ public class BungeeCordUtils {
           + "An unexpected exception has occurred. Please notify the server's staff about this. (They should look at the console).");
       ChestCommands.getInstance().getLogger().log(Level.FINE,
           "Could not connect \"" + player.getName() + "\" to the server \"" + server + "\".", ex);
-      return false;
     }
 
-    return true;
   }
 
 }

@@ -5,6 +5,10 @@ import org.bukkit.entity.Player;
 
 public class VariableManager {
 
+  private VariableManager() {
+
+  }
+
   public static boolean hasVariables(String message) {
     if (message == null) {
       return false;

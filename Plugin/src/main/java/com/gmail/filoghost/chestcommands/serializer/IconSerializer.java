@@ -38,6 +38,10 @@ import org.bukkit.configuration.ConfigurationSection;
 
 public class IconSerializer {
 
+  private IconSerializer() {
+
+  }
+
   public static Icon loadIconFromSection(ConfigurationSection section, String iconName,
       String menuFileName, ErrorLogger errorLogger) {
     Validate.notNull(section, "ConfigurationSection cannot be null");
@@ -457,7 +461,8 @@ public class IconSerializer {
 
   static class Coords {
 
-    private Integer x, y;
+    private Integer x;
+    private Integer y;
 
     Coords(Integer x, Integer y) {
       this.x = x;

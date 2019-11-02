@@ -6,6 +6,10 @@ import java.math.BigDecimal;
 
 public class ExpressionUtils {
 
+  private ExpressionUtils() {
+
+  }
+
   public static boolean isBoolean(String input) {
     Expression expression = new Expression(input);
     try {

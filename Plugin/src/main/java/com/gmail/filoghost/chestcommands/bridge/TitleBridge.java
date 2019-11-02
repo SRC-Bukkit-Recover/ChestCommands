@@ -46,25 +46,16 @@ public class TitleBridge {
     if (!hasValidPlugin()) {
       throw new IllegalStateException("Title plugins were not found!");
     }
-    switch (type) {
-      case TITLE_MANAGER: {
-        titleManagerAPI.sendTitle(player, title, fadeIn, stay, fadeOut);
-        titleManagerAPI.sendSubtitle(player, subtitle, fadeIn, stay, fadeOut);
-        break;
-      }
-      case TITLE_API: {
-        TitleAPI.sendTitle(player, fadeIn, stay, fadeOut, title, subtitle);
-        break;
-      }
-      case TTA: {
-        TTA_Methods
-            .sendTitle(player, title, fadeIn, stay, fadeOut, subtitle, fadeIn, stay, fadeOut);
-        break;
-      }
-      case BOUNTIFUL_API: {
-        BountifulAPI.sendTitle(player, fadeIn, stay, fadeOut, title, subtitle);
-        break;
-      }
+    if (type == PluginType.TITLE_MANAGER) {
+      titleManagerAPI.sendTitle(player, title, fadeIn, stay, fadeOut);
+      titleManagerAPI.sendSubtitle(player, subtitle, fadeIn, stay, fadeOut);
+    } else if (type == PluginType.TITLE_API) {
+      TitleAPI.sendTitle(player, fadeIn, stay, fadeOut, title, subtitle);
+    } else if (type == PluginType.TTA) {
+      TTA_Methods
+          .sendTitle(player, title, fadeIn, stay, fadeOut, subtitle, fadeIn, stay, fadeOut);
+    } else if (type == PluginType.BOUNTIFUL_API) {
+      BountifulAPI.sendTitle(player, fadeIn, stay, fadeOut, title, subtitle);
     }
   }
 

@@ -47,7 +47,9 @@ public class PluginConfig extends YamlConfiguration {
         if (file.getParentFile() != null) {
           file.getParentFile().mkdirs();
         }
-        file.createNewFile();
+        if (file.createNewFile()) {
+          plugin.getLogger().info("Created " + getFileName());
+        }
       }
     }
 

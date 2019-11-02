@@ -258,17 +258,17 @@ public class Icon {
   protected String calculateName(Player pov) {
     if (hasName()) {
 
-      String name = this.name;
+      String displayname = this.name;
 
       if (pov != null && nameHasVariables) {
-        name = VariableManager.setVariables(name, pov);
+        displayname = VariableManager.setVariables(displayname, pov);
       }
 
-      if (name.isEmpty()) {
+      if (displayname.isEmpty()) {
         // Add a color to display the name empty
         return ChatColor.WHITE.toString();
       } else {
-        return name;
+        return displayname;
       }
     }
 
@@ -338,11 +338,11 @@ public class Icon {
     ItemMeta itemMeta = itemStack.getItemMeta();
 
     if (skullOwner != null && itemMeta instanceof SkullMeta) {
-      String skullOwner = this.skullOwner;
+      String skull = this.skullOwner;
       if (skullOwnerHasVariables) {
-        skullOwner = VariableManager.setVariables(skullOwner, pov);
+        skull = VariableManager.setVariables(skull, pov);
       }
-      itemMeta = SkullUtils.parseSkull(itemMeta, skullOwner);
+      itemMeta = SkullUtils.parseSkull(itemMeta, skull);
     }
     // In case the meta has lore, remove it
     itemMeta.setLore(Utils.newArrayList());

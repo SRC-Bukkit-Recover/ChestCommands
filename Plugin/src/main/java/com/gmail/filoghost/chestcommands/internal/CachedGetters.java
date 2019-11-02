@@ -20,7 +20,9 @@ public class CachedGetters {
 
   private static long lastOnlinePlayersRefresh;
   private static int onlinePlayers;
+  private CachedGetters() {
 
+  }
 
   public static int getOnlinePlayers() {
     long now = System.currentTimeMillis();

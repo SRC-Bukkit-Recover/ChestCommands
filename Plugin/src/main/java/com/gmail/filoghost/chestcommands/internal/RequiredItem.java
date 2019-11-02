@@ -93,9 +93,9 @@ public class RequiredItem {
     return amountFound >= getAmount();
   }
 
-  public boolean takeItem(Player player) {
+  public void takeItem(Player player) {
     if (getAmount() <= 0) {
-      return true;
+      return;
     }
 
     int itemsToTake = getAmount(); //start from amount and decrease
@@ -111,7 +111,7 @@ public class RequiredItem {
           current.getDurability()) && isValidItemMeta(current)) {
         if (current.getAmount() > itemsToTake) {
           current.setAmount(current.getAmount() - itemsToTake);
-          return true;
+          return;
         } else {
           itemsToTake -= current.getAmount();
           player.getInventory().setItem(i, new ItemStack(Material.AIR));
@@ -120,10 +120,8 @@ public class RequiredItem {
 
       // The end
       if (itemsToTake <= 0) {
-        return true;
+        return;
       }
     }
-
-    return false;
   }
 }

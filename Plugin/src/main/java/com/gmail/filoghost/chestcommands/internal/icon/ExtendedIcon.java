@@ -16,9 +16,9 @@ package com.gmail.filoghost.chestcommands.internal.icon;
 
 import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.api.Icon;
+import com.gmail.filoghost.chestcommands.bridge.VaultBridge;
 import com.gmail.filoghost.chestcommands.bridge.currency.PlayerPointsBridge;
 import com.gmail.filoghost.chestcommands.bridge.currency.TokenManagerBridge;
-import com.gmail.filoghost.chestcommands.bridge.VaultBridge;
 import com.gmail.filoghost.chestcommands.internal.ExtendedIconMenu;
 import com.gmail.filoghost.chestcommands.internal.MenuInventoryHolder;
 import com.gmail.filoghost.chestcommands.internal.RequiredItem;
@@ -91,11 +91,9 @@ public class ExtendedIcon extends Icon {
       permission = null;
     }
 
-    if (permission != null) {
-      if (permission.startsWith("-")) {
-        permissionNegated = true;
-        permission = permission.substring(1).trim();
-      }
+    if (permission != null && permission.startsWith("-")) {
+      permissionNegated = true;
+      permission = permission.substring(1).trim();
     }
     this.permission = permission;
   }
@@ -133,11 +131,9 @@ public class ExtendedIcon extends Icon {
       viewPermission = null;
     }
 
-    if (viewPermission != null) {
-      if (viewPermission.startsWith("-")) {
-        viewPermissionNegated = true;
-        viewPermission = viewPermission.substring(1).trim();
-      }
+    if (viewPermission != null && viewPermission.startsWith("-")) {
+      viewPermissionNegated = true;
+      viewPermission = viewPermission.substring(1).trim();
     }
     this.viewPermission = viewPermission;
   }
@@ -204,10 +200,12 @@ public class ExtendedIcon extends Icon {
     this.middleRequiredItems = requiredItems;
   }
 
+  @Override
   public String calculateName(Player pov) {
     return super.calculateName(pov);
   }
 
+  @Override
   public List<String> calculateLore(Player pov) {
     return super.calculateLore(pov);
   }
@@ -343,25 +341,19 @@ public class ExtendedIcon extends Icon {
         return closeOnClick;
       }
     }
-    if (expLevelsPrice > 0) {
-      if (player.getLevel() < expLevelsPrice) {
-        player.sendMessage(
-            ChestCommands.getLang().no_exp.replace("{levels}", Integer.toString(expLevelsPrice)));
-        return closeOnClick;
-      }
+    if (expLevelsPrice > 0 && player.getLevel() < expLevelsPrice) {
+      player.sendMessage(
+          ChestCommands.getLang().no_exp.replace("{levels}", Integer.toString(expLevelsPrice)));
+      return closeOnClick;
     }
 
     List<RequiredItem> requiredItems = new ArrayList<>();
-    switch (clickType) {
-      case LEFT:
-        requiredItems = leftRequiredItems;
-        break;
-      case RIGHT:
-        requiredItems = rightRequiredItems;
-        break;
-      case MIDDLE:
-        requiredItems = middleRequiredItems;
-        break;
+    if (clickType == ClickType.LEFT) {
+      requiredItems = leftRequiredItems;
+    } else if (clickType == ClickType.RIGHT) {
+      requiredItems = rightRequiredItems;
+    } else if (clickType == ClickType.MIDDLE) {
+      requiredItems = middleRequiredItems;
     }
     if (!requiredItems.isEmpty()) {
 
@@ -425,67 +417,63 @@ public class ExtendedIcon extends Icon {
         }
       }
     } else {
-      switch (clickType) {
-        case LEFT:
-          cooldownUntil = leftCooldownList.get(player);
-          if (leftCooldown > 0) {
-            if (cooldownUntil != null && cooldownUntil > now) {
-              if (cooldownMessage != null) {
-                player.sendMessage(
-                    cooldownMessage.replace("{cooldown}", String.valueOf(cooldownUntil - now))
-                        .replace("{cooldown_second}",
-                            String.valueOf((cooldownUntil - now) / 1000)));
-              } else {
-                player.sendMessage(ChestCommands.getLang().default_cooldown_message
-                    .replace("{cooldown}", String.valueOf(cooldownUntil - now))
-                    .replace("{cooldown_second}", String.valueOf((cooldownUntil - now) / 1000)));
-              }
-              return closeOnClick;
+      if (clickType == ClickType.LEFT) {
+        cooldownUntil = leftCooldownList.get(player);
+        if (leftCooldown > 0) {
+          if (cooldownUntil != null && cooldownUntil > now) {
+            if (cooldownMessage != null) {
+              player.sendMessage(
+                  cooldownMessage.replace("{cooldown}", String.valueOf(cooldownUntil - now))
+                      .replace("{cooldown_second}",
+                          String.valueOf((cooldownUntil - now) / 1000)));
             } else {
-              leftCooldownList.put(player, now + leftCooldown);
+              player.sendMessage(ChestCommands.getLang().default_cooldown_message
+                  .replace("{cooldown}", String.valueOf(cooldownUntil - now))
+                  .replace("{cooldown_second}", String.valueOf((cooldownUntil - now) / 1000)));
             }
+            return closeOnClick;
+          } else {
+            leftCooldownList.put(player, now + leftCooldown);
           }
-          break;
-        case RIGHT:
-          cooldownUntil = rightCooldownList.get(player);
-          if (rightCooldown > 0) {
-            if (cooldownUntil != null && cooldownUntil > now) {
-              if (cooldownMessage != null) {
-                player.sendMessage(
-                    cooldownMessage.replace("{cooldown}", String.valueOf(cooldownUntil - now))
-                        .replace("{cooldown_second}",
-                            String.valueOf((cooldownUntil - now) / 1000)));
-              } else {
-                player.sendMessage(ChestCommands.getLang().default_cooldown_message
-                    .replace("{cooldown}", String.valueOf(cooldownUntil - now))
-                    .replace("{cooldown_second}", String.valueOf((cooldownUntil - now) / 1000)));
-              }
-              return closeOnClick;
+        }
+      } else if (clickType == ClickType.RIGHT) {
+        cooldownUntil = rightCooldownList.get(player);
+        if (rightCooldown > 0) {
+          if (cooldownUntil != null && cooldownUntil > now) {
+            if (cooldownMessage != null) {
+              player.sendMessage(
+                  cooldownMessage.replace("{cooldown}", String.valueOf(cooldownUntil - now))
+                      .replace("{cooldown_second}",
+                          String.valueOf((cooldownUntil - now) / 1000)));
             } else {
-              rightCooldownList.put(player, now + rightCooldown);
+              player.sendMessage(ChestCommands.getLang().default_cooldown_message
+                  .replace("{cooldown}", String.valueOf(cooldownUntil - now))
+                  .replace("{cooldown_second}", String.valueOf((cooldownUntil - now) / 1000)));
             }
+            return closeOnClick;
+          } else {
+            rightCooldownList.put(player, now + rightCooldown);
           }
-          break;
-        case MIDDLE:
-          cooldownUntil = middleCooldownList.get(player);
-          if (middleCooldown > 0) {
-            if (cooldownUntil != null && cooldownUntil > now) {
-              if (cooldownMessage != null) {
-                player.sendMessage(
-                    cooldownMessage.replace("{cooldown}", String.valueOf(cooldownUntil - now))
-                        .replace("{cooldown_second}",
-                            String.valueOf((cooldownUntil - now) / 1000)));
-              } else {
-                player.sendMessage(ChestCommands.getLang().default_cooldown_message
-                    .replace("{cooldown}", String.valueOf(cooldownUntil - now))
-                    .replace("{cooldown_second}", String.valueOf((cooldownUntil - now) / 1000)));
-              }
-              return closeOnClick;
+        }
+      } else if (clickType == ClickType.MIDDLE) {
+        cooldownUntil = middleCooldownList.get(player);
+        if (middleCooldown > 0) {
+          if (cooldownUntil != null && cooldownUntil > now) {
+            if (cooldownMessage != null) {
+              player.sendMessage(
+                  cooldownMessage.replace("{cooldown}", String.valueOf(cooldownUntil - now))
+                      .replace("{cooldown_second}",
+                          String.valueOf((cooldownUntil - now) / 1000)));
             } else {
-              middleCooldownList.put(player, now + middleCooldown);
+              player.sendMessage(ChestCommands.getLang().default_cooldown_message
+                  .replace("{cooldown}", String.valueOf(cooldownUntil - now))
+                  .replace("{cooldown_second}", String.valueOf((cooldownUntil - now) / 1000)));
             }
+            return closeOnClick;
+          } else {
+            middleCooldownList.put(player, now + middleCooldown);
           }
-          break;
+        }
       }
     }
 

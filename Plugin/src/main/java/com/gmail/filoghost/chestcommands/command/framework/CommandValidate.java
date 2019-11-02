@@ -16,6 +16,10 @@ package com.gmail.filoghost.chestcommands.command.framework;
 
 public class CommandValidate {
 
+  private CommandValidate() {
+
+  }
+
   public static void notNull(Object o, String msg) {
     if (o == null) {
       throw new CommandException(msg);

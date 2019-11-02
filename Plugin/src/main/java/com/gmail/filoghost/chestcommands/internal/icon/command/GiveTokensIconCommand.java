@@ -5,6 +5,7 @@ import com.gmail.filoghost.chestcommands.bridge.currency.TokenManagerBridge;
 import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
 import com.gmail.filoghost.chestcommands.util.ExpressionUtils;
 import com.gmail.filoghost.chestcommands.util.Utils;
+import java.util.Objects;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -23,7 +24,7 @@ public class GiveTokensIconCommand extends IconCommand {
     if (Utils.isValidPositiveInteger(parsed)) {
       tokensToGive = Integer.parseInt(parsed);
     } else if (ExpressionUtils.isValidExpression(parsed)) {
-      tokensToGive = ExpressionUtils.getResult(parsed).longValue();
+      tokensToGive = Objects.requireNonNull(ExpressionUtils.getResult(parsed)).longValue();
     } else {
       errorMessage = ChatColor.RED + "Invalid tokens amount: " + command;
     }

@@ -9,6 +9,10 @@ public final class FormatUtils {
 
   private static DecimalFormat decimalFormat = new DecimalFormat("0.##");
 
+  private FormatUtils() {
+
+  }
+
   public static String decimalFormat(double number) {
     return decimalFormat.format(number);
   }

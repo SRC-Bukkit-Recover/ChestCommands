@@ -46,10 +46,9 @@ public class ErrorLoggerTask implements Runnable {
     String output = StringUtils.join(lines, "\n");
 
     if (ChestCommands.getSettings().use_console_colors) {
-      Bukkit.getConsoleSender().sendMessage(output);
-    } else {
-      System.out.println(ChatColor.stripColor(output));
+      output = ChatColor.stripColor(output);
     }
+    Bukkit.getConsoleSender().sendMessage(output);
   }
 
 }

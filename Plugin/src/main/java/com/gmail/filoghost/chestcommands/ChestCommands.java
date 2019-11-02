@@ -17,14 +17,14 @@ package com.gmail.filoghost.chestcommands;
 import co.aikar.taskchain.BukkitTaskChainFactory;
 import co.aikar.taskchain.TaskChainFactory;
 import com.gmail.filoghost.chestcommands.bridge.BarAPIBridge;
+import com.gmail.filoghost.chestcommands.bridge.PlaceholderAPIBridge;
+import com.gmail.filoghost.chestcommands.bridge.TitleBridge;
+import com.gmail.filoghost.chestcommands.bridge.VaultBridge;
+import com.gmail.filoghost.chestcommands.bridge.currency.PlayerPointsBridge;
+import com.gmail.filoghost.chestcommands.bridge.currency.TokenManagerBridge;
 import com.gmail.filoghost.chestcommands.bridge.heads.EpicHeadsBridge;
 import com.gmail.filoghost.chestcommands.bridge.heads.HeadDatabaseBridge;
 import com.gmail.filoghost.chestcommands.bridge.heads.HeadsPlusBridge;
-import com.gmail.filoghost.chestcommands.bridge.PlaceholderAPIBridge;
-import com.gmail.filoghost.chestcommands.bridge.currency.PlayerPointsBridge;
-import com.gmail.filoghost.chestcommands.bridge.TitleBridge;
-import com.gmail.filoghost.chestcommands.bridge.currency.TokenManagerBridge;
-import com.gmail.filoghost.chestcommands.bridge.VaultBridge;
 import com.gmail.filoghost.chestcommands.command.CommandHandler;
 import com.gmail.filoghost.chestcommands.command.framework.CommandFramework;
 import com.gmail.filoghost.chestcommands.config.AsciiPlaceholders;
@@ -380,10 +380,8 @@ public class ChestCommands extends JavaPlugin {
       for (File subFile : file.listFiles()) {
         list.addAll(loadMenus(subFile));
       }
-    } else if (file.isFile()) {
-      if (file.getName().endsWith(".yml")) {
-        list.add(new PluginConfig(this, file));
-      }
+    } else if (file.isFile() && file.getName().endsWith(".yml")) {
+      list.add(new PluginConfig(this, file));
     }
     return list;
   }

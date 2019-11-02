@@ -9,6 +9,10 @@ public class HeadsPlusBridge {
 
   private static HeadsPlus plugin;
 
+  private HeadsPlusBridge() {
+
+  }
+
   public static boolean setupPlugin() {
     if (!Bukkit.getServer().getPluginManager().isPluginEnabled("HeadsPlus")) {
       return false;

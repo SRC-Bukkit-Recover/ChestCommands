@@ -74,11 +74,11 @@ public class ItemStackReader {
         throw new FormatException("invalid amount \"" + amountString + "\"");
       }
 
-      int amount = Integer.parseInt(amountString);
-      if (amount <= 0) {
+      int anInt = Integer.parseInt(amountString);
+      if (anInt <= 0) {
         throw new FormatException("invalid amount \"" + amountString + "\"");
       }
-      this.amount = amount;
+      this.amount = anInt;
     }
 
     // Read the optional data value
@@ -90,27 +90,27 @@ public class ItemStackReader {
         throw new FormatException("invalid data value \"" + splitByColons[1] + "\"");
       }
 
-      short dataValue = Short.parseShort(splitByColons[1]);
-      if (dataValue < 0) {
+      short datavalue = Short.parseShort(splitByColons[1]);
+      if (datavalue < 0) {
         throw new FormatException("invalid data value \"" + splitByColons[1] + "\"");
       }
 
       this.explicitDataValue = true;
-      this.dataValue = dataValue;
+      this.dataValue = datavalue;
 
       // Only keep the first part as input
       materialString = splitByColons[0];
     }
 
-    Material material = MaterialsRegistry.matchMaterial(materialString);
+    Material type = MaterialsRegistry.matchMaterial(materialString);
 
-    if (material == null || MaterialsRegistry.isAir(material)) {
+    if (type == null || MaterialsRegistry.isAir(type)) {
       throw new FormatException("invalid material \"" + materialString + "\"");
     }
-    this.material = material;
+    this.material = type;
 
     // Read ItemMeta
-    itemMeta = new ItemStack(material, dataValue).getItemMeta().clone();
+    itemMeta = new ItemStack(type, dataValue).getItemMeta().clone();
     if (itemData.length > 0) {
       for (String data : itemData) {
         data = data.trim();

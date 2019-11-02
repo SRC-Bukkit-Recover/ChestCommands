@@ -19,6 +19,7 @@ import com.gmail.filoghost.chestcommands.bridge.VaultBridge;
 import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
 import com.gmail.filoghost.chestcommands.util.ExpressionUtils;
 import com.gmail.filoghost.chestcommands.util.Utils;
+import java.util.Objects;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -37,7 +38,7 @@ public class GiveMoneyIconCommand extends IconCommand {
     if (Utils.isValidPositiveInteger(parsed)) {
       moneyToGive = Double.parseDouble(parsed);
     } else if (ExpressionUtils.isValidExpression(parsed)) {
-      moneyToGive = ExpressionUtils.getResult(parsed).doubleValue();
+      moneyToGive = Objects.requireNonNull(ExpressionUtils.getResult(parsed)).doubleValue();
     } else {
       errorMessage = ChatColor.RED + "Invalid money amount: " + command;
     }

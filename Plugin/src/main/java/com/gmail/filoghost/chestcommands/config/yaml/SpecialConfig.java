@@ -16,12 +16,14 @@ package com.gmail.filoghost.chestcommands.config.yaml;
 
 import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.util.FormatUtils;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
+import org.bukkit.configuration.InvalidConfigurationException;
 
 /**
  * A special configuration wrapper that reads the values using reflection. It will also save default
@@ -41,7 +43,7 @@ public class SpecialConfig {
     this.header = header;
   }
 
-  public void load() throws Exception {
+  public void load() throws IOException, InvalidConfigurationException, IllegalAccessException {
 
     // Check if the configuration was initialized
     if (defaultValuesMap == null) {

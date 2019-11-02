@@ -67,6 +67,10 @@ public class CommandSerializer {
     commandTypesMap.put(commandPattern("close:"), CloseMenuCommand.class);
   }
 
+  private CommandSerializer() {
+
+  }
+
   private static Pattern commandPattern(String regex) {
     return Pattern.compile("^(?i)" + regex); // Case insensitive and only at the beginning
   }

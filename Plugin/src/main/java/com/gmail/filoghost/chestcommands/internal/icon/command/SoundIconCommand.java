@@ -51,14 +51,16 @@ public class SoundIconCommand extends IconCommand {
     if (split.length > 1) {
       try {
         pitch = Float.parseFloat(split[1].trim());
-      } catch (NumberFormatException e) {
+      } catch (NumberFormatException ignored) {
+        // Ignored
       }
     }
 
     if (split.length > 2) {
       try {
         volume = Float.parseFloat(split[2].trim());
-      } catch (NumberFormatException e) {
+      } catch (NumberFormatException ignored) {
+        // Ignored
       }
     }
   }
