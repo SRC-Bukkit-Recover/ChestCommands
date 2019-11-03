@@ -33,6 +33,7 @@ public class MenuData {
   private short boundDataValue;
   private ClickType clickType;
   private List<IconCommand> openActions;
+  private List<IconCommand> closeActions;
   private int refreshTenths;
 
   public MenuData(String title, int slots, InventoryType inventoryType) {
@@ -112,5 +113,13 @@ public class MenuData {
 
   public InventoryType getInventoryType() {
     return inventoryType;
+  }
+
+  public List<IconCommand> getCloseActions() {
+    return closeActions;
+  }
+
+  public void setCloseActions(List<IconCommand> closeActions) {
+    this.closeActions = closeActions;
   }
 }

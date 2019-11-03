@@ -142,6 +142,11 @@ public class MenuSerializer {
       menuData.setOpenActions(CommandSerializer.readCommands(config.getString(Nodes.OPEN_ACTION)));
     }
 
+    if (config.isSet(Nodes.CLOSE_ACTION)) {
+      menuData
+          .setCloseActions(CommandSerializer.readCommands(config.getString(Nodes.CLOSE_ACTION)));
+    }
+
     if (config.isSet(Nodes.OPEN_ITEM_MATERIAL)) {
       try {
         ItemStackReader itemReader = new ItemStackReader(config.getString(Nodes.OPEN_ITEM_MATERIAL),
@@ -184,6 +189,7 @@ public class MenuSerializer {
     static final String MENU_COMMAND = "menu-settings.command";
 
     static final String OPEN_ACTION = "menu-settings.open-action";
+    static final String CLOSE_ACTION = "menu-settings.close-action";
 
     static final String OPEN_ITEM_MATERIAL = "menu-settings.open-with-item.id";
     static final String OPEN_ITEM_LEFT_CLICK = "menu-settings.open-with-item.left-click";

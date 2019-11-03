@@ -14,7 +14,13 @@
  */
 package com.gmail.filoghost.chestcommands.task;
 
+import co.aikar.taskchain.TaskChain;
+import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.api.Icon;
+import com.gmail.filoghost.chestcommands.api.IconMenu;
+import com.gmail.filoghost.chestcommands.internal.ExtendedIconMenu;
+import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
+import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
@@ -22,13 +28,15 @@ public class ExecuteCommandsTask implements Runnable {
 
   private Player player;
   private Icon icon;
+  private IconMenu menu;
   private ClickType clickType;
 
 
-  public ExecuteCommandsTask(Player player, Icon icon, ClickType clickType) {
+  public ExecuteCommandsTask(Player player, IconMenu menu, Icon icon, ClickType clickType) {
     this.player = player;
     this.icon = icon;
     this.clickType = clickType;
+    this.menu = menu;
   }
 
 
@@ -38,6 +46,20 @@ public class ExecuteCommandsTask implements Runnable {
 
     if (close) {
       player.closeInventory();
+
+      // RUN CLOSE ACTIONS
+      if (menu instanceof ExtendedIconMenu) {
+        List<IconCommand> closeActions = ((ExtendedIconMenu) menu).getCloseActions();
+        if (closeActions != null) {
+          TaskChain taskChain = ChestCommands.getTaskChainFactory().newChain();
+
+          for (IconCommand closeAction : closeActions) {
+            closeAction.execute(player, taskChain);
+          }
+
+          taskChain.execute();
+        }
+      }
     }
   }
 

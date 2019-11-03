@@ -356,6 +356,10 @@ public class ChestCommands extends JavaPlugin {
         iconMenu.setOpenActions(data.getOpenActions());
       }
 
+      if (data.getCloseActions() != null) {
+        iconMenu.setCloseActions(data.getCloseActions());
+      }
+
       if (data.hasBoundMaterial() && data.getClickType() != null) {
         BoundItem boundItem = new BoundItem(iconMenu, data.getBoundMaterial(), data.getClickType());
         if (data.hasBoundDataValue()) {

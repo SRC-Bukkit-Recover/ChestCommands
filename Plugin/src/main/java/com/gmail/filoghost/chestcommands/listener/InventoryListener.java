@@ -129,7 +129,7 @@ public class InventoryListener implements Listener {
 
           // Closes the inventory and executes commands AFTER the event
           Bukkit.getScheduler().scheduleSyncDelayedTask(ChestCommands.getInstance(),
-              new ExecuteCommandsTask(clicker, icon, clickType));
+              new ExecuteCommandsTask(clicker, menu, icon, clickType));
         }
       }
     }

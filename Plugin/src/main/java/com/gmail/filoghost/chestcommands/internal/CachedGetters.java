@@ -20,6 +20,7 @@ public class CachedGetters {
 
   private static long lastOnlinePlayersRefresh;
   private static int onlinePlayers;
+
   private CachedGetters() {
 
   }

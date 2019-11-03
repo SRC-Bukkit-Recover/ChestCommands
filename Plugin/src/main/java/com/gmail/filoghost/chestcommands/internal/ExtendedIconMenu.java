@@ -37,6 +37,7 @@ public class ExtendedIconMenu extends IconMenu {
   private String fileName;
   private String permission;
   private List<IconCommand> openActions;
+  private List<IconCommand> closeActions;
 
   private int refreshTicks;
 
@@ -158,4 +159,11 @@ public class ExtendedIconMenu extends IconMenu {
     }
   }
 
+  public List<IconCommand> getCloseActions() {
+    return closeActions;
+  }
+
+  public void setCloseActions(List<IconCommand> closeActions) {
+    this.closeActions = closeActions;
+  }
 }
