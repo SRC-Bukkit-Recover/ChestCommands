@@ -14,13 +14,7 @@
  */
 package com.gmail.filoghost.chestcommands.task;
 
-import co.aikar.taskchain.TaskChain;
-import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.api.Icon;
-import com.gmail.filoghost.chestcommands.api.IconMenu;
-import com.gmail.filoghost.chestcommands.internal.ExtendedIconMenu;
-import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
-import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
