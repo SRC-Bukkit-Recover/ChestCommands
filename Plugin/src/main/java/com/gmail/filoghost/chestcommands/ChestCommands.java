@@ -98,6 +98,10 @@ public class ChestCommands extends JavaPlugin {
     return Utils.isClassLoaded("org.bukkit.entity.Player$Spigot");
   }
 
+  public static boolean hasInvCloseReason() {
+    return Utils.isClassLoaded("org.bukkit.event.inventory.InventoryCloseEvent$Reason");
+  }
+
   public static ChestCommands getInstance() {
     return instance;
   }

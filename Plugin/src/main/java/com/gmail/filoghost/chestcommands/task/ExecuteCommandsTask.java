@@ -23,6 +23,7 @@ import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
 import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryCloseEvent.Reason;
 
 public class ExecuteCommandsTask implements Runnable {
 
@@ -48,17 +49,17 @@ public class ExecuteCommandsTask implements Runnable {
       player.closeInventory();
 
       // RUN CLOSE ACTIONS
-      if (menu instanceof ExtendedIconMenu) {
-        List<IconCommand> closeActions = ((ExtendedIconMenu) menu).getCloseActions();
-        if (closeActions != null) {
-          TaskChain taskChain = ChestCommands.getTaskChainFactory().newChain();
+      if (ChestCommands.hasInvCloseReason() && menu instanceof ExtendedIconMenu) {
+          List<IconCommand> closeActions = ((ExtendedIconMenu) menu).getCloseActions();
+          if (closeActions != null) {
+            TaskChain taskChain = ChestCommands.getTaskChainFactory().newChain();
 
-          for (IconCommand closeAction : closeActions) {
-            closeAction.execute(player, taskChain);
+            for (IconCommand closeAction : closeActions) {
+              closeAction.execute(player, taskChain);
+            }
+
+            taskChain.execute();
           }
-
-          taskChain.execute();
-        }
       }
     }
   }

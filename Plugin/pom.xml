@@ -14,8 +14,8 @@
 
 	<repositories>
 		<repository>
-			<id>spigot-repo</id>
-			<url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+			<id>papermc-repo</id>
+			<url>https://repo.destroystokyo.com/repository/maven-public/</url>
 		</repository>
 
 		<repository>
@@ -61,8 +61,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.spigotmc</groupId>
-			<artifactId>spigot-api</artifactId>
+			<groupId>com.destroystokyo.paper</groupId>
+			<artifactId>paper-api</artifactId>
 			<version>${spigot-api.version}</version>
 			<scope>provided</scope>
 		</dependency>

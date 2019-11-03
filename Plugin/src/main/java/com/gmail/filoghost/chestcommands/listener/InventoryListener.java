@@ -14,15 +14,18 @@
  */
 package com.gmail.filoghost.chestcommands.listener;
 
+import co.aikar.taskchain.TaskChain;
 import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.api.Icon;
 import com.gmail.filoghost.chestcommands.api.IconMenu;
 import com.gmail.filoghost.chestcommands.internal.BoundItem;
 import com.gmail.filoghost.chestcommands.internal.ExtendedIconMenu;
 import com.gmail.filoghost.chestcommands.internal.MenuInventoryHolder;
+import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
 import com.gmail.filoghost.chestcommands.task.ExecuteCommandsTask;
 import com.gmail.filoghost.chestcommands.task.RefreshMenusTask;
 import com.gmail.filoghost.chestcommands.util.Utils;
+import java.util.List;
 import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -33,6 +36,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent.Reason;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -87,9 +91,25 @@ public class InventoryListener implements Listener {
       if (menuHolder.getIconMenu() instanceof ExtendedIconMenu) {
         ExtendedIconMenu extMenu = (ExtendedIconMenu) menuHolder.getIconMenu();
 
-        if (refreshMenusTaskMap.containsKey(player) && refreshMenusTaskMap.get(player).getExtMenu()
+        if (refreshMenusTaskMap.containsKey(player) && refreshMenusTaskMap.get(player)
+            .getExtMenu()
             .equals(extMenu)) {
           refreshMenusTaskMap.remove(player).cancel();
+        }
+
+        // RUN CLOSE ACTIONS
+        if (ChestCommands.hasInvCloseReason() && event.getReason().equals(Reason.PLUGIN)) {
+          return;
+        }
+        List<IconCommand> closeActions = extMenu.getCloseActions();
+        if (closeActions != null) {
+          TaskChain taskChain = ChestCommands.getTaskChainFactory().newChain();
+
+          for (IconCommand closeAction : closeActions) {
+            closeAction.execute(player, taskChain);
+          }
+
+          taskChain.execute();
         }
       }
     }
