@@ -507,4 +507,4 @@ menu-close-no-commands-no-lore:
     - 'Create an item without command,'
     - 'the GUI will just close.'
   POSITION-X: 9
-  POSITION-Y: 5
+  POSITION-Y: 6
