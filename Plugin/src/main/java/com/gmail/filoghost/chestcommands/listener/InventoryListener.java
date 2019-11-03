@@ -36,7 +36,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent.Reason;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -91,16 +90,7 @@ public class InventoryListener implements Listener {
       if (menuHolder.getIconMenu() instanceof ExtendedIconMenu) {
         ExtendedIconMenu extMenu = (ExtendedIconMenu) menuHolder.getIconMenu();
 
-        if (refreshMenusTaskMap.containsKey(player) && refreshMenusTaskMap.get(player)
-            .getExtMenu()
-            .equals(extMenu)) {
-          refreshMenusTaskMap.remove(player).cancel();
-        }
-
         // RUN CLOSE ACTIONS
-        if (ChestCommands.hasInvCloseReason() && event.getReason().equals(Reason.PLUGIN)) {
-          return;
-        }
         List<IconCommand> closeActions = extMenu.getCloseActions();
         if (closeActions != null) {
           TaskChain taskChain = ChestCommands.getTaskChainFactory().newChain();
@@ -110,6 +100,11 @@ public class InventoryListener implements Listener {
           }
 
           taskChain.execute();
+        }
+
+        if (refreshMenusTaskMap.containsKey(player) && refreshMenusTaskMap.get(player).getExtMenu()
+            .equals(extMenu)) {
+          refreshMenusTaskMap.remove(player).cancel();
         }
       }
     }
@@ -149,7 +144,7 @@ public class InventoryListener implements Listener {
 
           // Closes the inventory and executes commands AFTER the event
           Bukkit.getScheduler().scheduleSyncDelayedTask(ChestCommands.getInstance(),
-              new ExecuteCommandsTask(clicker, menu, icon, clickType));
+              new ExecuteCommandsTask(clicker, icon, clickType));
         }
       }
     }
