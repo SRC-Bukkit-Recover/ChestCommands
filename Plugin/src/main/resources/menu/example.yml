@@ -29,6 +29,11 @@ menu-settings:
   open-action: 'tell: &eYou opened the example menu.'
 
   # OPTIONAL
+  # This command command will be executed when the menu is closed.
+  # Supports all the icon command types.
+  close-action: 'tell: &eYou closed the example menu.'
+
+  # OPTIONAL
   # The menu will open only when right-clicking with a compass.
   open-with-item:
     id: compass
