@@ -98,6 +98,10 @@ public class IconMenu {
     }
   }
 
+  public String getTitle() {
+    return title;
+  }
+
   public void open(Player player) {
     Validate.notNull(player, "Player cannot be null");
 
