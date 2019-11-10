@@ -39,7 +39,7 @@ public final class BukkitUtils {
       }
     } catch (Exception e) {
       ChestCommands.getInstance().getLogger()
-          .log(Level.FINE, "Unexpected error when getting online players", e);
+          .log(Level.WARNING, "Unexpected error when getting online players", e);
       return Collections.emptyList();
     }
   }
@@ -80,7 +80,7 @@ public final class BukkitUtils {
       return String.valueOf((int) entityPlayer.getClass().getField("ping").get(entityPlayer));
     } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException | NoSuchFieldException e) {
       ChestCommands.getInstance().getLogger()
-          .log(Level.FINE, "Unexpected error when getting ping", e);
+          .log(Level.WARNING, "Unexpected error when getting ping", e);
       return "ERROR GETTING PING";
     }
   }

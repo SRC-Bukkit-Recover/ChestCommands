@@ -53,7 +53,7 @@ public class SkullUtils {
       profileField.set(skullMeta, profile);
     } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
       ChestCommands.getInstance().getLogger()
-          .log(Level.FINE, "Unexpected error when getting skull", e);
+          .log(Level.WARNING, "Unexpected error when getting skull", e);
     }
   }
 }

@@ -109,7 +109,7 @@ public class ExtendedIconMenu extends IconMenu {
       player.openInventory(inventory);
     } catch (Exception e) {
       ChestCommands.getInstance().getLogger()
-          .log(Level.FINER, "Unexpected error when opening the menu", e);
+          .log(Level.WARNING, "Unexpected error when opening the menu", e);
       player.sendMessage(ChatColor.RED
           + "An internal error occurred while opening the menu. The staff should check the console for errors.");
     }
@@ -146,7 +146,7 @@ public class ExtendedIconMenu extends IconMenu {
       }
     } catch (Exception e) {
       ChestCommands.getInstance().getLogger()
-          .log(Level.FINER, "Unexpected error when refreshing the menu", e);
+          .log(Level.WARNING, "Unexpected error when refreshing the menu", e);
       player.sendMessage(ChatColor.RED
           + "An internal error occurred while refreshing the menu. The staff should check the console for errors.");
     }

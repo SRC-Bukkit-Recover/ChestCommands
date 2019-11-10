@@ -19,18 +19,20 @@ import com.gmail.filoghost.chestcommands.internal.ExtendedIconMenu;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class RefreshMenusTask extends BukkitRunnable {
 
   private Player player;
   private ExtendedIconMenu extMenu;
+  private BukkitTask task;
 
   private long elapsedTenths;
 
   public RefreshMenusTask(Player player, ExtendedIconMenu extMenu) {
     this.player = player;
     this.extMenu = extMenu;
-    runTaskTimerAsynchronously(ChestCommands.getInstance(), 2L, 2L);
+    task = runTaskTimerAsynchronously(ChestCommands.getInstance(), 2L, 2L);
   }
 
   @Override
@@ -50,5 +52,9 @@ public class RefreshMenusTask extends BukkitRunnable {
 
   public ExtendedIconMenu getExtMenu() {
     return extMenu;
+  }
+
+  public BukkitTask getTask() {
+    return task;
   }
 }

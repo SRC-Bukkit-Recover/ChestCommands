@@ -90,6 +90,11 @@ public class InventoryListener implements Listener {
       if (menuHolder.getIconMenu() instanceof ExtendedIconMenu) {
         ExtendedIconMenu extMenu = (ExtendedIconMenu) menuHolder.getIconMenu();
 
+        if (refreshMenusTaskMap.containsKey(player) && refreshMenusTaskMap.get(player).getExtMenu()
+            .equals(extMenu)) {
+          refreshMenusTaskMap.remove(player).getTask().cancel();
+        }
+
         // RUN CLOSE ACTIONS
         List<IconCommand> closeActions = extMenu.getCloseActions();
         if (closeActions != null) {
@@ -100,11 +105,6 @@ public class InventoryListener implements Listener {
           }
 
           taskChain.execute();
-        }
-
-        if (refreshMenusTaskMap.containsKey(player) && refreshMenusTaskMap.get(player).getExtMenu()
-            .equals(extMenu)) {
-          refreshMenusTaskMap.remove(player).cancel();
         }
       }
     }

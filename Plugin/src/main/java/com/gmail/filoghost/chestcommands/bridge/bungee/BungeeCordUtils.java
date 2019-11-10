@@ -47,7 +47,7 @@ public class BungeeCordUtils {
     } catch (Exception ex) {
       player.sendMessage(ChatColor.RED
           + "An unexpected exception has occurred. Please notify the server's staff about this. (They should look at the console).");
-      ChestCommands.getInstance().getLogger().log(Level.FINE,
+      ChestCommands.getInstance().getLogger().log(Level.WARNING,
           "Could not connect \"" + player.getName() + "\" to the server \"" + server + "\".", ex);
     }
 

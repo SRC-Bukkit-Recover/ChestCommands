@@ -69,7 +69,7 @@ public class SpecialConfig {
 
         } catch (Exception ex) {
           ChestCommands.getInstance().getLogger()
-              .log(Level.FINE, "Unexpected error when loading field", ex);
+              .log(Level.WARNING, "Unexpected error when loading field", ex);
         }
       }
     }
