@@ -44,7 +44,7 @@ public class Lang extends SpecialConfig {
   @Override
   public void load() throws IOException, InvalidConfigurationException, IllegalAccessException {
     super.load();
-    
+
     for (Field field : getClass().getDeclaredFields()) {
       Class<?> type = field.getType();
       if (type == String.class) {
