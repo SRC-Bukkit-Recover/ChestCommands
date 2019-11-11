@@ -285,6 +285,8 @@ public class IconSerializer {
           requiredItemsStrings = Collections
               .singletonList(section.getString(Nodes.REQUIRED_ITEM_LEFT));
         }
+        // ASCII Translate
+        requiredItemsStrings = AsciiPlaceholders.placeholdersToSymbols(requiredItemsStrings);
 
         List<RequiredItem> requiredItems = new ArrayList<>();
         for (String requiredItemText : requiredItemsStrings) {
