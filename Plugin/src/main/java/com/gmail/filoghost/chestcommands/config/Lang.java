@@ -14,8 +14,12 @@
  */
 package com.gmail.filoghost.chestcommands.config;
 
+import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.config.yaml.PluginConfig;
 import com.gmail.filoghost.chestcommands.config.yaml.SpecialConfig;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import org.bukkit.configuration.InvalidConfigurationException;
 
 public class Lang extends SpecialConfig {
 
@@ -35,5 +39,20 @@ public class Lang extends SpecialConfig {
 
   public Lang(PluginConfig config) {
     super(config);
+  }
+
+  @Override
+  public void load() throws IOException, InvalidConfigurationException, IllegalAccessException {
+    super.load();
+    for (Field field : getClass().getDeclaredFields()) {
+      Class<?> type = field.getType();
+      if (type == String.class) {
+        try {
+          field.set(this, AsciiPlaceholders.placeholdersToSymbols((String) field.get(this)));
+        } catch (IllegalAccessException e) {
+          ChestCommands.getInstance().getLogger().warning("Error when getting the field " + field.getName());
+        }
+      }
+    }
   }
 }

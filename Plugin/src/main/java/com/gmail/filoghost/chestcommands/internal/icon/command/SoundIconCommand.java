@@ -17,13 +17,12 @@ package com.gmail.filoghost.chestcommands.internal.icon.command;
 import co.aikar.taskchain.TaskChain;
 import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
 import com.gmail.filoghost.chestcommands.util.BukkitUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class SoundIconCommand extends IconCommand {
 
-  private Sound sound;
+  private Object sound;
   private float pitch;
   private float volume;
   private String errorMessage;
@@ -44,8 +43,7 @@ public class SoundIconCommand extends IconCommand {
 
     sound = BukkitUtils.matchSound(split[0]);
     if (sound == null) {
-      errorMessage = ChatColor.RED + "Invalid sound \"" + split[0].trim() + "\".";
-      return;
+      sound = split[0];
     }
 
     if (split.length > 1) {
@@ -75,7 +73,11 @@ public class SoundIconCommand extends IconCommand {
       return;
     }
 
-    taskChain.sync(() -> player.playSound(player.getLocation(), sound, volume, pitch));
+    if (sound instanceof Sound) {
+      taskChain.sync(() -> player.playSound(player.getLocation(), (Sound) sound, volume, pitch));
+    } else {
+      taskChain.sync(() -> player.playSound(player.getLocation(), (String) sound, volume, pitch));
+    }
   }
 
 }

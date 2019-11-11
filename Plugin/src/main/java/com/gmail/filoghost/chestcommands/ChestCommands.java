@@ -273,6 +273,16 @@ public class ChestCommands extends JavaPlugin {
     }
 
     try {
+      AsciiPlaceholders.load(errorLogger);
+    } catch (IOException e) {
+      getLogger()
+          .log(Level.WARNING, "I/O error while reading the placeholders. They will not work.", e);
+    } catch (Exception e) {
+      getLogger().log(Level.WARNING,
+          "Unhandled error while reading the placeholders! Please inform the developer.", e);
+    }
+
+    try {
       lang.load();
     } catch (IOException e) {
       getLogger().log(Level.WARNING,
@@ -285,16 +295,6 @@ public class ChestCommands extends JavaPlugin {
       getLogger().log(Level.WARNING,
           "Unhandled error while reading the values for the language file! Please inform the developer.",
           e);
-    }
-
-    try {
-      AsciiPlaceholders.load(errorLogger);
-    } catch (IOException e) {
-      getLogger()
-          .log(Level.WARNING, "I/O error while reading the placeholders. They will not work.", e);
-    } catch (Exception e) {
-      getLogger().log(Level.WARNING,
-          "Unhandled error while reading the placeholders! Please inform the developer.", e);
     }
 
     // Load the menus
