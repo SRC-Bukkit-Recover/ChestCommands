@@ -44,13 +44,15 @@ public class Lang extends SpecialConfig {
   @Override
   public void load() throws IOException, InvalidConfigurationException, IllegalAccessException {
     super.load();
+    
     for (Field field : getClass().getDeclaredFields()) {
       Class<?> type = field.getType();
       if (type == String.class) {
         try {
           field.set(this, AsciiPlaceholders.placeholdersToSymbols((String) field.get(this)));
         } catch (IllegalAccessException e) {
-          ChestCommands.getInstance().getLogger().warning("Error when getting the field " + field.getName());
+          ChestCommands.getInstance().getLogger()
+              .warning("Error when getting the field " + field.getName());
         }
       }
     }

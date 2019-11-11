@@ -14,6 +14,7 @@
  */
 package com.gmail.filoghost.chestcommands.util;
 
+import com.gmail.filoghost.chestcommands.config.AsciiPlaceholders;
 import com.gmail.filoghost.chestcommands.exception.FormatException;
 import com.gmail.filoghost.chestcommands.serializer.EnchantmentSerializer;
 import java.util.ArrayList;
@@ -268,7 +269,8 @@ public class ItemStackReader {
   private void parseLore(String input) {
     List<String> lore = new ArrayList<>();
     for (String line : input.substring(Nodes.LORE.length()).trim().split(" ")) {
-      lore.add(ChatColor.translateAlternateColorCodes('&', line.replace("_", " ")));
+      lore.add(ChatColor.translateAlternateColorCodes('&',
+          AsciiPlaceholders.placeholdersToSymbols(line.replace("_", " "))));
     }
     itemMeta.setLore(lore);
   }
@@ -278,7 +280,8 @@ public class ItemStackReader {
   // Example: This_Is_Example
   private void parseDisplayName(String input) {
     itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&',
-        input.substring(Nodes.NAME.length()).trim().replace("_", " ")));
+        AsciiPlaceholders
+            .placeholdersToSymbols(input.substring(Nodes.NAME.length()).trim().replace("_", " "))));
   }
 
   public Material getMaterial() {
