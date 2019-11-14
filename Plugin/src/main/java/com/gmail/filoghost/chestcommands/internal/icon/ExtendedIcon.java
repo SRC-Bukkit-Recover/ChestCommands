@@ -19,6 +19,7 @@ import com.gmail.filoghost.chestcommands.api.Icon;
 import com.gmail.filoghost.chestcommands.bridge.VaultBridge;
 import com.gmail.filoghost.chestcommands.bridge.currency.PlayerPointsBridge;
 import com.gmail.filoghost.chestcommands.bridge.currency.TokenManagerBridge;
+import com.gmail.filoghost.chestcommands.internal.Cooldown;
 import com.gmail.filoghost.chestcommands.internal.ExtendedIconMenu;
 import com.gmail.filoghost.chestcommands.internal.MenuInventoryHolder;
 import com.gmail.filoghost.chestcommands.internal.RequiredItem;
@@ -27,10 +28,8 @@ import com.gmail.filoghost.chestcommands.util.ExpressionUtils;
 import com.gmail.filoghost.chestcommands.util.ItemUtils;
 import com.gmail.filoghost.chestcommands.util.MaterialsRegistry;
 import com.gmail.filoghost.chestcommands.util.StringUtils;
-import com.gmail.filoghost.chestcommands.util.Utils;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -60,15 +59,7 @@ public class ExtendedIcon extends Icon {
   private List<RequiredItem> middleRequiredItems = new ArrayList<>();
   private String playerPoints;
   private String tokenManager;
-
-  private long leftCooldown = 0;
-  private long rightCooldown = 0;
-  private long middleCooldown = 0;
-  private boolean cooldownAll = false;
-  private Map<Player, Long> leftCooldownList = Utils.newHashMap();
-  private Map<Player, Long> rightCooldownList = Utils.newHashMap();
-  private Map<Player, Long> middleCooldownList = Utils.newHashMap();
-  private String cooldownMessage;
+  private Cooldown cooldown = new Cooldown();
 
   public ExtendedIcon() {
     super();
@@ -396,85 +387,8 @@ public class ExtendedIcon extends Icon {
 
     }
 
-    long now = System.currentTimeMillis();
-    Long cooldownUntil;
-    if (cooldownAll) {
-      cooldownUntil = leftCooldownList.get(player);
-      if (leftCooldown > 0) {
-        if (cooldownUntil != null && cooldownUntil > now) {
-          if (cooldownMessage != null) {
-            player.sendMessage(
-                cooldownMessage.replace("{cooldown}", String.valueOf(cooldownUntil - now))
-                    .replace("{cooldown_second}", String.valueOf((cooldownUntil - now) / 1000)));
-          } else {
-            player.sendMessage(ChestCommands.getLang().default_cooldown_message
-                .replace("{cooldown}", String.valueOf(cooldownUntil - now))
-                .replace("{cooldown_second}", String.valueOf((cooldownUntil - now) / 1000)));
-          }
-          return closeOnClick;
-        } else {
-          leftCooldownList.put(player, now + leftCooldown);
-        }
-      }
-    } else {
-      if (clickType == ClickType.LEFT) {
-        cooldownUntil = leftCooldownList.get(player);
-        if (leftCooldown > 0) {
-          if (cooldownUntil != null && cooldownUntil > now) {
-            if (cooldownMessage != null) {
-              player.sendMessage(
-                  cooldownMessage.replace("{cooldown}", String.valueOf(cooldownUntil - now))
-                      .replace("{cooldown_second}",
-                          String.valueOf((cooldownUntil - now) / 1000)));
-            } else {
-              player.sendMessage(ChestCommands.getLang().default_cooldown_message
-                  .replace("{cooldown}", String.valueOf(cooldownUntil - now))
-                  .replace("{cooldown_second}", String.valueOf((cooldownUntil - now) / 1000)));
-            }
-            return closeOnClick;
-          } else {
-            leftCooldownList.put(player, now + leftCooldown);
-          }
-        }
-      } else if (clickType == ClickType.RIGHT) {
-        cooldownUntil = rightCooldownList.get(player);
-        if (rightCooldown > 0) {
-          if (cooldownUntil != null && cooldownUntil > now) {
-            if (cooldownMessage != null) {
-              player.sendMessage(
-                  cooldownMessage.replace("{cooldown}", String.valueOf(cooldownUntil - now))
-                      .replace("{cooldown_second}",
-                          String.valueOf((cooldownUntil - now) / 1000)));
-            } else {
-              player.sendMessage(ChestCommands.getLang().default_cooldown_message
-                  .replace("{cooldown}", String.valueOf(cooldownUntil - now))
-                  .replace("{cooldown_second}", String.valueOf((cooldownUntil - now) / 1000)));
-            }
-            return closeOnClick;
-          } else {
-            rightCooldownList.put(player, now + rightCooldown);
-          }
-        }
-      } else if (clickType == ClickType.MIDDLE) {
-        cooldownUntil = middleCooldownList.get(player);
-        if (middleCooldown > 0) {
-          if (cooldownUntil != null && cooldownUntil > now) {
-            if (cooldownMessage != null) {
-              player.sendMessage(
-                  cooldownMessage.replace("{cooldown}", String.valueOf(cooldownUntil - now))
-                      .replace("{cooldown_second}",
-                          String.valueOf((cooldownUntil - now) / 1000)));
-            } else {
-              player.sendMessage(ChestCommands.getLang().default_cooldown_message
-                  .replace("{cooldown}", String.valueOf(cooldownUntil - now))
-                  .replace("{cooldown_second}", String.valueOf((cooldownUntil - now) / 1000)));
-            }
-            return closeOnClick;
-          } else {
-            middleCooldownList.put(player, now + middleCooldown);
-          }
-        }
-      }
+    if (cooldown.isCooldown(player, clickType)) {
+      return closeOnClick;
     }
 
     // Take the money, the points, the tokens and the required item
@@ -533,28 +447,8 @@ public class ExtendedIcon extends Icon {
     return super.onClick(player, clickType);
   }
 
-  public String getCooldownMessage() {
-    return cooldownMessage;
-  }
-
-  public void setCooldownMessage(String cooldownMessage) {
-    this.cooldownMessage = cooldownMessage;
-  }
-
-  public void setLeftCooldown(long leftCooldown) {
-    this.leftCooldown = leftCooldown;
-  }
-
-  public void setRightCooldown(long rightCooldown) {
-    this.rightCooldown = rightCooldown;
-  }
-
-  public void setMiddleCooldown(long middleCooldown) {
-    this.middleCooldown = middleCooldown;
-  }
-
-  public void setCooldownAll(boolean cooldownAll) {
-    this.cooldownAll = cooldownAll;
+  public Cooldown getCooldown() {
+    return cooldown;
   }
 
   public void setViewRequirement(String viewRequirement) {

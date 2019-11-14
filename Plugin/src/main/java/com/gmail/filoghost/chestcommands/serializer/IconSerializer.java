@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.List;
 import org.bukkit.FireworkEffect;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.event.inventory.ClickType;
 
 public class IconSerializer {
 
@@ -249,26 +250,25 @@ public class IconSerializer {
       // LEFT CLICK COOLDOWN
       if (section.isSet(Nodes.COOLDOWN_LEFT)) {
         long cooldown = (long) (section.getDouble(Nodes.COOLDOWN_LEFT) * 1000);
-        icon.setLeftCooldown(cooldown);
+        icon.getCooldown().setTime(cooldown, ClickType.LEFT);
       }
       // RIGHT CLICK COOLDOWN
       if (section.isSet(Nodes.COOLDOWN_RIGHT)) {
         long cooldown = (long) (section.getDouble(Nodes.COOLDOWN_RIGHT) * 1000);
-        icon.setRightCooldown(cooldown);
+        icon.getCooldown().setTime(cooldown, ClickType.RIGHT);
       }
       // MIDDLE CLICK COOLDOWN
       if (section.isSet(Nodes.COOLDOWN_MIDDLE)) {
         long cooldown = (long) (section.getDouble(Nodes.COOLDOWN_MIDDLE) * 1000);
-        icon.setMiddleCooldown(cooldown);
+        icon.getCooldown().setTime(cooldown, ClickType.MIDDLE);
       }
     } else if (section.isSet(Nodes.COOLDOWN)) {
       long cooldown = (long) (section.getDouble(Nodes.COOLDOWN) * 1000);
-      icon.setLeftCooldown(cooldown);
-      icon.setRightCooldown(cooldown);
-      icon.setMiddleCooldown(cooldown);
-      icon.setCooldownAll(true);
+      icon.getCooldown().setTime(cooldown, ClickType.LEFT);
+      icon.getCooldown().setAll();
     }
-    icon.setCooldownMessage(FormatUtils.addColors(section.getString(Nodes.COOLDOWN_MESSAGE)));
+    icon.getCooldown()
+        .setCooldownMessage(FormatUtils.addColors(section.getString(Nodes.COOLDOWN_MESSAGE)));
 
     if (section.isConfigurationSection(Nodes.REQUIRED_ITEM)) {
       // LEFT REQUIRED ITEMS
