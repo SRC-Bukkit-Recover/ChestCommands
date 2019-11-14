@@ -202,9 +202,8 @@ public class ChestCommands extends JavaPlugin {
       getLogger().info("Hooked EpicHeads");
     }
 
-    if (TitleBridge.setupPlugin()) {
-      getLogger().info("Enabled Title features");
-    }
+    TitleBridge.setupPlugin();
+    getLogger().info("Enabled Title features");
 
     if (settings.update_notifications) {
       new SimpleUpdater(this, 56919).checkForUpdates(newVersion -> {

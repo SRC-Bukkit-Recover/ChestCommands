@@ -71,7 +71,7 @@ public class PlayerPointsBridge {
   }
 
 
-  public static boolean givePoints(Player player, int points) {
+  public static void givePoints(Player player, int points) {
     if (!hasValidPlugin()) {
       throw new IllegalStateException("PlayerPoints plugin was not found!");
     }
@@ -79,11 +79,9 @@ public class PlayerPointsBridge {
       throw new IllegalArgumentException("Invalid amount of points: " + points);
     }
 
-    boolean result = playerPoints.getAPI().give(player.getUniqueId(), points);
+    playerPoints.getAPI().give(player.getUniqueId(), points);
 
     MenuUtils.refreshMenu(player);
-
-    return result;
   }
 
 }

@@ -51,13 +51,6 @@ public class VaultBridge {
     return economy != null;
   }
 
-  public static Economy getEconomy() {
-    if (!hasValidEconomy()) {
-      throw new IllegalStateException("Economy plugin was not found!");
-    }
-    return economy;
-  }
-
   public static double getMoney(Player player) {
     if (!hasValidEconomy()) {
       throw new IllegalStateException("Economy plugin was not found!");
@@ -97,7 +90,7 @@ public class VaultBridge {
     return result;
   }
 
-  public static boolean giveMoney(Player player, double amount) {
+  public static void giveMoney(Player player, double amount) {
     if (!hasValidEconomy()) {
       throw new IllegalStateException("Economy plugin was not found!");
     }
@@ -105,12 +98,9 @@ public class VaultBridge {
       throw new IllegalArgumentException("Invalid amount of money: " + amount);
     }
 
-    EconomyResponse response = economy.depositPlayer(player, player.getWorld().getName(), amount);
-    boolean result = response.transactionSuccess();
+    economy.depositPlayer(player, player.getWorld().getName(), amount);
 
     MenuUtils.refreshMenu(player);
-
-    return result;
   }
 
   public static String formatMoney(double amount) {

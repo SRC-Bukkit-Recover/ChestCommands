@@ -1,6 +1,8 @@
 package com.gmail.filoghost.chestcommands.util;
 
+import java.lang.reflect.InvocationTargetException;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 public final class NMSUtils {
 
@@ -24,6 +26,14 @@ public final class NMSUtils {
 
   public static Class<?> getCraftBukkitClass(String name) throws ClassNotFoundException {
     return Class.forName("org.bukkit.craftbukkit." + NMSUtils.getNMSVersion() + "." + name);
+  }
+
+  public static void sendPacket(Player player, Object packet)
+      throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException, ClassNotFoundException {
+    Object handle = player.getClass().getMethod("getHandle").invoke(player);
+    Object playerConnection = handle.getClass().getField("playerConnection").get(handle);
+    playerConnection.getClass().getMethod("sendPacket", getNMSClass("Packet"))
+        .invoke(playerConnection, packet);
   }
 
 }
