@@ -20,6 +20,7 @@ import com.gmail.filoghost.chestcommands.util.ErrorLogger;
 import com.gmail.filoghost.chestcommands.util.FormatUtils;
 import com.gmail.filoghost.chestcommands.util.Utils;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -36,7 +37,7 @@ public class AsciiPlaceholders {
 
   }
 
-  public static void load(ErrorLogger errorLogger) throws Exception {
+  public static void load(ErrorLogger errorLogger) throws IOException {
 
     placeholders.clear();
     File file = new File(ChestCommands.getInstance().getDataFolder(), "placeholders.yml");
