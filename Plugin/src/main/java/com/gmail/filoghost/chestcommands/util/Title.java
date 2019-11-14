@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 
 public class Title {
 
-  private static Class<?> chatBaseComponentClass;
   private static Class<?> playOutTitleClass;
   private static Method chatTitleMethod;
   private static Constructor titleConstructor;
@@ -17,7 +16,7 @@ public class Title {
 
   static {
     try {
-      chatBaseComponentClass = NMSUtils.getNMSClass("IChatBaseComponent");
+      Class<?> chatBaseComponentClass = NMSUtils.getNMSClass("IChatBaseComponent");
       playOutTitleClass = NMSUtils.getNMSClass("PacketPlayOutTitle");
       titleConstructor = playOutTitleClass.getConstructor(
           playOutTitleClass.getDeclaredClasses()[0],
