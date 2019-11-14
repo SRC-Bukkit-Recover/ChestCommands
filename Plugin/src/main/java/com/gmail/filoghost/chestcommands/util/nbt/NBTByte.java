@@ -3,12 +3,16 @@ package com.gmail.filoghost.chestcommands.util.nbt;
 /**
  * The {@code TAG_Byte} tag.
  */
-public final class NBTByte extends NBTTag implements Cloneable {
+public final class NBTByte extends NBTTag {
 
   private byte value;
 
   public NBTByte(byte value) {
     this.value = value;
+  }
+
+  public NBTByte(NBTByte source) {
+    this.value = source.value;
   }
 
   @Override
@@ -48,11 +52,6 @@ public final class NBTByte extends NBTTag implements Cloneable {
   @Override
   public String toMSONString() {
     return Byte.toUnsignedInt(value) + "b";
-  }
-
-  @Override
-  public NBTByte clone() {
-    return new NBTByte(value);
   }
 
 }

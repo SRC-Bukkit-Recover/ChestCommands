@@ -10,48 +10,52 @@ import java.util.NoSuchElementException;
 /**
  * The {@code TAG_List} tag.
  */
-public final class NBTList extends NBTTag implements Iterable<NBTTag>, Cloneable {
+public final class NBTList extends NBTTag implements Iterable<NBTTag> {
 
-  private final List<NBTTag> list = new ArrayList<NBTTag>();
-  private NBTType type;
+  private List<NBTTag> list = new ArrayList<>();
+  private NBTType elementType;
 
   /**
    * Creates the list with a type and a series of elements.
    *
-   * @param type  the type of tag
+   * @param elementType  the type of tag
    * @param value the value of the tag
    */
-  public NBTList(NBTType type, List<? extends NBTTag> value) {
-    this.type = type;
+  public NBTList(NBTType elementType, List<? extends NBTTag> value) {
+    this.elementType = elementType;
     for (NBTTag entry : value) {
       this.add(entry);
     }
   }
 
+  public NBTList(NBTList source) {
+    this.elementType = source.elementType;
+    this.list = source.list;
+  }
+
   /**
    * Creates the list with a type and a series of elements.
    *
-   * @param type  the type of tag
+   * @param elementType  the type of tag
    * @param value the value of the tag
    */
-  public NBTList(NBTType type, NBTTag... value) {
-    this(type, Arrays.asList(value));
+  public NBTList(NBTType elementType, NBTTag... value) {
+    this(elementType, Arrays.asList(value));
   }
 
   /**
    * Creates an empty list with a type.
    *
-   * @param type the type of tag or null if the list has no type yet
+   * @param elementType the type of tag or null if the list has no type yet
    */
-  public NBTList(NBTType type) {
-    this.type = type;
+  public NBTList(NBTType elementType) {
+    this.elementType = elementType;
   }
 
   /**
    * Creates an empty list without a type.
    */
   public NBTList() {
-    this(null);
   }
 
   // GETTERS
@@ -86,7 +90,7 @@ public final class NBTList extends NBTTag implements Iterable<NBTTag>, Cloneable
    * @return The type of elements in this list.
    */
   public NBTType getElementType() {
-    return type;
+    return elementType;
   }
 
   /**
@@ -119,10 +123,11 @@ public final class NBTList extends NBTTag implements Iterable<NBTTag>, Cloneable
    * @param value the tag
    */
   public void add(NBTTag value) {
-    if (this.type == null) {
-      this.type = value.getType();
-    } else if (this.type != value.getType()) {
-      throw new IllegalArgumentException(value.getType() + " is not of expected type " + type);
+    if (this.elementType == null) {
+      this.elementType = value.getType();
+    } else if (this.elementType != value.getType()) {
+      throw new IllegalArgumentException(
+          value.getType() + " is not of expected type " + elementType);
     }
     list.add(value);
   }
@@ -136,10 +141,11 @@ public final class NBTList extends NBTTag implements Iterable<NBTTag>, Cloneable
     if (index < 0 || index >= list.size()) {
       throw new IndexOutOfBoundsException(Integer.toString(index));
     }
-    if (this.type == null) {
-      this.type = value.getType();
-    } else if (this.type != value.getType()) {
-      throw new IllegalArgumentException(value.getType() + " is not of expected type " + type);
+    if (this.elementType == null) {
+      this.elementType = value.getType();
+    } else if (this.elementType != value.getType()) {
+      throw new IllegalArgumentException(
+          value.getType() + " is not of expected type " + elementType);
     }
     list.add(index, value);
   }
@@ -164,7 +170,7 @@ public final class NBTList extends NBTTag implements Iterable<NBTTag>, Cloneable
 
   public boolean equals(NBTList tag) {
     return this.isEmpty() && tag.isEmpty()
-        || this.type == tag.type && this.list.equals(tag.list);
+        || this.elementType == tag.elementType && this.list.equals(tag.list);
   }
 
   @Override
@@ -188,11 +194,6 @@ public final class NBTList extends NBTTag implements Iterable<NBTTag>, Cloneable
     }
 
     return builder.append("]").toString();
-  }
-
-  @Override
-  public NBTList clone() {
-    return new NBTList(type, list);
   }
 
 }

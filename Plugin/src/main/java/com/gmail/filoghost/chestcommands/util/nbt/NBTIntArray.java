@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * The {@code TAG_Int_Array} tag.
  */
-public final class NBTIntArray extends NBTTag implements Cloneable {
+public final class NBTIntArray extends NBTTag {
 
   private final int[] value;
 
@@ -24,6 +24,10 @@ public final class NBTIntArray extends NBTTag implements Cloneable {
     for (int i = 0; i < numbers.length; i++) {
       value[i] = numbers[i].intValue();
     }
+  }
+
+  public NBTIntArray(NBTIntArray source) {
+    this.value = source.value;
   }
 
   /**
@@ -71,11 +75,6 @@ public final class NBTIntArray extends NBTTag implements Cloneable {
       stringbuilder.append(this.value[i]);
     }
     return stringbuilder.append(']').toString();
-  }
-
-  @Override
-  public NBTIntArray clone() {
-    return new NBTIntArray(value);
   }
 
 }

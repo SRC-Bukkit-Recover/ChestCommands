@@ -3,12 +3,16 @@ package com.gmail.filoghost.chestcommands.util.nbt;
 /**
  * The {@code TAG_Double} tag.
  */
-public final class NBTDouble extends NBTTag implements Cloneable {
+public final class NBTDouble extends NBTTag {
 
   private double value;
 
   public NBTDouble(double value) {
     this.value = value;
+  }
+
+  public NBTDouble(NBTDouble source) {
+    this.value = source.value;
   }
 
   @Override
@@ -48,11 +52,6 @@ public final class NBTDouble extends NBTTag implements Cloneable {
   @Override
   public String toMSONString() {
     return value + "d";
-  }
-
-  @Override
-  public NBTDouble clone() {
-    return new NBTDouble(value);
   }
 
 }

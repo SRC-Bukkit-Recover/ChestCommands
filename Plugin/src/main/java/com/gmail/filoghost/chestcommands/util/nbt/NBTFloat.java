@@ -3,12 +3,16 @@ package com.gmail.filoghost.chestcommands.util.nbt;
 /**
  * The {@code TAG_Float} tag.
  */
-public final class NBTFloat extends NBTTag implements Cloneable {
+public final class NBTFloat extends NBTTag {
 
   private float value;
 
   public NBTFloat(float value) {
     this.value = value;
+  }
+
+  public NBTFloat(NBTFloat source) {
+    this.value = source.value;
   }
 
   @Override
@@ -48,11 +52,6 @@ public final class NBTFloat extends NBTTag implements Cloneable {
   @Override
   public String toMSONString() {
     return value + "f";
-  }
-
-  @Override
-  public NBTFloat clone() {
-    return new NBTFloat(value);
   }
 
 }

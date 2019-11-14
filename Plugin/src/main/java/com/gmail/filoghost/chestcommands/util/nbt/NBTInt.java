@@ -3,12 +3,16 @@ package com.gmail.filoghost.chestcommands.util.nbt;
 /**
  * The {@code TAG_Int} tag.
  */
-public final class NBTInt extends NBTTag implements Cloneable {
+public final class NBTInt extends NBTTag {
 
   private int value;
 
   public NBTInt(int value) {
     this.value = value;
+  }
+
+  public NBTInt(NBTInt source) {
+    this.value = source.value;
   }
 
   @Override
@@ -48,11 +52,6 @@ public final class NBTInt extends NBTTag implements Cloneable {
   @Override
   public String toMSONString() {
     return Integer.toString(value);
-  }
-
-  @Override
-  public NBTInt clone() {
-    return new NBTInt(value);
   }
 
 }

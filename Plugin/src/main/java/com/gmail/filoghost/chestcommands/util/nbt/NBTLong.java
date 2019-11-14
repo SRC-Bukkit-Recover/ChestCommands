@@ -3,12 +3,16 @@ package com.gmail.filoghost.chestcommands.util.nbt;
 /**
  * The {@code TAG_Long} tag.
  */
-public final class NBTLong extends NBTTag implements Cloneable {
+public final class NBTLong extends NBTTag {
 
   private long value;
 
   public NBTLong(long value) {
     this.value = value;
+  }
+
+  public NBTLong(NBTLong source) {
+    this.value = source.value;
   }
 
   @Override
@@ -48,11 +52,6 @@ public final class NBTLong extends NBTTag implements Cloneable {
   @Override
   public String toMSONString() {
     return value + "L";
-  }
-
-  @Override
-  public NBTLong clone() {
-    return new NBTLong(value);
   }
 
 }

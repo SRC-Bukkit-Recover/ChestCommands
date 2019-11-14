@@ -11,6 +11,10 @@ public final class NBTString extends NBTTag implements Cloneable {
     setValue(value);
   }
 
+  public NBTString(NBTString source) {
+    this.value = source.value;
+  }
+
   /**
    * Converts a regular string into a Mojangson string by surrounding it with quotes and escaping
    * backslashes and quotes inside it.
@@ -59,13 +63,6 @@ public final class NBTString extends NBTTag implements Cloneable {
   @Override
   public String toMSONString() {
     return toMSONString(value);
-  }
-
-  // UTIL
-
-  @Override
-  public NBTString clone() {
-    return new NBTString(value);
   }
 
 }
