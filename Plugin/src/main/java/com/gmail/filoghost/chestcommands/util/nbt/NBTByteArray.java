@@ -46,6 +46,11 @@ public final class NBTByteArray extends NBTTag {
     return obj instanceof NBTByteArray && equals((NBTByteArray) obj);
   }
 
+  @Override
+  public int hashCode() {
+    return super.hashCode();
+  }
+
   public boolean equals(NBTByteArray tag) {
     return Arrays.equals(this.value, tag.value);
   }

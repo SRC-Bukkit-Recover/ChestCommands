@@ -52,6 +52,11 @@ public final class NBTIntArray extends NBTTag implements Cloneable {
     return obj instanceof NBTIntArray && equals((NBTIntArray) obj);
   }
 
+  @Override
+  public int hashCode() {
+    return super.hashCode();
+  }
+
   public boolean equals(NBTIntArray tag) {
     return Arrays.equals(this.value, tag.value);
   }

@@ -51,6 +51,11 @@ public final class NBTLongArray extends NBTTag {
     return obj instanceof NBTLongArray && equals((NBTLongArray) obj);
   }
 
+  @Override
+  public int hashCode() {
+    return super.hashCode();
+  }
+
   public boolean equals(NBTLongArray tag) {
     return Arrays.equals(this.value, tag.value);
   }

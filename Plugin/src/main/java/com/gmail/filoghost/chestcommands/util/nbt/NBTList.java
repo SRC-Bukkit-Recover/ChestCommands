@@ -75,6 +75,11 @@ public final class NBTList extends NBTTag implements Iterable<NBTTag>, Cloneable
     return NBTType.LIST;
   }
 
+  @Override
+  public int hashCode() {
+    return super.hashCode();
+  }
+
   /**
    * Gets the type of elements in this list.
    *

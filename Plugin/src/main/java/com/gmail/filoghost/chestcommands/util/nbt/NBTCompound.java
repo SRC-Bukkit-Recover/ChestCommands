@@ -436,6 +436,11 @@ public final class NBTCompound extends NBTTag {
     return obj instanceof NBTCompound && equals((NBTCompound) obj);
   }
 
+  @Override
+  public int hashCode() {
+    return super.hashCode();
+  }
+
   public boolean equals(NBTCompound tag) {
     return this.isEmpty() && tag.isEmpty()
         || this.value.equals(tag.value);

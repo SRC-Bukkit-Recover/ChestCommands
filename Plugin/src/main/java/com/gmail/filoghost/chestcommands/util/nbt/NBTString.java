@@ -47,6 +47,11 @@ public final class NBTString extends NBTTag implements Cloneable {
   }
 
   @Override
+  public boolean equals(Object obj) {
+    return super.equals(obj);
+  }
+
+  @Override
   public int hashCode() {
     return value.hashCode();
   }
