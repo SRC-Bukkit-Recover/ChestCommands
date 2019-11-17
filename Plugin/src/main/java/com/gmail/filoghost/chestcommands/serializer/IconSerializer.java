@@ -230,25 +230,22 @@ public class IconSerializer {
     icon.setExpLevelsPrice(section.getString(Nodes.EXP_LEVELS, "0"));
 
     if (section.isConfigurationSection(Nodes.COOLDOWN)) {
-      // LEFT CLICK COOLDOWN
-      if (section.isSet(Nodes.COOLDOWN_LEFT)) {
-        long cooldown = (long) (section.getDouble(Nodes.COOLDOWN_LEFT) * 1000);
-        icon.getCooldown().setTime(cooldown, ClickType.LEFT);
+      // PER CLICK TYPE
+      for (ClickType type : ClickType.values()) {
+        String subsection = Nodes.COOLDOWN + "." + type.name();
+        if (section.isSet(subsection)) {
+          long cooldown = (long) (section.getDouble(subsection) * 1000);
+          icon.getCooldown().setTime(cooldown, type);
+        }
       }
-      // RIGHT CLICK COOLDOWN
-      if (section.isSet(Nodes.COOLDOWN_RIGHT)) {
-        long cooldown = (long) (section.getDouble(Nodes.COOLDOWN_RIGHT) * 1000);
-        icon.getCooldown().setTime(cooldown, ClickType.RIGHT);
-      }
-      // MIDDLE CLICK COOLDOWN
-      if (section.isSet(Nodes.COOLDOWN_MIDDLE)) {
-        long cooldown = (long) (section.getDouble(Nodes.COOLDOWN_MIDDLE) * 1000);
-        icon.getCooldown().setTime(cooldown, ClickType.MIDDLE);
+      // DEFAULT
+      if (section.isSet(Nodes.COOLDOWN_DEFAULT)) {
+        long cooldown = (long) (section.getDouble(Nodes.COMMAND_DEFAULT) * 1000);
+        icon.getCooldown().setDefaultTime(cooldown);
       }
     } else if (section.isSet(Nodes.COOLDOWN)) {
       long cooldown = (long) (section.getDouble(Nodes.COOLDOWN) * 1000);
-      icon.getCooldown().setTime(cooldown, ClickType.LEFT);
-      icon.getCooldown().setAll();
+      icon.getCooldown().setDefaultTime(cooldown);
     }
     icon.getCooldown()
         .setCooldownMessage(FormatUtils.addColors(section.getString(Nodes.COOLDOWN_MESSAGE)));
@@ -502,9 +499,7 @@ public class IconSerializer {
     static final String POSITION_Y = "POSITION-Y";
     static final String FIREWORK = "FIREWORK";
     static final String COOLDOWN = "COOLDOWN";
-    static final String COOLDOWN_LEFT = "COOLDOWN.LEFT";
-    static final String COOLDOWN_RIGHT = "COOLDOWN.RIGHT";
-    static final String COOLDOWN_MIDDLE = "COOLDOWN.MIDDLE";
+    static final String COOLDOWN_DEFAULT = "COOLDOWN.DEFAULT";
     static final String COOLDOWN_MESSAGE = "COOLDOWN-MESSAGE";
     static final String VIEW_REQUIREMENT = "VIEW-REQUIREMENT";
     static final String CLICK_REQUIREMENT = "CLICK-REQUIREMENT";
