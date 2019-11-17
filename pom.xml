@@ -23,6 +23,10 @@
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<maven.test.skip>true</maven.test.skip>
 		<spigot-api.version>1.8.8-R0.1-SNAPSHOT</spigot-api.version>
+		<sonar.projectKey>SRC-Bukkit-Recover_ChestCommands</sonar.projectKey>
+		<sonar.organization>src-bukkit-recover</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.login>d174505dd3567f71f4e117288624c18eed339f09</sonar.login>
 	</properties>
 
 	<modules>
