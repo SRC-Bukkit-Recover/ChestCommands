@@ -57,9 +57,7 @@ public class Icon {
   private DyeColor bannerColor;
   private List<Pattern> bannerPatterns;
   private List<FireworkEffect> fireworkEffects;
-  private ClickHandler clickLeftHandler;
-  private ClickHandler clickRightHandler;
-  private ClickHandler clickMiddleHandler;
+  private ClickHandler clickHandler;
 
   private boolean nameHasVariables;
   private boolean[] loreLinesWithVariables;
@@ -225,34 +223,12 @@ public class Icon {
     this.closeOnClick = closeOnClick;
   }
 
-  public ClickHandler getClickMiddleHandler() {
-    return clickMiddleHandler;
-  }
-
-  public void setClickMiddleHandler(ClickHandler clickHandler) {
-    this.clickMiddleHandler = clickHandler;
-  }
-
-  public ClickHandler getClickRightHandler() {
-    return clickRightHandler;
-  }
-
-  public void setClickRightHandler(ClickHandler clickHandler) {
-    this.clickRightHandler = clickHandler;
-  }
-
-  public ClickHandler getClickLeftHandler() {
-    return clickLeftHandler;
-  }
-
-  public void setClickLeftHandler(ClickHandler clickHandler) {
-    this.clickLeftHandler = clickHandler;
+  public ClickHandler getClickHandler() {
+    return clickHandler;
   }
 
   public void setClickHandler(ClickHandler clickHandler) {
-    this.clickLeftHandler = clickHandler;
-    this.clickRightHandler = clickHandler;
-    this.clickMiddleHandler = clickHandler;
+    this.clickHandler = clickHandler;
   }
 
   protected String calculateName(Player pov) {
@@ -391,12 +367,8 @@ public class Icon {
   }
 
   public boolean onClick(Player whoClicked, ClickType clickType) {
-    if (clickLeftHandler != null && clickType == ClickType.LEFT) {
-      return clickLeftHandler.onClick(whoClicked);
-    } else if (clickRightHandler != null && clickType == ClickType.RIGHT) {
-      return clickRightHandler.onClick(whoClicked);
-    } else if (clickMiddleHandler != null && clickType == ClickType.MIDDLE) {
-      return clickMiddleHandler.onClick(whoClicked);
+    if (clickHandler != null) {
+      return clickHandler.onClick(whoClicked, clickType);
     }
 
     return closeOnClick;

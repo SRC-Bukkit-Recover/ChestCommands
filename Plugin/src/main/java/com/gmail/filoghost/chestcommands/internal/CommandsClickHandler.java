@@ -20,42 +20,49 @@ import com.gmail.filoghost.chestcommands.api.ClickHandler;
 import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
 import com.gmail.filoghost.chestcommands.internal.icon.command.OpenIconCommand;
 import com.gmail.filoghost.chestcommands.internal.icon.command.RefreshIconCommand;
+import com.gmail.filoghost.chestcommands.util.Utils;
 import java.util.List;
+import java.util.Map;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class CommandsClickHandler implements ClickHandler {
 
-  private List<IconCommand> commands;
+  private Map<ClickType, List<IconCommand>> commandsPerClickType = Utils.newHashMap();
+  private List<IconCommand> defaultCommands = Utils.newArrayList();
   private boolean closeOnClick;
 
-  public CommandsClickHandler(List<IconCommand> commands, boolean closeOnClick) {
-    this.commands = commands;
+  public CommandsClickHandler(boolean closeOnClick) {
     this.closeOnClick = closeOnClick;
-
-    if (commands != null && !commands.isEmpty()) {
-      for (IconCommand command : commands) {
-        if (command instanceof OpenIconCommand || command instanceof RefreshIconCommand) {
-          // Fix GUI closing if KEEP-OPEN is not set, and a command should open another GUI
-          this.closeOnClick = false;
-          break;
-        }
-      }
-    }
   }
 
   @Override
-  public boolean onClick(Player player) {
-    if (commands != null && !commands.isEmpty()) {
+  public boolean onClick(Player player, ClickType clickType) {
+    List<IconCommand> commands = commandsPerClickType.getOrDefault(clickType, defaultCommands);
+    boolean close = closeOnClick;
+    if (!commands.isEmpty()) {
       TaskChain taskChain = ChestCommands.getTaskChainFactory().newChain();
 
       for (IconCommand command : commands) {
         command.execute(player, taskChain);
+        if (command instanceof OpenIconCommand || command instanceof RefreshIconCommand) {
+          // Fix GUI closing if KEEP-OPEN is not set, and a command should open another GUI
+          close = false;
+          break;
+        }
       }
 
       taskChain.execute();
     }
 
-    return closeOnClick;
+    return close;
   }
 
+  public void setCommands(List<IconCommand> commands, ClickType clickType) {
+    commandsPerClickType.put(clickType, commands);
+  }
+
+  public void setDefaultCommands(List<IconCommand> commands) {
+    this.defaultCommands = commands;
+  }
 }

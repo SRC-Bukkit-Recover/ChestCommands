@@ -156,37 +156,40 @@ public class IconSerializer {
     boolean closeOnClick = !section.getBoolean(Nodes.KEEP_OPEN);
     icon.setCloseOnClick(closeOnClick);
 
+    CommandsClickHandler clickHandler = new CommandsClickHandler(closeOnClick);
     if (section.isConfigurationSection(Nodes.COMMAND)) {
-      // LEFT COMMAND
-      if (section.isSet(Nodes.COMMAND_LEFT)) {
+      // PER CLICK TYPE
+      for (ClickType type : ClickType.values()) {
+        String subsection = Nodes.COMMAND + "." + type.name();
+        if (section.isSet(subsection)) {
+          List<IconCommand> commands;
 
-        List<IconCommand> commands;
+          if (section.isList(subsection)) {
+            commands = Utils.newArrayList();
 
-        if (section.isList(Nodes.COMMAND_LEFT)) {
-          commands = Utils.newArrayList();
-
-          for (String commandString : section.getStringList(Nodes.COMMAND_LEFT)) {
-            if (commandString.isEmpty()) {
-              continue;
+            for (String commandString : section.getStringList(subsection)) {
+              if (commandString.isEmpty()) {
+                continue;
+              }
+              commands.add(CommandSerializer.matchCommand(commandString));
             }
-            commands.add(CommandSerializer.matchCommand(commandString));
+
+          } else {
+            commands = CommandSerializer.readCommands(section.getString(subsection));
           }
 
-        } else {
-          commands = CommandSerializer.readCommands(section.getString(Nodes.COMMAND_LEFT));
+          clickHandler.setCommands(commands, type);
         }
-
-        icon.setClickLeftHandler(new CommandsClickHandler(commands, closeOnClick));
       }
-      // RIGHT COMMAND
-      if (section.isSet(Nodes.COMMAND_RIGHT)) {
 
+      // DEFAULT
+      if (section.isSet(Nodes.COMMAND_DEFAULT)) {
         List<IconCommand> commands;
 
-        if (section.isList(Nodes.COMMAND_RIGHT)) {
+        if (section.isList(Nodes.COMMAND_DEFAULT)) {
           commands = Utils.newArrayList();
 
-          for (String commandString : section.getStringList(Nodes.COMMAND_RIGHT)) {
+          for (String commandString : section.getStringList(Nodes.COMMAND_DEFAULT)) {
             if (commandString.isEmpty()) {
               continue;
             }
@@ -194,31 +197,10 @@ public class IconSerializer {
           }
 
         } else {
-          commands = CommandSerializer.readCommands(section.getString(Nodes.COMMAND_RIGHT));
+          commands = CommandSerializer.readCommands(section.getString(Nodes.COMMAND_DEFAULT));
         }
 
-        icon.setClickRightHandler(new CommandsClickHandler(commands, closeOnClick));
-      }
-      // MIDDLE COMMAND
-      if (section.isSet(Nodes.COMMAND_MIDDLE)) {
-
-        List<IconCommand> commands;
-
-        if (section.isList(Nodes.COMMAND_MIDDLE)) {
-          commands = Utils.newArrayList();
-
-          for (String commandString : section.getStringList(Nodes.COMMAND_MIDDLE)) {
-            if (commandString.isEmpty()) {
-              continue;
-            }
-            commands.add(CommandSerializer.matchCommand(commandString));
-          }
-
-        } else {
-          commands = CommandSerializer.readCommands(section.getString(Nodes.COMMAND_MIDDLE));
-        }
-
-        icon.setClickMiddleHandler(new CommandsClickHandler(commands, closeOnClick));
+        clickHandler.setDefaultCommands(commands);
       }
     } else if (section.isSet(Nodes.COMMAND)) {
 
@@ -238,8 +220,9 @@ public class IconSerializer {
         commands = CommandSerializer.readCommands(section.getString(Nodes.COMMAND));
       }
 
-      icon.setClickHandler(new CommandsClickHandler(commands, closeOnClick));
+      clickHandler.setDefaultCommands(commands);
     }
+    icon.setClickHandler(clickHandler);
 
     icon.setMoneyPrice(section.getString(Nodes.PRICE, "0"));
     icon.setPlayerPointsPrice(section.getString(Nodes.POINTS, "0"));
@@ -501,9 +484,7 @@ public class IconSerializer {
     static final String BANNER_COLOR = "BANNER-COLOUR";
     static final String BANNER_PATTERNS = "BANNER-PATTERNS";
     static final String COMMAND = "COMMAND";
-    static final String COMMAND_LEFT = "COMMAND.LEFT";
-    static final String COMMAND_RIGHT = "COMMAND.RIGHT";
-    static final String COMMAND_MIDDLE = "COMMAND.MIDDLE";
+    static final String COMMAND_DEFAULT = "COMMAND.DEFAULT";
     static final String PRICE = "PRICE";
     static final String POINTS = "POINTS";
     static final String TOKENS = "TOKENS";
