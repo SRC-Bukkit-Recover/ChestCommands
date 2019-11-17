@@ -18,8 +18,8 @@ public final class NBTList extends NBTTag implements Iterable<NBTTag> {
   /**
    * Creates the list with a type and a series of elements.
    *
-   * @param elementType  the type of tag
-   * @param value the value of the tag
+   * @param elementType the type of tag
+   * @param value       the value of the tag
    */
   public NBTList(NBTType elementType, List<? extends NBTTag> value) {
     this.elementType = elementType;
@@ -36,8 +36,8 @@ public final class NBTList extends NBTTag implements Iterable<NBTTag> {
   /**
    * Creates the list with a type and a series of elements.
    *
-   * @param elementType  the type of tag
-   * @param value the value of the tag
+   * @param elementType the type of tag
+   * @param value       the value of the tag
    */
   public NBTList(NBTType elementType, NBTTag... value) {
     this(elementType, Arrays.asList(value));
