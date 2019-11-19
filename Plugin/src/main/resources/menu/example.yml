@@ -466,6 +466,8 @@ requirement:
   LORE:
     - 'This is an example for View/Click requirements'
     - ''
+  POSITION-X: 6
+  POSITION-Y: 4
   # Available requirement types: MONEY, POINT, TOKEN, CONDITION, ITEM, LEVEL, PERMISSION
   VIEW-REQUIREMENT:
     MONEY:
