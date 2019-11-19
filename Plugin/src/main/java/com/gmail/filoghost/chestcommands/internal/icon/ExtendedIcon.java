@@ -14,26 +14,12 @@
  */
 package com.gmail.filoghost.chestcommands.internal.icon;
 
-import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.api.Icon;
-import com.gmail.filoghost.chestcommands.bridge.VaultBridge;
-import com.gmail.filoghost.chestcommands.bridge.currency.PlayerPointsBridge;
-import com.gmail.filoghost.chestcommands.bridge.currency.TokenManagerBridge;
 import com.gmail.filoghost.chestcommands.internal.Cooldown;
 import com.gmail.filoghost.chestcommands.internal.ExtendedIconMenu;
 import com.gmail.filoghost.chestcommands.internal.MenuInventoryHolder;
-import com.gmail.filoghost.chestcommands.internal.RequiredItem;
-import com.gmail.filoghost.chestcommands.internal.VariableManager;
-import com.gmail.filoghost.chestcommands.util.ExpressionUtils;
-import com.gmail.filoghost.chestcommands.util.ItemUtils;
-import com.gmail.filoghost.chestcommands.util.MaterialsRegistry;
-import com.gmail.filoghost.chestcommands.util.StringUtils;
-import java.util.ArrayList;
+import com.gmail.filoghost.chestcommands.internal.requirement.Requirements;
 import java.util.List;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
@@ -41,154 +27,11 @@ import org.bukkit.inventory.InventoryView;
 
 public class ExtendedIcon extends Icon {
 
-  private String permission;
-  private String permissionMessage;
-  private String viewPermission;
-
-  private String viewRequirement;
-  private String clickRequirement;
-  private String clickRequirementMessage;
-
-  private boolean permissionNegated;
-  private boolean viewPermissionNegated;
-
-  private String money;
-  private String expLevels;
-  private List<RequiredItem> leftRequiredItems = new ArrayList<>();
-  private List<RequiredItem> rightRequiredItems = new ArrayList<>();
-  private List<RequiredItem> middleRequiredItems = new ArrayList<>();
-  private String playerPoints;
-  private String tokenManager;
+  private Requirements requirements = new Requirements();
   private Cooldown cooldown = new Cooldown();
 
   public ExtendedIcon() {
     super();
-  }
-
-  public boolean hasClickPermission(Player player) {
-    if (permission == null) {
-      return true;
-    }
-
-    if (permissionNegated) {
-      return !player.hasPermission(permission);
-    } else {
-      return player.hasPermission(permission);
-    }
-  }
-
-  public void setPermission(String permission) {
-    if (StringUtils.isNullOrEmpty(permission)) {
-      permission = null;
-    }
-
-    if (permission != null && permission.startsWith("-")) {
-      permissionNegated = true;
-      permission = permission.substring(1).trim();
-    }
-    this.permission = permission;
-  }
-
-  public String getPermissionMessage() {
-    return permissionMessage;
-  }
-
-  public void setPermissionMessage(String permissionMessage) {
-    this.permissionMessage = permissionMessage;
-  }
-
-  public boolean hasViewPermission() {
-    return viewPermission != null;
-  }
-
-  public boolean hasViewRequirement() {
-    return viewRequirement != null;
-  }
-
-  public boolean hasViewPermission(Player player) {
-    if (viewPermission == null) {
-      return true;
-    }
-
-    if (viewPermissionNegated) {
-      return !player.hasPermission(viewPermission);
-    } else {
-      return player.hasPermission(viewPermission);
-    }
-  }
-
-  public void setViewPermission(String viewPermission) {
-    if (StringUtils.isNullOrEmpty(viewPermission)) {
-      viewPermission = null;
-    }
-
-    if (viewPermission != null && viewPermission.startsWith("-")) {
-      viewPermissionNegated = true;
-      viewPermission = viewPermission.substring(1).trim();
-    }
-    this.viewPermission = viewPermission;
-  }
-
-  public String getMoneyPrice() {
-    return money;
-  }
-
-  public void setMoneyPrice(String moneyPrice) {
-    this.money = moneyPrice;
-  }
-
-  public String getPlayerPointsPrice() {
-    return playerPoints;
-  }
-
-  public void setPlayerPointsPrice(String playerPointsPrice) {
-    this.playerPoints = playerPointsPrice;
-  }
-
-  public String getTokenManagerPrice() {
-    return tokenManager;
-  }
-
-  public void setTokenManagerPrice(String tokenManagerPrice) {
-    this.tokenManager = tokenManagerPrice;
-  }
-
-  public String getExpLevelsPrice() {
-    return expLevels;
-  }
-
-  public void setExpLevelsPrice(String expLevelsPrice) {
-    this.expLevels = expLevelsPrice;
-  }
-
-  public List<RequiredItem> getLeftRequiredItems() {
-    return leftRequiredItems;
-  }
-
-  public void setLeftRequiredItems(List<RequiredItem> requiredItems) {
-    this.leftRequiredItems = requiredItems;
-  }
-
-  public List<RequiredItem> getRightRequiredItems() {
-    return rightRequiredItems;
-  }
-
-  public void setRightRequiredItems(List<RequiredItem> requiredItems) {
-    this.rightRequiredItems = requiredItems;
-  }
-
-  public List<RequiredItem> getMiddleRequiredItems() {
-    return middleRequiredItems;
-  }
-
-  public void setMiddleRequiredItems(List<RequiredItem> requiredItems) {
-    this.middleRequiredItems = requiredItems;
-  }
-
-  public void setRequiredItems(List<RequiredItem> requiredItems) {
-    this.leftRequiredItems = requiredItems;
-    this.rightRequiredItems = requiredItems;
-    this.middleRequiredItems = requiredItems;
   }
 
   @Override
@@ -207,239 +50,26 @@ public class ExtendedIcon extends Icon {
 
     // Check all the requirements
 
-    if (!hasClickPermission(player)) {
-      if (permissionMessage != null) {
-        player.sendMessage(permissionMessage);
-      } else {
-        player.sendMessage(ChestCommands.getLang().default_no_icon_permission);
-      }
-      return closeOnClick;
-    }
-
-    if (!hasClickRequirement(player)) {
-      if (clickRequirementMessage != null) {
-        player.sendMessage(clickRequirementMessage);
-      } else {
-        player.sendMessage(ChestCommands.getLang().default_no_requirement_message);
-      }
-      return closeOnClick;
-    }
-
-    double moneyPrice;
-    String parsedMoney =
-        VariableManager.hasVariables(money) ? VariableManager.setVariables(money, player) : money;
-    if (ExpressionUtils.isValidExpression(parsedMoney)) {
-      moneyPrice = ExpressionUtils.getResult(parsedMoney).doubleValue();
-    } else {
-      try {
-        moneyPrice = Double.parseDouble(parsedMoney);
-      } catch (NumberFormatException e) {
-        String error =
-            ChatColor.RED + "Error parsing value!" + parsedMoney + " is not a valid number";
-        player.sendMessage(error);
-        ChestCommands.getInstance().getLogger().warning(error);
-        return closeOnClick;
-      }
-    }
-    if (moneyPrice > 0) {
-      if (!VaultBridge.hasValidEconomy()) {
-        player.sendMessage(ChatColor.RED
-            + "This command has a price, but Vault with a compatible economy plugin was not found. For security, the command has been blocked. Please inform the staff.");
-        return closeOnClick;
-      }
-
-      if (!VaultBridge.hasMoney(player, moneyPrice)) {
-        player.sendMessage(ChestCommands.getLang().no_money
-            .replace("{money}", VaultBridge.formatMoney(moneyPrice)));
-        return closeOnClick;
-      }
-    }
-
-    int playerPointsPrice;
-    String parsedPoints = VariableManager.hasVariables(playerPoints) ? VariableManager
-        .setVariables(playerPoints, player) : playerPoints;
-    if (ExpressionUtils.isValidExpression(parsedPoints)) {
-      playerPointsPrice = ExpressionUtils.getResult(parsedPoints).intValue();
-    } else {
-      try {
-        playerPointsPrice = Integer.parseInt(parsedPoints);
-      } catch (NumberFormatException e) {
-        String error =
-            ChatColor.RED + "Error parsing value!" + parsedPoints + " is not a valid number";
-        player.sendMessage(error);
-        ChestCommands.getInstance().getLogger().warning(error);
-        return closeOnClick;
-      }
-    }
-    if (playerPointsPrice > 0) {
-      if (!PlayerPointsBridge.hasValidPlugin()) {
-        player.sendMessage(ChatColor.RED
-            + "This command has a price in points, but the plugin PlayerPoints was not found. For security, the command has been blocked. Please inform the staff.");
-        return closeOnClick;
-      }
-
-      if (!PlayerPointsBridge.hasPoints(player, playerPointsPrice)) {
-        player.sendMessage(ChestCommands.getLang().no_points
-            .replace("{points}", Integer.toString(playerPointsPrice)));
-        return closeOnClick;
-      }
-    }
-
-    long tokenManagerPrice;
-    String parsedTokens = VariableManager.hasVariables(tokenManager) ? VariableManager
-        .setVariables(tokenManager, player) : tokenManager;
-    if (ExpressionUtils.isValidExpression(parsedTokens)) {
-      tokenManagerPrice = ExpressionUtils.getResult(parsedTokens).longValue();
-    } else {
-      try {
-        tokenManagerPrice = Long.parseLong(parsedTokens);
-      } catch (NumberFormatException e) {
-        String error =
-            ChatColor.RED + "Error parsing value!" + parsedTokens + " is not a valid number";
-        player.sendMessage(error);
-        ChestCommands.getInstance().getLogger().warning(error);
-        return closeOnClick;
-      }
-    }
-    if (tokenManagerPrice > 0) {
-      if (!TokenManagerBridge.hasValidPlugin()) {
-        player.sendMessage(ChatColor.RED
-            + "This command has a price in tokens, but the plugin TokenManager was not found. For security, the command has been blocked. Please inform the staff.");
-        return closeOnClick;
-      }
-
-      if (!TokenManagerBridge.hasTokens(player, tokenManagerPrice)) {
-        player.sendMessage(ChestCommands.getLang().no_tokens
-            .replace("{tokens}", Long.toString(tokenManagerPrice)));
-        return closeOnClick;
-      }
-    }
-
-    int expLevelsPrice;
-    String parsedExp =
-        VariableManager.hasVariables(expLevels) ? VariableManager.setVariables(expLevels, player)
-            : expLevels;
-    if (ExpressionUtils.isValidExpression(parsedExp)) {
-      expLevelsPrice = ExpressionUtils.getResult(parsedExp).intValue();
-    } else {
-      try {
-        expLevelsPrice = Integer.parseInt(parsedExp);
-      } catch (NumberFormatException e) {
-        String error =
-            ChatColor.RED + "Error parsing value!" + parsedExp + " is not a valid number";
-        player.sendMessage(error);
-        ChestCommands.getInstance().getLogger().warning(error);
-        return closeOnClick;
-      }
-    }
-    if (expLevelsPrice > 0 && player.getLevel() < expLevelsPrice) {
-      player.sendMessage(
-          ChestCommands.getLang().no_exp.replace("{levels}", Integer.toString(expLevelsPrice)));
-      return closeOnClick;
-    }
-
-    List<RequiredItem> requiredItems = new ArrayList<>();
-    if (clickType == ClickType.LEFT) {
-      requiredItems = leftRequiredItems;
-    } else if (clickType == ClickType.RIGHT) {
-      requiredItems = rightRequiredItems;
-    } else if (clickType == ClickType.MIDDLE) {
-      requiredItems = middleRequiredItems;
-    }
-    if (!requiredItems.isEmpty()) {
-
-      boolean notHasItem = false;
-
-      for (RequiredItem requiredItem : requiredItems) {
-
-        if (!requiredItem.hasItem(player)) {
-          notHasItem = true;
-          String message = ChestCommands.getLang().no_required_item
-              .replace("{item}",
-                  (requiredItem.hasItemMeta() && requiredItem.getItemMeta().hasDisplayName())
-                      ? requiredItem.getItemMeta().getDisplayName()
-                      : MaterialsRegistry.formatMaterial(requiredItem.getMaterial()))
-              .replace("{amount}", Integer.toString(requiredItem.getAmount()))
-              .replace("{datavalue}", requiredItem.hasRestrictiveDataValue() ? Short
-                  .toString(requiredItem.getDataValue()) : ChestCommands.getLang().any);
-          if (ChestCommands.isSpigot() && ChestCommands
-              .getSettings().use_hover_event_on_required_item_message) {
-            String itemJson = ItemUtils.convertItemStackToJson(requiredItem.createItemStack());
-
-            BaseComponent[] hoverEventComponents = new BaseComponent[]{new TextComponent(itemJson)};
-
-            HoverEvent event = new HoverEvent(HoverEvent.Action.SHOW_ITEM, hoverEventComponents);
-
-            TextComponent component = new TextComponent(message);
-            component.setHoverEvent(event);
-
-            player.spigot().sendMessage(component);
-          } else {
-            player.sendMessage(message);
-          }
-        }
-
-      }
-
-      if (notHasItem) {
-        return closeOnClick;
-      }
-
-    }
-
     if (cooldown.isCooldown(player, clickType)) {
       return closeOnClick;
     }
 
-    // Take the money, the points, the tokens and the required item
-
-    boolean changedVariables = false; // To update the placeholders
-
-    if (moneyPrice > 0) {
-      if (!VaultBridge.takeMoney(player, moneyPrice)) {
-        player.sendMessage(ChatColor.RED
-            + "Error: the transaction couldn't be executed. Please inform the staff.");
-        return closeOnClick;
-      }
-      changedVariables = true;
+    if (!requirements.check(player, clickType)) {
+      return closeOnClick;
     }
 
-    if (expLevelsPrice > 0) {
-      player.setLevel(player.getLevel() - expLevelsPrice);
-    }
+    // Take things that are required
 
-    if (playerPointsPrice > 0) {
-      if (!PlayerPointsBridge.takePoints(player, playerPointsPrice)) {
-        player.sendMessage(ChatColor.RED
-            + "Error: the transaction couldn't be executed. Please inform the staff.");
-        return closeOnClick;
-      }
-      changedVariables = true;
-    }
+    requirements.take(player, clickType);
 
-    if (tokenManagerPrice > 0) {
-      if (!TokenManagerBridge.takeTokens(player, tokenManagerPrice)) {
-        player.sendMessage(ChatColor.RED
-            + "Error: the transaction couldn't be executed. Please inform the staff.");
-        return closeOnClick;
-      }
-      changedVariables = true;
-    }
+    InventoryView view = player.getOpenInventory();
+    if (view != null) {
+      Inventory topInventory = view.getTopInventory();
+      if (topInventory.getHolder() instanceof MenuInventoryHolder) {
+        MenuInventoryHolder menuHolder = (MenuInventoryHolder) topInventory.getHolder();
 
-    if (!requiredItems.isEmpty()) {
-      requiredItems.forEach(requiredItem -> requiredItem.takeItem(player));
-    }
-
-    if (changedVariables) {
-      InventoryView view = player.getOpenInventory();
-      if (view != null) {
-        Inventory topInventory = view.getTopInventory();
-        if (topInventory.getHolder() instanceof MenuInventoryHolder) {
-          MenuInventoryHolder menuHolder = (MenuInventoryHolder) topInventory.getHolder();
-
-          if (menuHolder.getIconMenu() instanceof ExtendedIconMenu) {
-            ((ExtendedIconMenu) menuHolder.getIconMenu()).refresh(player, topInventory);
-          }
+        if (menuHolder.getIconMenu() instanceof ExtendedIconMenu) {
+          ((ExtendedIconMenu) menuHolder.getIconMenu()).refresh(player, topInventory);
         }
       }
     }
@@ -451,55 +81,7 @@ public class ExtendedIcon extends Icon {
     return cooldown;
   }
 
-  public void setViewRequirement(String viewRequirement) {
-    if (!StringUtils.isNullOrEmpty(viewRequirement)) {
-      this.viewRequirement = viewRequirement;
-    }
-  }
-
-  public void setClickRequirement(String clickRequirement) {
-    if (!StringUtils.isNullOrEmpty(clickRequirement)) {
-      this.clickRequirement = clickRequirement;
-    }
-  }
-
-  public String getClickRequirementMessage() {
-    return clickRequirementMessage;
-  }
-
-  public void setClickRequirementMessage(String clickRequirementMessage) {
-    this.clickRequirementMessage = clickRequirementMessage;
-  }
-
-  public boolean hasClickRequirement(Player player) {
-    if (StringUtils.isNullOrEmpty(clickRequirement)) {
-      return true;
-    }
-
-    String parsed = VariableManager.hasVariables(clickRequirement) ? VariableManager
-        .setVariables(clickRequirement, player) : clickRequirement;
-
-    if (!ExpressionUtils.isBoolean(parsed)) {
-      player.sendMessage(ChatColor.RED + "Invalid condition! Please inform the staff");
-      return false;
-    }
-
-    return ExpressionUtils.getResult(parsed).intValue() == 1;
-  }
-
-  public boolean hasViewRequirement(Player player) {
-    if (StringUtils.isNullOrEmpty(viewRequirement)) {
-      return true;
-    }
-
-    String parsed = VariableManager.hasVariables(viewRequirement) ? VariableManager
-        .setVariables(viewRequirement, player) : viewRequirement;
-
-    if (!ExpressionUtils.isBoolean(parsed)) {
-      player.sendMessage(ChatColor.RED + "Invalid condition! Please inform the staff");
-      return false;
-    }
-
-    return ExpressionUtils.getResult(parsed).intValue() == 1;
+  public Requirements getRequirements() {
+    return requirements;
   }
 }

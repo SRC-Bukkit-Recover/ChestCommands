@@ -16,7 +16,8 @@ public class Cooldown {
 
   public boolean isCooldown(Player player, ClickType clickType) {
     long now = System.currentTimeMillis();
-    Map<Player, Long> cooldownList = cooldownListPerType.getOrDefault(clickType, defaultCooldownList);
+    Map<Player, Long> cooldownList = cooldownListPerType
+        .getOrDefault(clickType, defaultCooldownList);
     Long cooldownUntil = cooldownList.get(player);
     long time = cooldownTimePerType.getOrDefault(clickType, defaultCooldownTime);
     if (time > 0) {

@@ -140,13 +140,15 @@ economy-give:
     - 'only if you have at least 50$!'
     - 'It gives you a gold ingot.'
   ID: gold ingot
-  PRICE: 50
+  CLICK-REQUIREMENT:
+    MONEY: 50
   POSITION-X: 8
   POSITION-Y: 1
 
 
 economy-take:
-  REQUIRED-ITEM: 'gold_ingot'
+  CLICK-REQUIREMENT:
+    ITEM: 'gold_ingot'
   COMMAND: 'tell: &aYou have been paid 50$; givemoney: 50'
   NAME: '&eEconomy & Required item'
   LORE:
@@ -214,8 +216,10 @@ permission:
   ID: iron bars
   POSITION-X: 5
   POSITION-Y: 2
-  PERMISSION: chestcommands.test
-  PERMISSION-MESSAGE: 'You don''t have the correct permission!'
+  CLICK-REQUIREMENT:
+    PERMISSION:
+      VALUE: chestcommands.test
+      MESSAGE: 'You don''t have the correct permission!'
 
 
 nbt-tags:
@@ -259,13 +263,15 @@ tokens-give:
     - 'only if you have at least 50 tokens!'
     - 'It gives you a diamond block.'
   ID: diamond_block
-  TOKENS: 50
+  CLICK-REQUIREMENT:
+    TOKEN: 50
   POSITION-X: 9
   POSITION-Y: 2
 
 
 tokens-take:
-  REQUIRED-ITEM: 'diamond_block'
+  CLICK-REQUIREMENT:
+    ITEM: 'diamond_block'
   COMMAND: 'tell: &aYou have been paid 50 tokens; givetokens: 50'
   NAME: '&bTokens & Required item'
   LORE:
@@ -284,13 +290,15 @@ points-give:
     - 'only if you have at least 50 points!'
     - 'It gives you a gold block.'
   ID: gold_block
-  POINTS: 50
+  CLICK-REQUIREMENT:
+    POINT: 50
   POSITION-X: 2
   POSITION-Y: 3
 
 
 points-take:
-  REQUIRED-ITEM: 'gold_block'
+  CLICK-REQUIREMENT:
+    ITEM: 'gold_block'
   COMMAND: 'tell: &aYou have been paid 50 points; givepoints: 50'
   NAME: '&ePoints & Required item'
   LORE:
@@ -302,7 +310,8 @@ points-take:
 
 
 multiple-required-items:
-  REQUIRED-ITEM: 'gold_block;diamond_block'
+  CLICK-REQUIREMENT:
+    ITEM: 'gold_block;diamond_block'
   COMMAND: 'tell: &aThank you :)'
   NAME: '&dMultiple required items'
   LORE:
@@ -340,9 +349,11 @@ test-delay-command:
 
 
 simple-buy-sell:
-  REQUIRED-ITEM:
-    RIGHT: 'wheat'
-    MIDDLE: 'wheat,64'
+  CLICK-REQUIREMENT:
+    RIGHT:
+      ITEM: 'wheat'
+    MIDDLE:
+      ITEM: 'wheat,64'
   COMMAND:
     LEFT: 'condition: {money} >= 5; console: eco take {player} 5; give: wheat,1'
     RIGHT: 'give-money: 3.5'
@@ -382,8 +393,9 @@ head:
   COMMAND:
     LEFT: 'give: skull:3,1,skull: hdb-1'
     RIGHT: 'tell: &aThank you :)'
-  REQUIRED-ITEM:
-    RIGHT: 'skull:3,1,skull: hdb-1'
+  CLICK-REQUIREMENT:
+    RIGHT:
+      ITEM: 'skull:3,1,skull: hdb-1'
   NAME: '&eHeadDatabase'
   LORE:
     - 'This is a test for HeadDatabase hooking'
@@ -469,9 +481,12 @@ requirement:
     - ''
     - 'You will see this icon if your money is not less than 10'
     - 'You can click this icon if your money is not less than 20'
-  VIEW-REQUIREMENT: "{money} >= 10"
-  CLICK-REQUIREMENT: "{money} >= 20"
-  CLICK-REQUIREMENT-MESSAGE: "&cHey! Earn more money and click again if your money is not less than 20"
+  VIEW-REQUIREMENT:
+    CONDITION: "{money} >= 10"
+  CLICK-REQUIREMENT:
+    CONDITION:
+      VALUE: "{money} >= 20"
+      MESSAGE: "&cHey! Earn more money and click again if your money is not less than 20"
   POSITION-X: 6
   POSITION-Y: 4
 
@@ -485,7 +500,8 @@ requirement-with-expression:
     - ''
     - 'You can use this icon when your money is higher than'
     - '100 * ({level} + 1)'
-  PRICE: "100 * ({level} + 1)"
+  CLICK-REQUIREMENT:
+    MONEY: "100 * ({level} + 1)"
   POSITION-X: 7
   POSITION-Y: 4
 

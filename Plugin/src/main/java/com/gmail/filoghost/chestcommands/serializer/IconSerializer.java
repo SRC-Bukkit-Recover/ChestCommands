@@ -18,7 +18,6 @@ import com.gmail.filoghost.chestcommands.api.Icon;
 import com.gmail.filoghost.chestcommands.config.AsciiPlaceholders;
 import com.gmail.filoghost.chestcommands.exception.FormatException;
 import com.gmail.filoghost.chestcommands.internal.CommandsClickHandler;
-import com.gmail.filoghost.chestcommands.internal.RequiredItem;
 import com.gmail.filoghost.chestcommands.internal.icon.ExtendedIcon;
 import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
 import com.gmail.filoghost.chestcommands.util.ErrorLogger;
@@ -30,8 +29,6 @@ import com.gmail.filoghost.chestcommands.util.Validate;
 import com.gmail.filoghost.chestcommands.util.nbt.parser.MojangsonParseException;
 import com.gmail.filoghost.chestcommands.util.nbt.parser.MojangsonParser;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import org.bukkit.FireworkEffect;
 import org.bukkit.configuration.ConfigurationSection;
@@ -144,15 +141,6 @@ public class IconSerializer {
       }
     }
 
-    icon.setPermission(section.getString(Nodes.PERMISSION));
-    icon.setPermissionMessage(FormatUtils.addColors(section.getString(Nodes.PERMISSION_MESSAGE)));
-    icon.setViewPermission(section.getString(Nodes.VIEW_PERMISSION));
-
-    icon.setViewRequirement(section.getString(Nodes.VIEW_REQUIREMENT));
-    icon.setClickRequirement(section.getString(Nodes.CLICK_REQUIREMENT));
-    icon.setClickRequirementMessage(
-        FormatUtils.addColors(section.getString(Nodes.CLICK_REQUIREMENT_MESSAGE)));
-
     boolean closeOnClick = !section.getBoolean(Nodes.KEEP_OPEN);
     icon.setCloseOnClick(closeOnClick);
 
@@ -224,10 +212,30 @@ public class IconSerializer {
     }
     icon.setClickHandler(clickHandler);
 
-    icon.setMoneyPrice(section.getString(Nodes.PRICE, "0"));
-    icon.setPlayerPointsPrice(section.getString(Nodes.POINTS, "0"));
-    icon.setTokenManagerPrice(section.getString(Nodes.TOKENS, "0"));
-    icon.setExpLevelsPrice(section.getString(Nodes.EXP_LEVELS, "0"));
+    if (section.isConfigurationSection(Nodes.VIEW_REQUIREMENT)) {
+      icon.getRequirements().addViewRequirement(RequirementSerializer
+          .loadRequirementsFromSection(section.getConfigurationSection(Nodes.VIEW_REQUIREMENT),
+              iconName, menuFileName, errorLogger));
+    }
+    if (section.isConfigurationSection(Nodes.CLICK_REQUIREMENT)) {
+      for (ClickType type : ClickType.values()) {
+        String subsection = Nodes.CLICK_REQUIREMENT + "." + type;
+        if (section.isConfigurationSection(subsection)) {
+          icon.getRequirements().addClickRequirement(RequirementSerializer
+              .loadRequirementsFromSection(section.getConfigurationSection(subsection),
+                  iconName, menuFileName, errorLogger), type);
+        }
+      }
+      icon.getRequirements().addDefaultClickRequirement(RequirementSerializer
+          .loadRequirementsFromSection(section.getConfigurationSection(Nodes.CLICK_REQUIREMENT),
+              iconName, menuFileName, errorLogger));
+      if (section.isConfigurationSection(Nodes.CLICK_REQUIREMENT_DEFAULT)) {
+        icon.getRequirements().addDefaultClickRequirement(RequirementSerializer
+            .loadRequirementsFromSection(
+                section.getConfigurationSection(Nodes.CLICK_REQUIREMENT_DEFAULT),
+                iconName, menuFileName, errorLogger));
+      }
+    }
 
     if (section.isConfigurationSection(Nodes.COOLDOWN)) {
       // PER CLICK TYPE
@@ -249,120 +257,6 @@ public class IconSerializer {
     }
     icon.getCooldown()
         .setCooldownMessage(FormatUtils.addColors(section.getString(Nodes.COOLDOWN_MESSAGE)));
-
-    if (section.isConfigurationSection(Nodes.REQUIRED_ITEM)) {
-      // LEFT REQUIRED ITEMS
-      if (section.isSet(Nodes.REQUIRED_ITEM_LEFT)) {
-        List<String> requiredItemsStrings;
-        if (section.isList(Nodes.REQUIRED_ITEM_LEFT)) {
-          requiredItemsStrings = section.getStringList(Nodes.REQUIRED_ITEM_LEFT);
-        } else if (section.isString(Nodes.REQUIRED_ITEM_LEFT) && section
-            .getString(Nodes.REQUIRED_ITEM_LEFT)
-            .contains(";")) {
-          requiredItemsStrings = Arrays
-              .asList(section.getString(Nodes.REQUIRED_ITEM_LEFT).split(";"));
-        } else {
-          requiredItemsStrings = Collections
-              .singletonList(section.getString(Nodes.REQUIRED_ITEM_LEFT));
-        }
-
-        List<RequiredItem> requiredItems = new ArrayList<>();
-        for (String requiredItemText : requiredItemsStrings) {
-          try {
-            ItemStackReader itemReader = new ItemStackReader(requiredItemText, true);
-            RequiredItem requiredItem = new RequiredItem(itemReader);
-
-            requiredItems.add(requiredItem);
-          } catch (FormatException e) {
-            errorLogger.addError("The icon \"" + iconName + "\" in the menu \"" + menuFileName
-                + "\" has an invalid REQUIRED-ITEM.LEFT: " + e.getMessage());
-          }
-        }
-        icon.setLeftRequiredItems(requiredItems);
-      }
-      // RIGHT REQUIRED ITEMS
-      if (section.isSet(Nodes.REQUIRED_ITEM_RIGHT)) {
-        List<String> requiredItemsStrings;
-        if (section.isList(Nodes.REQUIRED_ITEM_RIGHT)) {
-          requiredItemsStrings = section.getStringList(Nodes.REQUIRED_ITEM_RIGHT);
-        } else if (section.isString(Nodes.REQUIRED_ITEM_RIGHT) && section
-            .getString(Nodes.REQUIRED_ITEM_RIGHT)
-            .contains(";")) {
-          requiredItemsStrings = Arrays
-              .asList(section.getString(Nodes.REQUIRED_ITEM_RIGHT).split(";"));
-        } else {
-          requiredItemsStrings = Collections
-              .singletonList(section.getString(Nodes.REQUIRED_ITEM_RIGHT));
-        }
-
-        List<RequiredItem> requiredItems = new ArrayList<>();
-        for (String requiredItemText : requiredItemsStrings) {
-          try {
-            ItemStackReader itemReader = new ItemStackReader(requiredItemText, true);
-            RequiredItem requiredItem = new RequiredItem(itemReader);
-
-            requiredItems.add(requiredItem);
-          } catch (FormatException e) {
-            errorLogger.addError("The icon \"" + iconName + "\" in the menu \"" + menuFileName
-                + "\" has an invalid REQUIRED-ITEM.RIGHT: " + e.getMessage());
-          }
-        }
-        icon.setRightRequiredItems(requiredItems);
-      }
-      // MIDDLE REQUIRED ITEMS
-      if (section.isSet(Nodes.REQUIRED_ITEM_MIDDLE)) {
-        List<String> requiredItemsStrings;
-        if (section.isList(Nodes.REQUIRED_ITEM_MIDDLE)) {
-          requiredItemsStrings = section.getStringList(Nodes.REQUIRED_ITEM_MIDDLE);
-        } else if (section.isString(Nodes.REQUIRED_ITEM_MIDDLE) && section
-            .getString(Nodes.REQUIRED_ITEM_MIDDLE)
-            .contains(";")) {
-          requiredItemsStrings = Arrays
-              .asList(section.getString(Nodes.REQUIRED_ITEM_MIDDLE).split(";"));
-        } else {
-          requiredItemsStrings = Collections
-              .singletonList(section.getString(Nodes.REQUIRED_ITEM_MIDDLE));
-        }
-
-        List<RequiredItem> requiredItems = new ArrayList<>();
-        for (String requiredItemText : requiredItemsStrings) {
-          try {
-            ItemStackReader itemReader = new ItemStackReader(requiredItemText, true);
-            RequiredItem requiredItem = new RequiredItem(itemReader);
-
-            requiredItems.add(requiredItem);
-          } catch (FormatException e) {
-            errorLogger.addError("The icon \"" + iconName + "\" in the menu \"" + menuFileName
-                + "\" has an invalid REQUIRED-ITEM.MIDDLE: " + e.getMessage());
-          }
-        }
-        icon.setMiddleRequiredItems(requiredItems);
-      }
-    } else if (section.isSet(Nodes.REQUIRED_ITEM)) {
-      List<String> requiredItemsStrings;
-      if (section.isList(Nodes.REQUIRED_ITEM)) {
-        requiredItemsStrings = section.getStringList(Nodes.REQUIRED_ITEM);
-      } else if (section.isString(Nodes.REQUIRED_ITEM) && section.getString(Nodes.REQUIRED_ITEM)
-          .contains(";")) {
-        requiredItemsStrings = Arrays.asList(section.getString(Nodes.REQUIRED_ITEM).split(";"));
-      } else {
-        requiredItemsStrings = Collections.singletonList(section.getString(Nodes.REQUIRED_ITEM));
-      }
-
-      List<RequiredItem> requiredItems = new ArrayList<>();
-      for (String requiredItemText : requiredItemsStrings) {
-        try {
-          ItemStackReader itemReader = new ItemStackReader(requiredItemText, true);
-          RequiredItem requiredItem = new RequiredItem(itemReader);
-
-          requiredItems.add(requiredItem);
-        } catch (FormatException e) {
-          errorLogger.addError("The icon \"" + iconName + "\" in the menu \"" + menuFileName
-              + "\" has an invalid REQUIRED-ITEM: " + e.getMessage());
-        }
-      }
-      icon.setRequiredItems(requiredItems);
-    }
 
     return icon;
   }
@@ -482,17 +376,6 @@ public class IconSerializer {
     static final String BANNER_PATTERNS = "BANNER-PATTERNS";
     static final String COMMAND = "COMMAND";
     static final String COMMAND_DEFAULT = "COMMAND.DEFAULT";
-    static final String PRICE = "PRICE";
-    static final String POINTS = "POINTS";
-    static final String TOKENS = "TOKENS";
-    static final String EXP_LEVELS = "LEVELS";
-    static final String REQUIRED_ITEM = "REQUIRED-ITEM";
-    static final String REQUIRED_ITEM_LEFT = "REQUIRED-ITEM.LEFT";
-    static final String REQUIRED_ITEM_RIGHT = "REQUIRED-ITEM.RIGHT";
-    static final String REQUIRED_ITEM_MIDDLE = "REQUIRED-ITEM.MIDDLE";
-    static final String PERMISSION = "PERMISSION";
-    static final String PERMISSION_MESSAGE = "PERMISSION-MESSAGE";
-    static final String VIEW_PERMISSION = "VIEW-PERMISSION";
     static final String KEEP_OPEN = "KEEP-OPEN";
     static final String SLOT = "SLOT";
     static final String POSITION_X = "POSITION-X";
@@ -503,7 +386,7 @@ public class IconSerializer {
     static final String COOLDOWN_MESSAGE = "COOLDOWN-MESSAGE";
     static final String VIEW_REQUIREMENT = "VIEW-REQUIREMENT";
     static final String CLICK_REQUIREMENT = "CLICK-REQUIREMENT";
-    static final String CLICK_REQUIREMENT_MESSAGE = "CLICK-REQUIREMENT-MESSAGE";
+    static final String CLICK_REQUIREMENT_DEFAULT = "CLICK-REQUIREMENT.DEFAULT";
   }
 
 }

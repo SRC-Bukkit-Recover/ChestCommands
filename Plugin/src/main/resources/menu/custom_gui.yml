@@ -13,8 +13,9 @@ menu-settings:
   open-action: 'tell: &eYou opened the custom menu.'
 
 slot_1:
-  REQUIRED-ITEM:
-    RIGHT: 'paper,1, enchant: unbreaking|1, name: &c&lSmall_Paper, lore: &7This_is_a_simple_paper &7By_&8ADMIN, flag: HIDE_ATTRIBUTES'
+  CLICK-REQUIREMENT:
+    RIGHT:
+      ITEM: 'paper,1, enchant: unbreaking|1, name: &c&lSmall_Paper, lore: &7This_is_a_simple_paper &7By_&8ADMIN, flag: HIDE_ATTRIBUTES'
   COMMAND:
     LEFT: 'give: paper,1, name: &c&lSmall_Paper, lore: &7This_is_a_simple_paper &7By_&8ADMIN, enchant: unbreaking|1,flag: HIDE_ATTRIBUTES'
     RIGHT: 'tell: &aThank you :)'
@@ -23,7 +24,7 @@ slot_1:
   SLOT: 1
 
 slot_2:
-  COMMAND: 'give: diamond_sword,1, name: &c&lStarter_Sword, lore: &7This_is_a_simple_sword &7By_&8ADMIN,enchant: Knockback|1 DAMAGE_ALL|1, flag: HIDE_ATTRIBUTES HIDE_ENCHANTS'
+  CLICK-REQUIREMENT: 'give: diamond_sword,1, name: &c&lStarter_Sword, lore: &7This_is_a_simple_sword &7By_&8ADMIN,enchant: Knockback|1 DAMAGE_ALL|1, flag: HIDE_ATTRIBUTES HIDE_ENCHANTS'
   NAME: '&cGive diamond sword.'
   ID: diamond sword
   SLOT: 2

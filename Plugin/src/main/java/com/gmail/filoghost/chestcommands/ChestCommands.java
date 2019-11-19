@@ -41,6 +41,7 @@ import com.gmail.filoghost.chestcommands.listener.JoinListener;
 import com.gmail.filoghost.chestcommands.listener.SignListener;
 import com.gmail.filoghost.chestcommands.serializer.CommandSerializer;
 import com.gmail.filoghost.chestcommands.serializer.MenuSerializer;
+import com.gmail.filoghost.chestcommands.serializer.RequirementSerializer;
 import com.gmail.filoghost.chestcommands.task.ErrorLoggerTask;
 import com.gmail.filoghost.chestcommands.util.BukkitUtils;
 import com.gmail.filoghost.chestcommands.util.CaseInsensitiveMap;
@@ -235,13 +236,15 @@ public class ChestCommands extends JavaPlugin {
 
     CommandFramework.register(this, new CommandHandler("chestcommands"));
 
-    ErrorLogger errorLogger = new ErrorLogger();
-    load(errorLogger);
+    Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
+      ErrorLogger errorLogger = new ErrorLogger();
+      load(errorLogger);
 
-    lastReloadErrors = errorLogger.getSize();
-    if (errorLogger.hasErrors()) {
-      Bukkit.getScheduler().scheduleSyncDelayedTask(this, new ErrorLoggerTask(errorLogger), 10L);
-    }
+      lastReloadErrors = errorLogger.getSize();
+      if (errorLogger.hasErrors()) {
+        new ErrorLoggerTask(errorLogger).run();
+      }
+    });
   }
 
   @Override
@@ -254,6 +257,7 @@ public class ChestCommands extends JavaPlugin {
     commandsToMenuMap.clear();
     boundItems.clear();
 
+    RequirementSerializer.checkClassConstructors(errorLogger);
     CommandSerializer.checkClassConstructors(errorLogger);
 
     try {
