@@ -309,19 +309,6 @@ points-take:
   POSITION-Y: 3
 
 
-multiple-required-items:
-  CLICK-REQUIREMENT:
-    ITEM: 'gold_block;diamond_block'
-  COMMAND: 'tell: &aThank you :)'
-  NAME: '&dMultiple required items'
-  LORE:
-    - 'This command only runs when you have a diamond block and a golden block.'
-  ID: diamond
-  POSITION-X: 4
-  POSITION-Y: 3
-  ENCHANTMENT: durability, 1
-
-
 test-per-click-command:
   COMMAND:
     LEFT: 'console: Say You left-clicked'
@@ -473,22 +460,70 @@ cooldown-per-clicktype:
 
 
 requirement:
-  NAME: '&6View/Click Requirement'
+  NAME: '&6Requirement'
   COMMAND: 'tell: &aYou did it'
   ID: redstone
   LORE:
-    - 'This is an example for view/click requirement'
+    - 'This is an example for View/Click requirements'
     - ''
-    - 'You will see this icon if your money is not less than 10'
-    - 'You can click this icon if your money is not less than 20'
+  # Available requirement types: MONEY, POINT, TOKEN, CONDITION, ITEM, LEVEL, PERMISSION
   VIEW-REQUIREMENT:
-    CONDITION: "{money} >= 10"
-  CLICK-REQUIREMENT:
+    MONEY:
+      # REQUIRED
+      # The value of the requirement the player should meet
+      VALUE: 10
+      # OPTIONAL
+      # You can decide whether the plugin take required things
+      TAKE: false
+    POINT:
+      VALUE: 5
+      TAKE: true
+      # OPTIONAL
+      # Here you can set the message that is sent to the player when he doesn't meet the requirement
+      MESSAGE: "&cYou don't have enough gold"
     CONDITION:
-      VALUE: "{money} >= 20"
-      MESSAGE: "&cHey! Earn more money and click again if your money is not less than 20"
-  POSITION-X: 6
-  POSITION-Y: 4
+      VALUE: "{exp} >= 2"
+      FAIL-MESSAGE: "&6Hey! Improve yourself before using this."
+    ITEM:
+      VALUE: 'gold_ingot'
+      TAKE: false
+    PERMISSION:
+      VALUE: 'my.custom.permission'
+  CLICK-REQUIREMENT:
+    # This is the default requirements that is used on every click type
+    DEFAULT:
+      CONDITION:
+        VALUE: "{money} >= 20"
+        MESSAGE: "&cHey! Earn more money and click again if your money is not less than 20"
+    # This is the requirements that is used on the defined click type
+    # NOTE: It will override the default ones
+    # List of click types: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/inventory/ClickType.html
+    LEFT:
+      TOKEN:
+        VALUE: 10
+        TAKE: false
+    RIGHT:
+      LEVEL:
+        VALUE: 5
+        TAKE: false
+      TOKEN:
+        VALUE: 20
+        TAKE: true
+
+
+multiple-required-items:
+  CLICK-REQUIREMENT:
+    # This is the default requirements that is used on every click type
+    # You can set like this instead of DEFAULT
+    ITEM: 'gold_block;diamond_block'
+  COMMAND: 'tell: &aThank you :)'
+  NAME: '&dMultiple required items'
+  LORE:
+    - 'This command only runs when you have a diamond block and a golden block.'
+  ID: diamond
+  POSITION-X: 4
+  POSITION-Y: 3
+  ENCHANTMENT: durability, 1
 
 
 requirement-with-expression:
