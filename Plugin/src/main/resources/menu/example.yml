@@ -475,12 +475,9 @@ requirement:
       # OPTIONAL
       # You can decide whether the plugin take required things
       TAKE: false
-    POINT:
-      VALUE: 5
-      TAKE: true
       # OPTIONAL
       # Here you can set the message that is sent to the player when he doesn't meet the requirement
-      MESSAGE: "&cYou don't have enough gold"
+      MESSAGE: "&cYou don't have enough money"
     CONDITION:
       VALUE: "{exp} >= 2"
       FAIL-MESSAGE: "&6Hey! Improve yourself before using this."
@@ -498,17 +495,10 @@ requirement:
     # This is the requirements that is used on the defined click type
     # NOTE: It will override the default ones
     # List of click types: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/inventory/ClickType.html
-    LEFT:
-      TOKEN:
-        VALUE: 10
-        TAKE: false
     RIGHT:
       LEVEL:
         VALUE: 5
         TAKE: false
-      TOKEN:
-        VALUE: 20
-        TAKE: true
 
 
 multiple-required-items:
