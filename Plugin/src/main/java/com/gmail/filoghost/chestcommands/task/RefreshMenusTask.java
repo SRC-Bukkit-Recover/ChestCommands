@@ -32,7 +32,7 @@ public class RefreshMenusTask extends BukkitRunnable {
   public RefreshMenusTask(Player player, ExtendedIconMenu extMenu) {
     this.player = player;
     this.extMenu = extMenu;
-    task = runTaskTimerAsynchronously(ChestCommands.getInstance(), 2L, 2L);
+    task = runTaskTimerAsynchronously(ChestCommands.getInstance(), extMenu.getRefreshTicks() * 2L, 2L);
   }
 
   @Override

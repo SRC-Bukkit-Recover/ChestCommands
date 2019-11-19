@@ -482,7 +482,7 @@ requirement:
       MESSAGE: "&cYou don't have enough money"
     CONDITION:
       VALUE: "{exp} >= 2"
-      FAIL-MESSAGE: "&6Hey! Improve yourself before using this."
+      MESSAGE: "&6Hey! Improve yourself before using this."
     ITEM:
       VALUE: 'gold_ingot'
       TAKE: false
