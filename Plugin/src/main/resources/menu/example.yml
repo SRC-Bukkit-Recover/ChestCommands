@@ -505,6 +505,7 @@ multiple-required-items:
   CLICK-REQUIREMENT:
     # This is the default requirements that is used on every click type
     # You can set like this instead of DEFAULT
+    # Also, you can set the requirement like this if you just set the VALUE
     ITEM: 'gold_block;diamond_block'
   COMMAND: 'tell: &aThank you :)'
   NAME: '&dMultiple required items'
