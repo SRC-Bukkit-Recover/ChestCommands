@@ -26,7 +26,6 @@
 		<sonar.projectKey>SRC-Bukkit-Recover_ChestCommands</sonar.projectKey>
 		<sonar.organization>src-bukkit-recover</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<sonar.login>6352867ea9e1298bffbdc3e085d9c2e2700740ac</sonar.login>
 	</properties>
 
 	<modules>
@@ -36,6 +35,11 @@
 	<build>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.sonarsource.scanner.maven</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>3.6.1.1688</version>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
