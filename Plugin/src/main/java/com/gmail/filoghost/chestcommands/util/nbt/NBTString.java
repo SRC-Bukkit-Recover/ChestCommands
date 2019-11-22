@@ -3,7 +3,7 @@ package com.gmail.filoghost.chestcommands.util.nbt;
 /**
  * The {@code TAG_String} tag.
  */
-public final class NBTString extends NBTTag implements Cloneable {
+public final class NBTString extends NBTTag {
 
   private String value;
 

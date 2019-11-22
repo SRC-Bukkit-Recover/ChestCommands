@@ -106,7 +106,9 @@ public enum NBTType {
   LONG_ARRAY("TAG_Long_Array", false, false, true);
 
   private final String name;
-  private final boolean numeric, primitive, array;
+  private final boolean numeric;
+  private final boolean primitive;
+  private final boolean array;
   private final byte id;
 
   NBTType(String name, boolean primitive, boolean numeric, boolean array) {

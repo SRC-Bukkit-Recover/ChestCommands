@@ -16,6 +16,10 @@ package com.gmail.filoghost.chestcommands;
 
 public class Permissions {
 
+  private Permissions() {
+
+  }
+
   public static final String UPDATE_NOTIFICATIONS = "chestcommands.update";
   public static final String SEE_ERRORS = "chestcommands.errors";
   public static final String SIGN_CREATE = "chestcommands.sign";
