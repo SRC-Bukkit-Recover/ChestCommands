@@ -41,7 +41,7 @@ public final class NBTFloat extends NBTTag {
   }
 
   public boolean equals(NBTFloat tag) {
-    return this.value == tag.value;
+    return Float.floatToIntBits(this.value) == Float.floatToIntBits(tag.value);
   }
 
   @Override

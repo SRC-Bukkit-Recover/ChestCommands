@@ -20,7 +20,8 @@ public abstract class IconRequirement {
   }
 
   protected Object getParsedValue(Player player) {
-    String parsed = VariableManager.hasVariables(value) ? VariableManager.setVariables(value, player) : value;
+    String parsed =
+        VariableManager.hasVariables(value) ? VariableManager.setVariables(value, player) : value;
     switch (valueType) {
       case NUMBER:
         if (ExpressionUtils.isValidExpression(parsed)) {

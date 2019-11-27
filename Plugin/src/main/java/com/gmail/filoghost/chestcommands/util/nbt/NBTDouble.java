@@ -41,7 +41,7 @@ public final class NBTDouble extends NBTTag {
   }
 
   public boolean equals(NBTDouble tag) {
-    return this.value == tag.value;
+    return Double.doubleToLongBits(this.value) == Double.doubleToLongBits(tag.value);
   }
 
   @Override

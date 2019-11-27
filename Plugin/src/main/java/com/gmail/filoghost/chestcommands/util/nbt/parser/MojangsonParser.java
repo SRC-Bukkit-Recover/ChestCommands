@@ -20,17 +20,21 @@ import java.util.regex.Pattern;
 
 public final class MojangsonParser {
 
-  private static final Pattern
-      DOUBLE_NS = Pattern
-      .compile("[-+]?(?:[0-9]+[.]|[0-9]*[.][0-9]+)(?:e[-+]?[0-9]+)?", Pattern.CASE_INSENSITIVE),
-      DOUBLE_S = Pattern.compile("[-+]?(?:[0-9]+[.]?|[0-9]*[.][0-9]+)(?:e[-+]?[0-9]+)?d",
-          Pattern.CASE_INSENSITIVE),
-      FLOAT = Pattern.compile("[-+]?(?:[0-9]+[.]?|[0-9]*[.][0-9]+)(?:e[-+]?[0-9]+)?f",
-          Pattern.CASE_INSENSITIVE),
-      BYTE = Pattern.compile("[-+]?(?:0|[1-9][0-9]*)b", Pattern.CASE_INSENSITIVE),
-      LONG = Pattern.compile("[-+]?(?:0|[1-9][0-9]*)l", Pattern.CASE_INSENSITIVE),
-      SHORT = Pattern.compile("[-+]?(?:0|[1-9][0-9]*)s", Pattern.CASE_INSENSITIVE),
-      INT = Pattern.compile("[-+]?(?:0|[1-9][0-9]*)");
+  private static final Pattern DOUBLE_NS = Pattern
+      .compile("[-+]?(?:[0-9]+[.]|[0-9]*[.][0-9]+)(?:e[-+]?[0-9]+)?", Pattern.CASE_INSENSITIVE);
+  private static final Pattern DOUBLE_S = Pattern
+      .compile("[-+]?(?:[0-9]+[.]?|[0-9]*[.][0-9]+)(?:e[-+]?[0-9]+)?d",
+          Pattern.CASE_INSENSITIVE);
+  private static final Pattern FLOAT = Pattern
+      .compile("[-+]?(?:[0-9]+[.]?|[0-9]*[.][0-9]+)(?:e[-+]?[0-9]+)?f",
+          Pattern.CASE_INSENSITIVE);
+  private static final Pattern BYTE = Pattern
+      .compile("[-+]?(?:0|[1-9][0-9]*)b", Pattern.CASE_INSENSITIVE);
+  private static final Pattern LONG = Pattern
+      .compile("[-+]?(?:0|[1-9][0-9]*)l", Pattern.CASE_INSENSITIVE);
+  private static final Pattern SHORT = Pattern
+      .compile("[-+]?(?:0|[1-9][0-9]*)s", Pattern.CASE_INSENSITIVE);
+  private static final Pattern INT = Pattern.compile("[-+]?(?:0|[1-9][0-9]*)");
 
 
   private final String str;
