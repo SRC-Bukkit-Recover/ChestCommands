@@ -329,7 +329,7 @@ public class ItemStackReader {
     return ((PotionMeta) itemMeta).getCustomEffects();
   }
 
-  private class Nodes {
+  private static class Nodes {
 
     static final String LORE = "lore:";
     static final String NAME = "name:";

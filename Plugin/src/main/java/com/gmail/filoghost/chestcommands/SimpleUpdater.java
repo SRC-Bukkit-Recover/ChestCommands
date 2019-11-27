@@ -142,7 +142,7 @@ public final class SimpleUpdater {
       String version = matcher.group(1);
 
       // Replace multiple full stops (probably typos) with a single full stop, and split the version with them
-      String[] versionParts = version.replaceAll("[\\.]{2,}", ".").split("\\.");
+      String[] versionParts = version.replaceAll("[.]{2,}", ".").split("\\.");
 
       // Convert the strings to integers in order to compare them
       this.versionNumbers = new int[versionParts.length];

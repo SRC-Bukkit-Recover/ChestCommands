@@ -268,7 +268,7 @@ public final class MojangsonParser {
 
   private Number[] parseNumArray(NBTType arrayType, NBTType primType)
       throws MojangsonParseException {
-    List<Number> result = new ArrayList<Number>();
+    List<Number> result = new ArrayList<>();
     while (currentChar() != ']') {
       NBTTag element = parseAnything();
       NBTType elementType = element.getType();

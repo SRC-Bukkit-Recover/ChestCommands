@@ -37,7 +37,6 @@ public final class ItemUtils {
   // Reflection stuff
   private static Class<?> nbtTagCompoundClass;
   private static Class<?> nbtTagListClass;
-  private static Class<?> nmsItemstackClass;
   private static Method asNmsCopyMethod;
   private static Method asCraftMirrorMethod;
   private static Method hasTagMethod;
@@ -57,7 +56,7 @@ public final class ItemUtils {
     try {
       nbtTagCompoundClass = NMSUtils.getNMSClass("NBTTagCompound");
       nbtTagListClass = NMSUtils.getNMSClass("NBTTagList");
-      nmsItemstackClass = NMSUtils.getNMSClass("ItemStack");
+      Class<?> nmsItemstackClass = NMSUtils.getNMSClass("ItemStack");
 
       asNmsCopyMethod = NMSUtils.getCraftBukkitClass("inventory.CraftItemStack")
           .getMethod("asNMSCopy", ItemStack.class);
