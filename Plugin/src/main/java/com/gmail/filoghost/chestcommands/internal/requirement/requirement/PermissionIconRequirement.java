@@ -7,17 +7,17 @@ import org.bukkit.entity.Player;
 public class PermissionIconRequirement extends IconRequirement {
 
   public PermissionIconRequirement() {
-    super(false);
+    super(false, ValueType.STRING);
   }
 
   @Override
   public boolean check(Player player) {
     if (!hasPermission(player)) {
       if (failMessage != null) {
-        player.sendMessage(failMessage.replace("{permission}", getParsedValue(player)));
+        player.sendMessage(failMessage.replace("{permission}", (String) getParsedValue(player)));
       } else {
         player.sendMessage(ChestCommands.getLang().default_no_icon_permission
-            .replace("{permission}", getParsedValue(player)));
+            .replace("{permission}", (String) getParsedValue(player)));
       }
       return false;
     }
@@ -25,7 +25,7 @@ public class PermissionIconRequirement extends IconRequirement {
   }
 
   private boolean hasPermission(Player player) {
-    String permission = getParsedValue(player);
+    String permission = (String) getParsedValue(player);
     if (permission.startsWith("-")) {
       return !player.hasPermission(permission.substring(1).trim());
     } else {

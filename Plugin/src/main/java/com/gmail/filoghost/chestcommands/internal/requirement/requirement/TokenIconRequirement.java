@@ -3,33 +3,22 @@ package com.gmail.filoghost.chestcommands.internal.requirement.requirement;
 import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.api.IconRequirement;
 import com.gmail.filoghost.chestcommands.bridge.currency.TokenManagerBridge;
-import com.gmail.filoghost.chestcommands.util.ExpressionUtils;
+import java.math.BigDecimal;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class TokenIconRequirement extends IconRequirement {
 
   public TokenIconRequirement() {
-    super(true);
+    super(true, ValueType.NUMBER);
   }
 
   @Override
   public boolean check(Player player) {
-    long tokenManagerPrice;
-    String parsedTokens = getParsedValue(player);
-    if (ExpressionUtils.isValidExpression(parsedTokens)) {
-      tokenManagerPrice = ExpressionUtils.getResult(parsedTokens).longValue();
-    } else {
-      try {
-        tokenManagerPrice = Long.parseLong(parsedTokens);
-      } catch (NumberFormatException e) {
-        String error =
-            ChatColor.RED + "Error parsing value!" + parsedTokens + " is not a valid number";
-        player.sendMessage(error);
-        ChestCommands.getInstance().getLogger().warning(error);
-        return false;
-      }
+    if (getParsedValue(player) != null) {
+      return false;
     }
+    long tokenManagerPrice = ((BigDecimal) getParsedValue(player)).longValue();
     if (tokenManagerPrice > 0) {
       if (!TokenManagerBridge.hasValidPlugin()) {
         player.sendMessage(ChatColor.RED
@@ -58,21 +47,7 @@ public class TokenIconRequirement extends IconRequirement {
           + "This command has a price in tokens, but the plugin TokenManager was not found. For security, the command has been blocked. Please inform the staff.");
       return;
     }
-    long tokenManagerPrice;
-    String parsedTokens = getParsedValue(player);
-    if (ExpressionUtils.isValidExpression(parsedTokens)) {
-      tokenManagerPrice = ExpressionUtils.getResult(parsedTokens).longValue();
-    } else {
-      try {
-        tokenManagerPrice = Long.parseLong(parsedTokens);
-      } catch (NumberFormatException e) {
-        String error =
-            ChatColor.RED + "Error parsing value!" + parsedTokens + " is not a valid number";
-        player.sendMessage(error);
-        ChestCommands.getInstance().getLogger().warning(error);
-        return;
-      }
-    }
+    long tokenManagerPrice = ((BigDecimal) getParsedValue(player)).longValue();
     if (!TokenManagerBridge.takeTokens(player, tokenManagerPrice)) {
       player.sendMessage(ChatColor.RED
           + "Error: the transaction couldn't be executed. Please inform the staff.");

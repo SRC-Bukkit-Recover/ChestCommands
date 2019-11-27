@@ -23,7 +23,7 @@ public class ItemIconRequirement extends IconRequirement {
   private List<RequiredItem> requiredItems = Utils.newArrayList();
 
   public ItemIconRequirement() {
-    super(true);
+    super(true, ValueType.STRING);
   }
 
   @Override

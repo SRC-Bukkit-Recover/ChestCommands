@@ -3,33 +3,22 @@ package com.gmail.filoghost.chestcommands.internal.requirement.requirement;
 import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.api.IconRequirement;
 import com.gmail.filoghost.chestcommands.bridge.VaultBridge;
-import com.gmail.filoghost.chestcommands.util.ExpressionUtils;
+import java.math.BigDecimal;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class MoneyIconRequirement extends IconRequirement {
 
   public MoneyIconRequirement() {
-    super(true);
+    super(true, ValueType.NUMBER);
   }
 
   @Override
   public boolean check(Player player) {
-    double moneyPrice;
-    String parsedMoney = getParsedValue(player);
-    if (ExpressionUtils.isValidExpression(parsedMoney)) {
-      moneyPrice = ExpressionUtils.getResult(parsedMoney).doubleValue();
-    } else {
-      try {
-        moneyPrice = Double.parseDouble(parsedMoney);
-      } catch (NumberFormatException e) {
-        String error =
-            ChatColor.RED + "Error parsing value!" + parsedMoney + " is not a valid number";
-        player.sendMessage(error);
-        ChestCommands.getInstance().getLogger().warning(error);
-        return false;
-      }
+    if (getParsedValue(player) == null) {
+      return false;
     }
+    double moneyPrice = ((BigDecimal) getParsedValue(player)).doubleValue();
     if (moneyPrice > 0) {
       if (!VaultBridge.hasValidEconomy()) {
         player.sendMessage(ChatColor.RED
@@ -58,21 +47,7 @@ public class MoneyIconRequirement extends IconRequirement {
           + "This command has a price, but Vault with a compatible economy plugin was not found. For security, the command has been blocked. Please inform the staff.");
       return;
     }
-    double moneyPrice;
-    String parsedMoney = getParsedValue(player);
-    if (ExpressionUtils.isValidExpression(parsedMoney)) {
-      moneyPrice = ExpressionUtils.getResult(parsedMoney).doubleValue();
-    } else {
-      try {
-        moneyPrice = Double.parseDouble(parsedMoney);
-      } catch (NumberFormatException e) {
-        String error =
-            ChatColor.RED + "Error parsing value!" + parsedMoney + " is not a valid number";
-        player.sendMessage(error);
-        ChestCommands.getInstance().getLogger().warning(error);
-        return;
-      }
-    }
+    double moneyPrice = ((BigDecimal) getParsedValue(player)).doubleValue();
     VaultBridge.takeMoney(player, moneyPrice);
   }
 }

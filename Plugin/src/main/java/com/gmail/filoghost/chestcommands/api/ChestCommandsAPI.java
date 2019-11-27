@@ -19,6 +19,10 @@ import org.bukkit.entity.Player;
 
 public class ChestCommandsAPI {
 
+  private ChestCommandsAPI() {
+
+  }
+
   /**
    * Checks if a menu with a given file name was loaded by the plugin.
    *
