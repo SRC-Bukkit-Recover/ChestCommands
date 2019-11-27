@@ -41,10 +41,12 @@ public class GiveTokensIconCommand extends IconCommand {
 
     if (tokensToGive > 0) {
       long finalTokensToGive = tokensToGive;
-      taskChain.sync(() -> { if (!TokenManagerBridge.giveTokens(player, finalTokensToGive)) {
-        player.sendMessage(ChatColor.RED
-            + "Error: the transaction couldn't be executed. Please inform the staff.");
-      }});
+      taskChain.sync(() -> {
+        if (!TokenManagerBridge.giveTokens(player, finalTokensToGive)) {
+          player.sendMessage(ChatColor.RED
+              + "Error: the transaction couldn't be executed. Please inform the staff.");
+        }
+      });
     }
   }
 

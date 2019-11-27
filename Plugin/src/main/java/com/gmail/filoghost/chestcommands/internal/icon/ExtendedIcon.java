@@ -16,15 +16,11 @@ package com.gmail.filoghost.chestcommands.internal.icon;
 
 import com.gmail.filoghost.chestcommands.api.Icon;
 import com.gmail.filoghost.chestcommands.internal.Cooldown;
-import com.gmail.filoghost.chestcommands.internal.ExtendedIconMenu;
-import com.gmail.filoghost.chestcommands.internal.MenuInventoryHolder;
 import com.gmail.filoghost.chestcommands.internal.requirement.Requirements;
 import com.gmail.filoghost.chestcommands.util.MenuUtils;
 import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 
 public class ExtendedIcon extends Icon {
 
@@ -45,7 +41,6 @@ public class ExtendedIcon extends Icon {
     return super.calculateLore(pov);
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   public boolean onClick(Player player, ClickType clickType) {
 

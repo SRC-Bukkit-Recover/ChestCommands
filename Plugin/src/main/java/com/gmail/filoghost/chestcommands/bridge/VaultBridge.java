@@ -94,11 +94,11 @@ public class VaultBridge {
       throw new IllegalArgumentException("Invalid amount of money: " + amount);
     }
 
-    boolean result = economy.depositPlayer(player, player.getWorld().getName(), amount).transactionSuccess();
+    EconomyResponse response = economy.depositPlayer(player, player.getWorld().getName(), amount);
 
     MenuUtils.refreshMenu(player);
 
-    return result;
+    return response.transactionSuccess();
   }
 
   public static String formatMoney(double amount) {
