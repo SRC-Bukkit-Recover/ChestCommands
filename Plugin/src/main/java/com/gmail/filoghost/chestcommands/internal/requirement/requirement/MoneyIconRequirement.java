@@ -47,7 +47,6 @@ public class MoneyIconRequirement extends IconRequirement {
           + "This command has a price, but Vault with a compatible economy plugin was not found. For security, the command has been blocked. Please inform the staff.");
       return;
     }
-    double moneyPrice = ((BigDecimal) getParsedValue(player)).doubleValue();
-    VaultBridge.takeMoney(player, moneyPrice);
+    VaultBridge.takeMoney(player, ((BigDecimal) getParsedValue(player)).doubleValue());
   }
 }
