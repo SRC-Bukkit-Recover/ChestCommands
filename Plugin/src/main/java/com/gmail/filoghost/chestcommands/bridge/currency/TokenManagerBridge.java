@@ -59,15 +59,11 @@ public class TokenManagerBridge {
       throw new IllegalArgumentException("Invalid amount of tokens: " + tokens);
     }
 
-    boolean result = tokenManager.removeTokens(player, tokens);
-
-    MenuUtils.refreshMenu(player);
-
-    return result;
+    return tokenManager.removeTokens(player, tokens);
   }
 
 
-  public static void giveTokens(Player player, long tokens) {
+  public static boolean giveTokens(Player player, long tokens) {
     if (!hasValidPlugin()) {
       throw new IllegalStateException("TokenManager plugin was not found!");
     }
@@ -75,9 +71,11 @@ public class TokenManagerBridge {
       throw new IllegalArgumentException("Invalid amount of tokens: " + tokens);
     }
 
-    tokenManager.addTokens(player, tokens);
+    boolean result = tokenManager.addTokens(player, tokens);
 
     MenuUtils.refreshMenu(player);
+
+    return result;
   }
 
 }

@@ -55,7 +55,12 @@ public class GiveMoneyIconCommand extends IconCommand {
 
     if (moneyToGive > 0) {
       double finalMoneyToGive = moneyToGive;
-      taskChain.sync(() -> VaultBridge.giveMoney(player, finalMoneyToGive));
+      taskChain.sync(() -> {
+        if (!VaultBridge.giveMoney(player, finalMoneyToGive)) {
+          player.sendMessage(ChatColor.RED
+              + "Error: the transaction couldn't be executed. Please inform the staff.");
+        }
+      });
     }
   }
 

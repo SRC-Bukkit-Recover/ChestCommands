@@ -19,6 +19,7 @@ import com.gmail.filoghost.chestcommands.internal.Cooldown;
 import com.gmail.filoghost.chestcommands.internal.ExtendedIconMenu;
 import com.gmail.filoghost.chestcommands.internal.MenuInventoryHolder;
 import com.gmail.filoghost.chestcommands.internal.requirement.Requirements;
+import com.gmail.filoghost.chestcommands.util.MenuUtils;
 import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -62,17 +63,7 @@ public class ExtendedIcon extends Icon {
 
     requirements.take(player, clickType);
 
-    InventoryView view = player.getOpenInventory();
-    if (view != null) {
-      Inventory topInventory = view.getTopInventory();
-      if (topInventory.getHolder() instanceof MenuInventoryHolder) {
-        MenuInventoryHolder menuHolder = (MenuInventoryHolder) topInventory.getHolder();
-
-        if (menuHolder.getIconMenu() instanceof ExtendedIconMenu) {
-          ((ExtendedIconMenu) menuHolder.getIconMenu()).refresh(player, topInventory);
-        }
-      }
-    }
+    MenuUtils.refreshMenu(player);
 
     return super.onClick(player, clickType);
   }

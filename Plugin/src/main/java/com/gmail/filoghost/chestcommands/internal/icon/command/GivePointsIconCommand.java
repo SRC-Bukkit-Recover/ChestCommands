@@ -41,7 +41,12 @@ public class GivePointsIconCommand extends IconCommand {
 
     if (pointsToGive > 0) {
       int finalPointsToGive = pointsToGive;
-      taskChain.sync(() -> PlayerPointsBridge.givePoints(player, finalPointsToGive));
+      taskChain.sync(() -> {
+        if (!PlayerPointsBridge.givePoints(player, finalPointsToGive)) {
+          player.sendMessage(ChatColor.RED
+              + "Error: the transaction couldn't be executed. Please inform the staff.");
+        }
+      });
     }
   }
 
