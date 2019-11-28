@@ -1,51 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <artifactId>chestcommands-parent</artifactId>
 
-	<groupId>com.gmail.filoghost.chestcommands</groupId>
-	<artifactId>chestcommands-parent</artifactId>
-	<name>ChestCommands Parent</name>
-	<version>3.4.0</version>
-	<packaging>pom</packaging>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <configuration>
+            <archive>
+              <addMavenDescriptor>false</addMavenDescriptor>
+              <manifest>
+                <addClasspath>false</addClasspath>
+              </manifest>
+            </archive>
+          </configuration>
+          <groupId>org.apache.maven.plugins</groupId>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  <groupId>com.gmail.filoghost.chestcommands</groupId>
+  <modelVersion>4.0.0</modelVersion>
+  <modules>
+    <module>Plugin</module>
+    <module>LegacySupport</module>
+  </modules>
+  <name>ChestCommands Parent</name>
 
-	<url>https://dev.bukkit.org/bukkit-plugins/chest-commands</url>
+  <packaging>pom</packaging>
 
-	<scm>
-		<url>https://github.com/filoghost/ChestCommands</url>
-		<connection>scm:git:git://github.com:filoghost/ChestCommands.git</connection>
-		<developerConnection>scm:git:git@github.com:filoghost/ChestCommands.git</developerConnection>
-	</scm>
+  <properties>
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.6</maven.compiler.target>
+    <maven.test.skip>true</maven.test.skip>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <spigot-api.version>1.8.8-R0.1-SNAPSHOT</spigot-api.version>
+  </properties>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.6</maven.compiler.source>
-		<maven.compiler.target>1.6</maven.compiler.target>
-		<maven.test.skip>true</maven.test.skip>
-		<spigot-api.version>1.8.8-R0.1-SNAPSHOT</spigot-api.version>
-	</properties>
+  <scm>
+    <connection>scm:git:git://github.com:filoghost/ChestCommands.git</connection>
+    <developerConnection>scm:git:git@github.com:filoghost/ChestCommands.git</developerConnection>
+    <url>https://github.com/filoghost/ChestCommands</url>
+  </scm>
 
-	<modules>
-		<module>Plugin</module>
-	</modules>
+  <url>https://dev.bukkit.org/bukkit-plugins/chest-commands</url>
 
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<configuration>
-						<archive>
-							<addMavenDescriptor>false</addMavenDescriptor>
-							<manifest>
-								<addClasspath>false</addClasspath>
-							</manifest>
-						</archive>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
-	
+  <version>3.4.0</version>
+
 </project>

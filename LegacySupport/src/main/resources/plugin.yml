@@ -1,0 +1,5 @@
+name: ChestCommandsLegacySupport
+version: ${project.version}
+main: me.hsgamer.chestcommandslegacysupport.ChestCommandsLegacySupport
+api-version: 1.13
+depend: [ChestCommands]
