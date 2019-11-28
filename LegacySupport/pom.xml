@@ -57,7 +57,7 @@
   </dependencies>
   <groupId>me.HSGamer</groupId>
   <modelVersion>4.0.0</modelVersion>
-  <name>ChestCommandsLegacySupport</name>
+  <name>ChestCommands Legacy Support</name>
 
   <packaging>jar</packaging>
 
