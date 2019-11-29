@@ -16,7 +16,7 @@ package com.gmail.filoghost.chestcommands.internal.icon.command;
 
 import co.aikar.taskchain.TaskChain;
 import com.gmail.filoghost.chestcommands.exception.FormatException;
-import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
+import com.gmail.filoghost.chestcommands.api.IconCommand;
 import com.gmail.filoghost.chestcommands.util.ItemStackReader;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

@@ -14,7 +14,7 @@
  */
 package com.gmail.filoghost.chestcommands.internal;
 
-import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
+import com.gmail.filoghost.chestcommands.api.IconCommand;
 import com.gmail.filoghost.chestcommands.util.ClickType;
 import java.util.List;
 import org.bukkit.Material;

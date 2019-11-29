@@ -19,7 +19,7 @@ import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.Permissions;
 import com.gmail.filoghost.chestcommands.api.IconMenu;
 import com.gmail.filoghost.chestcommands.internal.icon.ExtendedIcon;
-import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
+import com.gmail.filoghost.chestcommands.api.IconCommand;
 import com.gmail.filoghost.chestcommands.util.ItemUtils;
 import java.util.List;
 import java.util.logging.Level;

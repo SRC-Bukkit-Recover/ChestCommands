@@ -15,11 +15,12 @@
 package com.gmail.filoghost.chestcommands.serializer;
 
 import com.gmail.filoghost.chestcommands.api.Icon;
+import com.gmail.filoghost.chestcommands.api.event.IconCreateEvent;
 import com.gmail.filoghost.chestcommands.config.AsciiPlaceholders;
 import com.gmail.filoghost.chestcommands.exception.FormatException;
 import com.gmail.filoghost.chestcommands.internal.CommandsClickHandler;
 import com.gmail.filoghost.chestcommands.internal.icon.ExtendedIcon;
-import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
+import com.gmail.filoghost.chestcommands.api.IconCommand;
 import com.gmail.filoghost.chestcommands.util.ErrorLogger;
 import com.gmail.filoghost.chestcommands.util.FormatUtils;
 import com.gmail.filoghost.chestcommands.util.ItemStackReader;
@@ -30,6 +31,7 @@ import com.gmail.filoghost.chestcommands.util.nbt.parser.MojangsonParseException
 import com.gmail.filoghost.chestcommands.util.nbt.parser.MojangsonParser;
 import java.util.ArrayList;
 import java.util.List;
+import org.bukkit.Bukkit;
 import org.bukkit.FireworkEffect;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.inventory.ClickType;
@@ -213,7 +215,7 @@ public class IconSerializer {
     icon.setClickHandler(clickHandler);
 
     if (section.isConfigurationSection(Nodes.VIEW_REQUIREMENT)) {
-      icon.getRequirements().addViewRequirement(RequirementSerializer
+      icon.getRequirements().addViewRequirements(RequirementSerializer
           .loadRequirementsFromSection(section.getConfigurationSection(Nodes.VIEW_REQUIREMENT),
               iconName, menuFileName, errorLogger));
     }
@@ -221,16 +223,16 @@ public class IconSerializer {
       for (ClickType type : ClickType.values()) {
         String subsection = Nodes.CLICK_REQUIREMENT + "." + type;
         if (section.isConfigurationSection(subsection)) {
-          icon.getRequirements().addClickRequirement(RequirementSerializer
+          icon.getRequirements().addClickRequirements(RequirementSerializer
               .loadRequirementsFromSection(section.getConfigurationSection(subsection),
                   iconName, menuFileName, errorLogger), type);
         }
       }
-      icon.getRequirements().addDefaultClickRequirement(RequirementSerializer
+      icon.getRequirements().addDefaultClickRequirements(RequirementSerializer
           .loadRequirementsFromSection(section.getConfigurationSection(Nodes.CLICK_REQUIREMENT),
               iconName, menuFileName, errorLogger));
       if (section.isConfigurationSection(Nodes.CLICK_REQUIREMENT_DEFAULT)) {
-        icon.getRequirements().addDefaultClickRequirement(RequirementSerializer
+        icon.getRequirements().addDefaultClickRequirements(RequirementSerializer
             .loadRequirementsFromSection(
                 section.getConfigurationSection(Nodes.CLICK_REQUIREMENT_DEFAULT),
                 iconName, menuFileName, errorLogger));
@@ -257,6 +259,9 @@ public class IconSerializer {
     }
     icon.getCooldown()
         .setCooldownMessage(FormatUtils.addColors(section.getString(Nodes.COOLDOWN_MESSAGE)));
+
+    // Call the event for further setting
+    Bukkit.getPluginManager().callEvent(new IconCreateEvent(icon, iconName, menuFileName, section, errorLogger));
 
     return icon;
   }

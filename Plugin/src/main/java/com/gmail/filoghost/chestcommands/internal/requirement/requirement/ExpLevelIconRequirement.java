@@ -5,9 +5,9 @@ import com.gmail.filoghost.chestcommands.api.IconRequirement;
 import java.math.BigDecimal;
 import org.bukkit.entity.Player;
 
-public class ExpIconRequirement extends IconRequirement {
+public class ExpLevelIconRequirement extends IconRequirement {
 
-  public ExpIconRequirement() {
+  public ExpLevelIconRequirement() {
     super(false, ValueType.NUMBER);
   }
 

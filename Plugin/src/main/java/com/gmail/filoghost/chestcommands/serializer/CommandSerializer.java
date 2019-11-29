@@ -15,7 +15,7 @@
 package com.gmail.filoghost.chestcommands.serializer;
 
 import com.gmail.filoghost.chestcommands.ChestCommands;
-import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
+import com.gmail.filoghost.chestcommands.api.IconCommand;
 import com.gmail.filoghost.chestcommands.internal.icon.command.BroadcastIconCommand;
 import com.gmail.filoghost.chestcommands.internal.icon.command.CloseMenuCommand;
 import com.gmail.filoghost.chestcommands.internal.icon.command.ConditionIconCommand;

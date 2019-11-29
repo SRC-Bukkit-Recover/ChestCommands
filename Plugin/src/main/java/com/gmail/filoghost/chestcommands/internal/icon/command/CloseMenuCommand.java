@@ -1,7 +1,7 @@
 package com.gmail.filoghost.chestcommands.internal.icon.command;
 
 import co.aikar.taskchain.TaskChain;
-import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
+import com.gmail.filoghost.chestcommands.api.IconCommand;
 import org.bukkit.entity.Player;
 
 public class CloseMenuCommand extends IconCommand {

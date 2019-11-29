@@ -17,7 +17,7 @@ package com.gmail.filoghost.chestcommands.internal;
 import co.aikar.taskchain.TaskChain;
 import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.api.ClickHandler;
-import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
+import com.gmail.filoghost.chestcommands.api.IconCommand;
 import com.gmail.filoghost.chestcommands.internal.icon.command.OpenIconCommand;
 import com.gmail.filoghost.chestcommands.internal.icon.command.RefreshIconCommand;
 import com.gmail.filoghost.chestcommands.util.Utils;

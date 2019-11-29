@@ -21,7 +21,7 @@ import com.gmail.filoghost.chestcommands.api.IconMenu;
 import com.gmail.filoghost.chestcommands.internal.BoundItem;
 import com.gmail.filoghost.chestcommands.internal.ExtendedIconMenu;
 import com.gmail.filoghost.chestcommands.internal.MenuInventoryHolder;
-import com.gmail.filoghost.chestcommands.internal.icon.IconCommand;
+import com.gmail.filoghost.chestcommands.api.IconCommand;
 import com.gmail.filoghost.chestcommands.task.ExecuteCommandsTask;
 import com.gmail.filoghost.chestcommands.task.RefreshMenusTask;
 import com.gmail.filoghost.chestcommands.util.Utils;

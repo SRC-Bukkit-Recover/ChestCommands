@@ -16,7 +16,7 @@ package com.gmail.filoghost.chestcommands.serializer;
 
 import com.gmail.filoghost.chestcommands.api.IconRequirement;
 import com.gmail.filoghost.chestcommands.internal.requirement.requirement.ConditionIconRequirement;
-import com.gmail.filoghost.chestcommands.internal.requirement.requirement.ExpIconRequirement;
+import com.gmail.filoghost.chestcommands.internal.requirement.requirement.ExpLevelIconRequirement;
 import com.gmail.filoghost.chestcommands.internal.requirement.requirement.ItemIconRequirement;
 import com.gmail.filoghost.chestcommands.internal.requirement.requirement.MoneyIconRequirement;
 import com.gmail.filoghost.chestcommands.internal.requirement.requirement.PermissionIconRequirement;
@@ -35,7 +35,7 @@ public class RequirementSerializer {
       .newHashMap();
 
   static {
-    register("LEVEL", ExpIconRequirement.class);
+    register("LEVEL", ExpLevelIconRequirement.class);
     register("MONEY", MoneyIconRequirement.class);
     register("PERMISSION", PermissionIconRequirement.class);
     register("POINT", PointIconRequirement.class);

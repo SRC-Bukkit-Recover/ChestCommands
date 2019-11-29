@@ -13,15 +13,30 @@ public class Requirements {
   private Map<ClickType, List<IconRequirement>> perTypeClickRequirements = Utils.newHashMap();
   private List<IconRequirement> defaultClickRequirements = Utils.newArrayList();
 
-  public void addClickRequirement(List<IconRequirement> requirements, ClickType type) {
+  public void addClickRequirement(IconRequirement requirement, ClickType type) {
+    if (!perTypeClickRequirements.containsKey(type)) {
+      perTypeClickRequirements.put(type, defaultClickRequirements);
+    }
+    this.perTypeClickRequirements.get(type).add(requirement);
+  }
+
+  public void addViewRequirement(IconRequirement requirement) {
+    this.viewRequirements.add(requirement);
+  }
+
+  public void addDefaultClickRequirement(IconRequirement requirement) {
+    this.defaultClickRequirements.add(requirement);
+  }
+
+  public void addClickRequirements(List<IconRequirement> requirements, ClickType type) {
     this.perTypeClickRequirements.put(type, requirements);
   }
 
-  public void addViewRequirement(List<IconRequirement> requirements) {
+  public void addViewRequirements(List<IconRequirement> requirements) {
     this.viewRequirements = requirements;
   }
 
-  public void addDefaultClickRequirement(List<IconRequirement> requirements) {
+  public void addDefaultClickRequirements(List<IconRequirement> requirements) {
     this.defaultClickRequirements = requirements;
   }
 
