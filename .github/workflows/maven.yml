@@ -16,10 +16,13 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
-      - run: mkdir -p path/to/artifact
-      - run: cat "./Plugin/target/*.jar" > "path/to/artifact/*.jar"
-      - run: cat "./Legacy/target/*.jar" > "path/to/artifact/*.jar"
-      - uses: actions/upload-artifact@master
+      - name: Upload Plugin
+        uses: actions/upload-artifact@master
         with:
-          name: ChestCommands Artifacts
-          path: path/to/artifact
+          name: Plugin
+          path: ./Plugin/target/
+      - name: Upload Legacy Support
+        uses: actions/upload-artifact@master
+        with:
+          name: Legacy Support
+          path: ./LegacySupport/target/
