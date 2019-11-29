@@ -19,10 +19,10 @@ jobs:
       - name: Upload Main plugin
         uses: actions/upload-artifact@v1.0.0
         with:
-          name: ./LegacySupport/target/*.jar
+          name: ./LegacySupport/target/
           path: path/to/artifact
       - name: Upload Legacy Support
         uses: actions/upload-artifact@v1.0.0
         with:
-          name: ./Plugin/target/*.jar
+          name: ./Plugin/target/
           path: path/to/artifact
