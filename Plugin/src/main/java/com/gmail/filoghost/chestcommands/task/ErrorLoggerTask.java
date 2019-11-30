@@ -41,6 +41,9 @@ public class ErrorLoggerTask implements Runnable {
     for (String error : errorLogger.getErrors()) {
       lines.add(ChatColor.GRAY + "" + (count++) + ") " + ChatColor.WHITE + error);
     }
+    for (String warning : errorLogger.getWarnings()) {
+      lines.add(ChatColor.GRAY + "" + (count++) + ") " + ChatColor.YELLOW + warning);
+    }
     lines.add(ChatColor.RED + "#-------------------------------------------------------------#");
 
     String output = StringUtils.join(lines, "\n");

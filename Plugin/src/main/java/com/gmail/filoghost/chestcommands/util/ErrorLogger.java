@@ -23,9 +23,18 @@ import java.util.List;
 public class ErrorLogger {
 
   private List<String> errors = new ArrayList<>();
+  private List<String> warnings = new ArrayList<>();
 
   public void addError(String error) {
     errors.add(error);
+  }
+
+  public void addWarning(String warning) {
+    warnings.add(warning);
+  }
+
+  public List<String> getWarnings() {
+    return warnings;
   }
 
   public List<String> getErrors() {

@@ -31,12 +31,15 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
 
   @EventHandler
   public void onIconCreate(IconCreateEvent event) {
+    boolean legacy = false;
+
     ExtendedIcon icon = event.getExtendedIcon();
     ConfigurationSection section = event.getConfigurationSection();
 
     Requirements requirements = icon.getRequirements();
 
     if (section.isSet(Nodes.PRICE)) {
+      legacy = true;
       String value = section.getString(Nodes.PRICE, "0");
       MoneyIconRequirement requirement = new MoneyIconRequirement();
       requirement.setValue(value);
@@ -44,6 +47,7 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
     }
 
     if (section.isSet(Nodes.POINTS)) {
+      legacy = true;
       String value = section.getString(Nodes.POINTS, "0");
       PointIconRequirement requirement = new PointIconRequirement();
       requirement.setValue(value);
@@ -51,6 +55,7 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
     }
 
     if (section.isSet(Nodes.TOKENS)) {
+      legacy = true;
       String value = section.getString(Nodes.TOKENS, "0");
       TokenIconRequirement requirement = new TokenIconRequirement();
       requirement.setValue(value);
@@ -58,6 +63,7 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
     }
 
     if (section.isSet(Nodes.EXP_LEVELS)) {
+      legacy = true;
       String value = section.getString(Nodes.EXP_LEVELS, "0");
       ExpLevelIconRequirement requirement = new ExpLevelIconRequirement();
       requirement.setValue(value);
@@ -65,28 +71,24 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
     }
 
     if (section.isConfigurationSection(Nodes.REQUIRED_ITEM)) {
-      // LEFT REQUIRED ITEMS
-      if (section.isSet(Nodes.REQUIRED_ITEM_LEFT)) {
-        String value = section.getString(Nodes.REQUIRED_ITEM_LEFT);
-        ItemIconRequirement requirement = new ItemIconRequirement();
-        requirement.setValue(value);
-        requirements.addClickRequirement(requirement, ClickType.LEFT);
+      legacy = true;
+      for (ClickType type : ClickType.values()) {
+        String subsection = Nodes.REQUIRED_ITEM + "." + type.name();
+        if (section.isSet(subsection)) {
+          String value = section.getString(subsection);
+          ItemIconRequirement requirement = new ItemIconRequirement();
+          requirement.setValue(value);
+          requirements.addClickRequirement(requirement, type);
+        }
       }
-      // RIGHT REQUIRED ITEMS
-      if (section.isSet(Nodes.REQUIRED_ITEM_RIGHT)) {
-        String value = section.getString(Nodes.REQUIRED_ITEM_RIGHT);
+      if (section.isSet(Nodes.REQUIRED_ITEM_DEFAULT)) {
+        String value = section.getString(Nodes.REQUIRED_ITEM_DEFAULT);
         ItemIconRequirement requirement = new ItemIconRequirement();
         requirement.setValue(value);
-        requirements.addClickRequirement(requirement, ClickType.RIGHT);
-      }
-      // MIDDLE REQUIRED ITEMS
-      if (section.isSet(Nodes.REQUIRED_ITEM_MIDDLE)) {
-        String value = section.getString(Nodes.REQUIRED_ITEM_MIDDLE);
-        ItemIconRequirement requirement = new ItemIconRequirement();
-        requirement.setValue(value);
-        requirements.addClickRequirement(requirement, ClickType.MIDDLE);
+        requirements.addDefaultClickRequirement(requirement);
       }
     } else if (section.isSet(Nodes.REQUIRED_ITEM)) {
+      legacy = true;
       String value = section.getString(Nodes.REQUIRED_ITEM);
       ItemIconRequirement requirement = new ItemIconRequirement();
       requirement.setValue(value);
@@ -94,6 +96,7 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
     }
 
     if (section.isSet(Nodes.PERMISSION)) {
+      legacy = true;
       String value = section.getString(Nodes.PERMISSION);
       PermissionIconRequirement requirement = new PermissionIconRequirement();
       requirement.setValue(value);
@@ -104,6 +107,7 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
     }
 
     if (section.isSet(Nodes.VIEW_PERMISSION)) {
+      legacy = true;
       String value = section.getString(Nodes.VIEW_PERMISSION);
       PermissionIconRequirement requirement = new PermissionIconRequirement();
       requirement.setValue(value);
@@ -111,6 +115,7 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
     }
 
     if (section.isSet(Nodes.VIEW_REQUIREMENT)) {
+      legacy = true;
       String value = section.getString(Nodes.VIEW_REQUIREMENT);
       ConditionIconRequirement requirement = new ConditionIconRequirement();
       requirement.setValue(value);
@@ -118,6 +123,7 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
     }
 
     if (section.isSet(Nodes.CLICK_REQUIREMENT)) {
+      legacy = true;
       String value = section.getString(Nodes.CLICK_REQUIREMENT);
       ConditionIconRequirement requirement = new ConditionIconRequirement();
       requirement.setValue(value);
@@ -125,6 +131,10 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
         requirement.setFailMessage(section.getString(Nodes.CLICK_REQUIREMENT_MESSAGE));
       }
       requirements.addDefaultClickRequirement(requirement);
+    }
+
+    if (legacy) {
+      event.getErrorLogger().addWarning("The icon \"" + event.getIconName() + "\" in the menu \"" + event.getMenuFileName() + "\" used the old settings. It's recommended to update to the new settings");
     }
   }
 
@@ -134,9 +144,7 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
     static final String TOKENS = "TOKENS";
     static final String EXP_LEVELS = "LEVELS";
     static final String REQUIRED_ITEM = "REQUIRED-ITEM";
-    static final String REQUIRED_ITEM_LEFT = "REQUIRED-ITEM.LEFT";
-    static final String REQUIRED_ITEM_RIGHT = "REQUIRED-ITEM.RIGHT";
-    static final String REQUIRED_ITEM_MIDDLE = "REQUIRED-ITEM.MIDDLE";
+    static final String REQUIRED_ITEM_DEFAULT = "REQUIRED-ITEM.DEFAULT";
     static final String PERMISSION = "PERMISSION";
     static final String PERMISSION_MESSAGE = "PERMISSION-MESSAGE";
     static final String VIEW_PERMISSION = "VIEW-PERMISSION";
