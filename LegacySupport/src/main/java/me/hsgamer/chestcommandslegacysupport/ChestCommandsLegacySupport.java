@@ -10,6 +10,8 @@ import com.gmail.filoghost.chestcommands.internal.requirement.requirement.MoneyI
 import com.gmail.filoghost.chestcommands.internal.requirement.requirement.PermissionIconRequirement;
 import com.gmail.filoghost.chestcommands.internal.requirement.requirement.PointIconRequirement;
 import com.gmail.filoghost.chestcommands.internal.requirement.requirement.TokenIconRequirement;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -21,6 +23,15 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
 
   @Override
   public void onEnable() {
+    try {
+      Class.forName("com.gmail.filoghost.chestcommands.api.IconRequirement");
+    } catch (ClassNotFoundException e) {
+      Bukkit.getConsoleSender().sendMessage(ChatColor.RED +
+          "This is not Chest Commands GUI - Forked. Disabling...");
+      Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Link: https://www.spigotmc.org/resources/chest-commands-gui-forked.69014/");
+      getServer().getPluginManager().disablePlugin(this);
+      return;
+    }
     getServer().getPluginManager().registerEvents(this, this);
   }
 
