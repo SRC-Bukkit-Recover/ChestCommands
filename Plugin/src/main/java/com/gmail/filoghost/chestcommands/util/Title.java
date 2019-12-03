@@ -11,8 +11,8 @@ public class Title {
 
   private static Class<?> playOutTitleClass;
   private static Method chatTitleMethod;
-  private static Constructor titleConstructor;
-  private static Constructor timingTitleConstructor;
+  private static Constructor<?> titleConstructor;
+  private static Constructor<?> timingTitleConstructor;
 
   static {
     try {
