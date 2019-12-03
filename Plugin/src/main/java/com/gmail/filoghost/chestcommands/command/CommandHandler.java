@@ -72,6 +72,9 @@ public class CommandHandler extends CommandFramework {
 
       if (!errorLogger.hasErrors()) {
         sender.sendMessage(ChestCommands.CHAT_PREFIX + "Plugin reloaded.");
+        if (errorLogger.hasWarnings()) {
+          new ErrorLoggerTask(errorLogger).run();
+        }
       } else {
         new ErrorLoggerTask(errorLogger).run();
         sender.sendMessage(

@@ -36,7 +36,7 @@ public class ErrorLoggerTask implements Runnable {
     List<String> lines = Utils.newArrayList();
 
     lines.add(" ");
-    lines.add(ChatColor.RED + "#------------------- Chest Commands Errors -------------------#");
+    lines.add(ChatColor.RED + "#------------------- Chest Commands Errors/Warnings -------------------#");
     int count = 1;
     for (String error : errorLogger.getErrors()) {
       lines.add(ChatColor.GRAY + "" + (count++) + ") " + ChatColor.WHITE + error);
@@ -44,7 +44,7 @@ public class ErrorLoggerTask implements Runnable {
     for (String warning : errorLogger.getWarnings()) {
       lines.add(ChatColor.GRAY + "" + (count++) + ") " + ChatColor.YELLOW + warning);
     }
-    lines.add(ChatColor.RED + "#-------------------------------------------------------------#");
+    lines.add(ChatColor.RED + "#----------------------------------------------------------------------#");
 
     String output = StringUtils.join(lines, "\n");
 

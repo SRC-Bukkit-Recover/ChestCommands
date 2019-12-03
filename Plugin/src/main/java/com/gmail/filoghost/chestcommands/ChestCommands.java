@@ -240,7 +240,7 @@ public class ChestCommands extends JavaPlugin {
       load(errorLogger);
 
       lastReloadErrors = errorLogger.getSize();
-      if (errorLogger.hasErrors()) {
+      if (errorLogger.hasErrors() || errorLogger.hasWarnings()) {
         new ErrorLoggerTask(errorLogger).run();
       }
     });
