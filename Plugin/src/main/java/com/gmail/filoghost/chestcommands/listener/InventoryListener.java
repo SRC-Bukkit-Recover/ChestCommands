@@ -98,7 +98,7 @@ public class InventoryListener implements Listener {
         // RUN CLOSE ACTIONS
         List<IconCommand> closeActions = extMenu.getCloseActions();
         if (closeActions != null) {
-          TaskChain taskChain = ChestCommands.getTaskChainFactory().newChain();
+          TaskChain<?> taskChain = ChestCommands.getTaskChainFactory().newChain();
 
           for (IconCommand closeAction : closeActions) {
             closeAction.execute(player, taskChain);

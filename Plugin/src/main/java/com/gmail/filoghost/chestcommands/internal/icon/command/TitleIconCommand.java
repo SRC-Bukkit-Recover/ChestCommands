@@ -43,7 +43,7 @@ public class TitleIconCommand extends IconCommand {
   }
 
   @Override
-  public void execute(Player player, TaskChain taskChain) {
+  public void execute(Player player, TaskChain<?> taskChain) {
     if (hasVariables) {
       parseTitle(getParsedCommand(player));
     }

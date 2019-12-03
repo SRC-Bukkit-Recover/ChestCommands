@@ -75,7 +75,7 @@ public class ExtendedIconMenu extends IconMenu {
   public void open(Player player) {
     try {
       if (openActions != null) {
-        TaskChain taskChain = ChestCommands.getTaskChainFactory().newChain();
+        TaskChain<?> taskChain = ChestCommands.getTaskChainFactory().newChain();
 
         for (IconCommand openAction : openActions) {
           openAction.execute(player, taskChain);

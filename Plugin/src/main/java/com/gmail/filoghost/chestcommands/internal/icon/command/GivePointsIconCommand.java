@@ -18,7 +18,7 @@ public class GivePointsIconCommand extends IconCommand {
   }
 
   @Override
-  public void execute(Player player, TaskChain taskChain) {
+  public void execute(Player player, TaskChain<?> taskChain) {
     int pointsToGive = 0;
     String parsed = getParsedCommand(player);
     if (Utils.isValidPositiveInteger(parsed)) {

@@ -26,7 +26,7 @@ public class ServerIconCommand extends IconCommand {
   }
 
   @Override
-  public void execute(Player player, TaskChain taskChain) {
+  public void execute(Player player, TaskChain<?> taskChain) {
     taskChain.sync(
         () -> BungeeCordUtils.connect(player, hasVariables ? getParsedCommand(player) : command));
   }

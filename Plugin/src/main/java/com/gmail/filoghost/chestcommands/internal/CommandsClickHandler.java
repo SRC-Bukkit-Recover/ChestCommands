@@ -41,7 +41,7 @@ public class CommandsClickHandler implements ClickHandler {
     List<IconCommand> commands = commandsPerClickType.getOrDefault(clickType, defaultCommands);
     boolean close = closeOnClick;
     if (!commands.isEmpty()) {
-      TaskChain taskChain = ChestCommands.getTaskChainFactory().newChain();
+      TaskChain<?> taskChain = ChestCommands.getTaskChainFactory().newChain();
 
       for (IconCommand command : commands) {
         command.execute(player, taskChain);
