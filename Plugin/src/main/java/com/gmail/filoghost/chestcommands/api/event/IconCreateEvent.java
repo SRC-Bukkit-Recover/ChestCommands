@@ -7,6 +7,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class IconCreateEvent extends Event {
+
   private static final HandlerList HANDLERS = new HandlerList();
 
   private ExtendedIcon extendedIcon;
@@ -15,7 +16,8 @@ public class IconCreateEvent extends Event {
   private String iconName;
   private String menuFileName;
 
-  public IconCreateEvent(ExtendedIcon extendedIcon, String iconName, String menuFileName, ConfigurationSection configurationSection, ErrorLogger errorLogger) {
+  public IconCreateEvent(ExtendedIcon extendedIcon, String iconName, String menuFileName,
+      ConfigurationSection configurationSection, ErrorLogger errorLogger) {
     this.extendedIcon = extendedIcon;
     this.configurationSection = configurationSection;
     this.errorLogger = errorLogger;
@@ -23,12 +25,12 @@ public class IconCreateEvent extends Event {
     this.menuFileName = menuFileName;
   }
 
-  @Override
-  public HandlerList getHandlers() {
+  public static HandlerList getHandlerList() {
     return HANDLERS;
   }
 
-  public static HandlerList getHandlerList() {
+  @Override
+  public HandlerList getHandlers() {
     return HANDLERS;
   }
 

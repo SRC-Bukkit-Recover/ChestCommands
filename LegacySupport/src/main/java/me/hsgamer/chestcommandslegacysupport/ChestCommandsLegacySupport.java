@@ -28,7 +28,8 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
     } catch (ClassNotFoundException e) {
       Bukkit.getConsoleSender().sendMessage(ChatColor.RED +
           "This is not Chest Commands GUI - Forked. Disabling...");
-      Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Link: https://www.spigotmc.org/resources/chest-commands-gui-forked.69014/");
+      Bukkit.getConsoleSender().sendMessage(ChatColor.RED
+          + "Link: https://www.spigotmc.org/resources/chest-commands-gui-forked.69014/");
       getServer().getPluginManager().disablePlugin(this);
       return;
     }
@@ -145,11 +146,14 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
     }
 
     if (legacy) {
-      event.getErrorLogger().addWarning("The icon \"" + event.getIconName() + "\" in the menu \"" + event.getMenuFileName() + "\" used the old settings. It's recommended to update to the new settings");
+      event.getErrorLogger().addWarning(
+          "The icon \"" + event.getIconName() + "\" in the menu \"" + event.getMenuFileName()
+              + "\" used the old settings. It's recommended to update to the new settings");
     }
   }
 
   private static class Nodes {
+
     static final String PRICE = "PRICE";
     static final String POINTS = "POINTS";
     static final String TOKENS = "TOKENS";

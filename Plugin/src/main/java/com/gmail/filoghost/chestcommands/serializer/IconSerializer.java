@@ -15,12 +15,12 @@
 package com.gmail.filoghost.chestcommands.serializer;
 
 import com.gmail.filoghost.chestcommands.api.Icon;
+import com.gmail.filoghost.chestcommands.api.IconCommand;
 import com.gmail.filoghost.chestcommands.api.event.IconCreateEvent;
 import com.gmail.filoghost.chestcommands.config.AsciiPlaceholders;
 import com.gmail.filoghost.chestcommands.exception.FormatException;
 import com.gmail.filoghost.chestcommands.internal.CommandsClickHandler;
 import com.gmail.filoghost.chestcommands.internal.icon.ExtendedIcon;
-import com.gmail.filoghost.chestcommands.api.IconCommand;
 import com.gmail.filoghost.chestcommands.util.ErrorLogger;
 import com.gmail.filoghost.chestcommands.util.FormatUtils;
 import com.gmail.filoghost.chestcommands.util.ItemStackReader;
@@ -261,7 +261,8 @@ public class IconSerializer {
         .setCooldownMessage(FormatUtils.addColors(section.getString(Nodes.COOLDOWN_MESSAGE)));
 
     // Call the event for further setting
-    Bukkit.getPluginManager().callEvent(new IconCreateEvent(icon, iconName, menuFileName, section, errorLogger));
+    Bukkit.getPluginManager()
+        .callEvent(new IconCreateEvent(icon, iconName, menuFileName, section, errorLogger));
 
     return icon;
   }

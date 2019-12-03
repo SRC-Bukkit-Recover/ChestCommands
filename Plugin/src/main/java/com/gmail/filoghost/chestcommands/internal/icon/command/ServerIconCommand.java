@@ -15,8 +15,8 @@
 package com.gmail.filoghost.chestcommands.internal.icon.command;
 
 import co.aikar.taskchain.TaskChain;
-import com.gmail.filoghost.chestcommands.bridge.bungee.BungeeCordUtils;
 import com.gmail.filoghost.chestcommands.api.IconCommand;
+import com.gmail.filoghost.chestcommands.bridge.bungee.BungeeCordUtils;
 import org.bukkit.entity.Player;
 
 public class ServerIconCommand extends IconCommand {
