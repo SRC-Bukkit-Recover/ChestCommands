@@ -33,6 +33,6 @@ public abstract class IconCommand {
     return hasVariables ? VariableManager.setVariables(command, executor) : command;
   }
 
-  public abstract void execute(Player player, TaskChain<?> taskChain);
+  public abstract void addToTaskChain(Player player, TaskChain<?> taskChain);
 
 }

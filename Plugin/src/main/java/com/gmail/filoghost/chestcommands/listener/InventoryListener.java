@@ -101,7 +101,7 @@ public class InventoryListener implements Listener {
           TaskChain<?> taskChain = ChestCommands.getTaskChainFactory().newChain();
 
           for (IconCommand closeAction : closeActions) {
-            closeAction.execute(player, taskChain);
+            closeAction.addToTaskChain(player, taskChain);
           }
 
           taskChain.execute();

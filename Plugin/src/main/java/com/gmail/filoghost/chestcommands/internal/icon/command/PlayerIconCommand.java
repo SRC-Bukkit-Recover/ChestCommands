@@ -25,7 +25,7 @@ public class PlayerIconCommand extends IconCommand {
   }
 
   @Override
-  public void execute(Player player, TaskChain<?> taskChain) {
+  public void addToTaskChain(Player player, TaskChain<?> taskChain) {
     taskChain.sync(() -> player.chat('/' + getParsedCommand(player)));
   }
 

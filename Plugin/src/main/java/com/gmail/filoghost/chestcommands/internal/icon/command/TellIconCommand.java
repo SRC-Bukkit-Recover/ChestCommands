@@ -26,7 +26,7 @@ public class TellIconCommand extends IconCommand {
   }
 
   @Override
-  public void execute(Player player, TaskChain<?> taskChain) {
+  public void addToTaskChain(Player player, TaskChain<?> taskChain) {
     taskChain.sync(() -> player.sendMessage(getParsedCommand(player)));
   }
 

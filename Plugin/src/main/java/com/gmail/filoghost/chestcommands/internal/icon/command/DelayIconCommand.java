@@ -23,7 +23,7 @@ public class DelayIconCommand extends IconCommand {
   }
 
   @Override
-  public void execute(Player player, TaskChain<?> taskChain) {
+  public void addToTaskChain(Player player, TaskChain<?> taskChain) {
     if (errorMessage != null) {
       player.sendMessage(errorMessage);
       return;

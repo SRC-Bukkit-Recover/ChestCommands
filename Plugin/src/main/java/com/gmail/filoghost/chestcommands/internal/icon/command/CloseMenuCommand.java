@@ -11,7 +11,7 @@ public class CloseMenuCommand extends IconCommand {
   }
 
   @Override
-  public void execute(Player player, TaskChain<?> taskChain) {
+  public void addToTaskChain(Player player, TaskChain<?> taskChain) {
     if (Boolean.parseBoolean(getParsedCommand(player))) {
       taskChain.sync(player::closeInventory);
     }

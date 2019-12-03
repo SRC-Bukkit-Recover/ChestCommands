@@ -78,7 +78,7 @@ public class ExtendedIconMenu extends IconMenu {
         TaskChain<?> taskChain = ChestCommands.getTaskChainFactory().newChain();
 
         for (IconCommand openAction : openActions) {
-          openAction.execute(player, taskChain);
+          openAction.addToTaskChain(player, taskChain);
         }
 
         taskChain.execute();

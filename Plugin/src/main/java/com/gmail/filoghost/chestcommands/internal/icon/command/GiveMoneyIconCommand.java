@@ -32,7 +32,7 @@ public class GiveMoneyIconCommand extends IconCommand {
   }
 
   @Override
-  public void execute(Player player, TaskChain<?> taskChain) {
+  public void addToTaskChain(Player player, TaskChain<?> taskChain) {
     double moneyToGive = 0;
     String parsed = getParsedCommand(player);
     if (Utils.isValidPositiveInteger(parsed)) {

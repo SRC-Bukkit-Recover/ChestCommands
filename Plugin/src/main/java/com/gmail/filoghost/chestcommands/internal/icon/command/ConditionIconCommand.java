@@ -13,7 +13,7 @@ public class ConditionIconCommand extends IconCommand {
   }
 
   @Override
-  public void execute(Player player, TaskChain<?> taskChain) {
+  public void addToTaskChain(Player player, TaskChain<?> taskChain) {
     String parsed = getParsedCommand(player);
     if (!ExpressionUtils.isBoolean(parsed)) {
       player.sendMessage(ChatColor.RED + "Invalid condition! Please inform the staff");

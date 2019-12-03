@@ -29,7 +29,7 @@ public class OpenIconCommand extends IconCommand {
   }
 
   @Override
-  public void execute(Player player, TaskChain<?> taskChain) {
+  public void addToTaskChain(Player player, TaskChain<?> taskChain) {
     String target = hasVariables ? getParsedCommand(player) : command;
     final ExtendedIconMenu menu = ChestCommands.getFileNameToMenuMap().get(target.toLowerCase());
     if (menu == null) {

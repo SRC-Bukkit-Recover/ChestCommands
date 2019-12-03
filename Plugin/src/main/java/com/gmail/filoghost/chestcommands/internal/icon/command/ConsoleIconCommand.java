@@ -26,7 +26,7 @@ public class ConsoleIconCommand extends IconCommand {
   }
 
   @Override
-  public void execute(Player player, TaskChain<?> taskChain) {
+  public void addToTaskChain(Player player, TaskChain<?> taskChain) {
     taskChain
         .sync(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), getParsedCommand(player)));
   }
