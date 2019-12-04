@@ -192,7 +192,7 @@
   <parent>
     <artifactId>chestcommands-parent</artifactId>
     <groupId>com.gmail.filoghost.chestcommands</groupId>
-    <version>3.4.0</version>
+    <version>3.4.1</version>
   </parent>
 
   <repositories>
