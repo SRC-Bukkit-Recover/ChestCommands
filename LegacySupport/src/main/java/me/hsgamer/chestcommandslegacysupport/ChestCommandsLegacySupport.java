@@ -126,7 +126,8 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
       requirements.addViewRequirement(requirement);
     }
 
-    if (section.isSet(Nodes.VIEW_REQUIREMENT) && !section.isConfigurationSection(Nodes.VIEW_REQUIREMENT)) {
+    if (section.isSet(Nodes.VIEW_REQUIREMENT) && !section
+        .isConfigurationSection(Nodes.VIEW_REQUIREMENT)) {
       legacy = true;
       String value = section.getString(Nodes.VIEW_REQUIREMENT);
       ConditionIconRequirement requirement = new ConditionIconRequirement();
@@ -134,7 +135,8 @@ public final class ChestCommandsLegacySupport extends JavaPlugin implements List
       requirements.addViewRequirement(requirement);
     }
 
-    if (section.isSet(Nodes.CLICK_REQUIREMENT) && !section.isConfigurationSection(Nodes.CLICK_REQUIREMENT)) {
+    if (section.isSet(Nodes.CLICK_REQUIREMENT) && !section
+        .isConfigurationSection(Nodes.CLICK_REQUIREMENT)) {
       legacy = true;
       String value = section.getString(Nodes.CLICK_REQUIREMENT);
       ConditionIconRequirement requirement = new ConditionIconRequirement();

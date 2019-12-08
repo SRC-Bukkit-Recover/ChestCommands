@@ -45,7 +45,9 @@ public class ErrorLogger {
     return !errors.isEmpty();
   }
 
-  public boolean hasWarnings() {return !warnings.isEmpty();}
+  public boolean hasWarnings() {
+    return !warnings.isEmpty();
+  }
 
   public int getSize() {
     return errors.size();
