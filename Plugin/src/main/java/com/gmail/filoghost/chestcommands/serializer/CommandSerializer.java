@@ -71,7 +71,8 @@ public class CommandSerializer {
   }
 
   public static void register(String regex, Class<? extends IconCommand> clazz) {
-    Pattern pattern = Pattern.compile("^(?i)" + regex); // Case insensitive and only at the beginning
+    Pattern pattern = Pattern
+        .compile("^(?i)" + regex); // Case insensitive and only at the beginning
     commandTypesMap.put(pattern, clazz);
   }
 
