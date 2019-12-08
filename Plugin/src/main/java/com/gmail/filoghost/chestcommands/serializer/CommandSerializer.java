@@ -47,32 +47,32 @@ public class CommandSerializer {
   private static Map<Pattern, Class<? extends IconCommand>> commandTypesMap = Utils.newHashMap();
 
   static {
-    commandTypesMap.put(commandPattern("console:"), ConsoleIconCommand.class);
-    commandTypesMap.put(commandPattern("op:"), OpIconCommand.class);
-    commandTypesMap.put(commandPattern("(open|menu):"), OpenIconCommand.class);
-    commandTypesMap.put(commandPattern("refresh:"), RefreshIconCommand.class);
-    commandTypesMap
-        .put(commandPattern("server:?"), ServerIconCommand.class); // The colon is optional
-    commandTypesMap.put(commandPattern("tell:"), TellIconCommand.class);
-    commandTypesMap.put(commandPattern("broadcast:"), BroadcastIconCommand.class);
-    commandTypesMap.put(commandPattern("give:"), GiveIconCommand.class);
-    commandTypesMap.put(commandPattern("give-?money:"), GiveMoneyIconCommand.class);
-    commandTypesMap.put(commandPattern("give-?points:"), GivePointsIconCommand.class);
-    commandTypesMap.put(commandPattern("sound:"), SoundIconCommand.class);
-    commandTypesMap.put(commandPattern("dragon-?bar:"), DragonBarIconCommand.class);
-    commandTypesMap.put(commandPattern("condition:"), ConditionIconCommand.class);
-    commandTypesMap.put(commandPattern("give-?tokens:"), GiveTokensIconCommand.class);
-    commandTypesMap.put(commandPattern("delay:"), DelayIconCommand.class);
-    commandTypesMap.put(commandPattern("title:"), TitleIconCommand.class);
-    commandTypesMap.put(commandPattern("close:"), CloseMenuCommand.class);
+    register("console:", ConsoleIconCommand.class);
+    register("op:", OpIconCommand.class);
+    register("(open|menu):", OpenIconCommand.class);
+    register("refresh:", RefreshIconCommand.class);
+    register("server:?", ServerIconCommand.class); // The colon is optional
+    register("tell:", TellIconCommand.class);
+    register("broadcast:", BroadcastIconCommand.class);
+    register("give:", GiveIconCommand.class);
+    register("give-?money:", GiveMoneyIconCommand.class);
+    register("give-?points:", GivePointsIconCommand.class);
+    register("sound:", SoundIconCommand.class);
+    register("dragon-?bar:", DragonBarIconCommand.class);
+    register("condition:", ConditionIconCommand.class);
+    register("give-?tokens:", GiveTokensIconCommand.class);
+    register("delay:", DelayIconCommand.class);
+    register("title:", TitleIconCommand.class);
+    register("close:", CloseMenuCommand.class);
   }
 
   private CommandSerializer() {
 
   }
 
-  private static Pattern commandPattern(String regex) {
-    return Pattern.compile("^(?i)" + regex); // Case insensitive and only at the beginning
+  public static void register(String regex, Class<? extends IconCommand> clazz) {
+    Pattern pattern = Pattern.compile("^(?i)" + regex); // Case insensitive and only at the beginning
+    commandTypesMap.put(pattern, clazz);
   }
 
   public static void checkClassConstructors(ErrorLogger errorLogger) {
