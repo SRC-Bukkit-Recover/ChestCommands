@@ -4,7 +4,7 @@ import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.api.IconRequirement;
 import com.gmail.filoghost.chestcommands.exception.FormatException;
 import com.gmail.filoghost.chestcommands.internal.RequiredItem;
-import com.gmail.filoghost.chestcommands.util.ItemStackReader;
+import com.gmail.filoghost.chestcommands.util.itemreader.ItemStackReader;
 import com.gmail.filoghost.chestcommands.util.ItemUtils;
 import com.gmail.filoghost.chestcommands.util.MaterialsRegistry;
 import com.gmail.filoghost.chestcommands.util.Utils;

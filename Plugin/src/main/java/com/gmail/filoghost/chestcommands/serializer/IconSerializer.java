@@ -23,7 +23,7 @@ import com.gmail.filoghost.chestcommands.internal.CommandsClickHandler;
 import com.gmail.filoghost.chestcommands.internal.icon.ExtendedIcon;
 import com.gmail.filoghost.chestcommands.util.ErrorLogger;
 import com.gmail.filoghost.chestcommands.util.FormatUtils;
-import com.gmail.filoghost.chestcommands.util.ItemStackReader;
+import com.gmail.filoghost.chestcommands.util.itemreader.ItemStackReader;
 import com.gmail.filoghost.chestcommands.util.ItemUtils;
 import com.gmail.filoghost.chestcommands.util.Utils;
 import com.gmail.filoghost.chestcommands.util.Validate;

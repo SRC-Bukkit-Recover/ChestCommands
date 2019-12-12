@@ -25,6 +25,12 @@ public final class Validate {
     }
   }
 
+  public static void notEmpty(String string, String error) {
+    if (string.isEmpty()) {
+      throw new NullPointerException(error);
+    }
+  }
+
   public static void isTrue(boolean statement, String error) {
     if (!statement) {
       throw new IllegalArgumentException(error);

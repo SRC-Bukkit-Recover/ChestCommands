@@ -23,7 +23,7 @@ import com.gmail.filoghost.chestcommands.serializer.IconSerializer.Coords;
 import com.gmail.filoghost.chestcommands.util.ClickType;
 import com.gmail.filoghost.chestcommands.util.ErrorLogger;
 import com.gmail.filoghost.chestcommands.util.FormatUtils;
-import com.gmail.filoghost.chestcommands.util.ItemStackReader;
+import com.gmail.filoghost.chestcommands.util.itemreader.ItemStackReader;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.inventory.InventoryType;
