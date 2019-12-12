@@ -45,7 +45,6 @@ public class ExtendedIcon extends Icon {
   public boolean onClick(Player player, ClickType clickType) {
 
     // Check all the requirements
-
     if (cooldown.isCooldown(player, clickType)) {
       return closeOnClick;
     }
@@ -55,8 +54,10 @@ public class ExtendedIcon extends Icon {
     }
 
     // Take things that are required
-
     requirements.take(player, clickType);
+
+    // Set Cooldown
+    cooldown.startCooldown(player, clickType);
 
     MenuUtils.refreshMenu(player);
 

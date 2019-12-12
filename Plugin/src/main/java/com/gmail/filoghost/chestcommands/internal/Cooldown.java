@@ -20,24 +20,29 @@ public class Cooldown {
         .getOrDefault(clickType, defaultCooldownList);
     Long cooldownUntil = cooldownList.get(player);
     long time = cooldownTimePerType.getOrDefault(clickType, defaultCooldownTime);
-    if (time > 0) {
-      if (cooldownUntil != null && cooldownUntil > now) {
-        if (cooldownMessage != null) {
-          player.sendMessage(
-              cooldownMessage.replace("{cooldown}", String.valueOf(cooldownUntil - now))
-                  .replace("{cooldown_second}",
-                      String.valueOf((cooldownUntil - now) / 1000)));
-        } else {
-          player.sendMessage(ChestCommands.getLang().default_cooldown_message
-              .replace("{cooldown}", String.valueOf(cooldownUntil - now))
-              .replace("{cooldown_second}", String.valueOf((cooldownUntil - now) / 1000)));
-        }
-        return true;
+    if (time > 0 && cooldownUntil != null && cooldownUntil > now) {
+      if (cooldownMessage != null) {
+        player.sendMessage(
+            cooldownMessage.replace("{cooldown}", String.valueOf(cooldownUntil - now))
+                .replace("{cooldown_second}",
+                    String.valueOf((cooldownUntil - now) / 1000)));
       } else {
-        cooldownList.put(player, now + time);
+        player.sendMessage(ChestCommands.getLang().default_cooldown_message
+            .replace("{cooldown}", String.valueOf(cooldownUntil - now))
+            .replace("{cooldown_second}", String.valueOf((cooldownUntil - now) / 1000)));
       }
+      return true;
+    } else {
+      return false;
     }
-    return false;
+  }
+
+  public void startCooldown(Player player, ClickType clickType) {
+    long now = System.currentTimeMillis();
+    Map<Player, Long> cooldownList = cooldownListPerType
+        .getOrDefault(clickType, defaultCooldownList);
+    long time = cooldownTimePerType.getOrDefault(clickType, defaultCooldownTime);
+    cooldownList.put(player, now + time);
   }
 
   public void setTime(long time, ClickType clickType) {
