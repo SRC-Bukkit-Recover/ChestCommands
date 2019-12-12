@@ -15,8 +15,8 @@
 package com.gmail.filoghost.chestcommands.internal;
 
 import com.gmail.filoghost.chestcommands.ChestCommands;
-import com.gmail.filoghost.chestcommands.util.itemreader.ItemStackReader;
 import com.gmail.filoghost.chestcommands.util.Validate;
+import com.gmail.filoghost.chestcommands.util.itemreader.ItemStackReader;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

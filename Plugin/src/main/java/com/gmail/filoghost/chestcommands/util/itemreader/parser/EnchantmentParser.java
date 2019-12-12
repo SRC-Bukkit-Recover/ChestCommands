@@ -25,7 +25,9 @@ public class EnchantmentParser implements ItemParser {
         throw new FormatException("invalid enchant type \"" + value + "\"");
       }
       if (itemMeta instanceof EnchantmentStorageMeta) {
-        ((EnchantmentStorageMeta) itemMeta).addStoredEnchant(EnchantmentSerializer.matchEnchantment(data[0]), Integer.parseInt(data[1]), true);
+        ((EnchantmentStorageMeta) itemMeta)
+            .addStoredEnchant(EnchantmentSerializer.matchEnchantment(data[0]),
+                Integer.parseInt(data[1]), true);
       } else {
         itemMeta
             .addEnchant(EnchantmentSerializer.matchEnchantment(data[0]), Integer.parseInt(data[1]),

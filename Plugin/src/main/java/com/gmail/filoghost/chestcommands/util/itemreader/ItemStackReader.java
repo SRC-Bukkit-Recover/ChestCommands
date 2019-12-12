@@ -41,6 +41,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class ItemStackReader {
+
   private static Map<Pattern, ItemParser> parserMap = Utils.newHashMap();
 
   static {
@@ -57,19 +58,12 @@ public class ItemStackReader {
     registerParser("color:", new ColorParser());
   }
 
-  public static void registerParser(String regex, ItemParser parser) {
-    Pattern pattern = Pattern
-        .compile("^(?i)" + regex); // Case insensitive and only at the beginning
-    parserMap.put(pattern, parser);
-  }
-
   private Material material;
   private int amount = 1;
   private ItemMeta itemMeta;
   private short dataValue = 0;
   private boolean unbreakable = false;
   private boolean explicitDataValue = false;
-
   /**
    * Reads item in the format "id:data, amount [,<itemMeta>]" id can be either the id of the
    * material or its name. for example wool:5, 3 is a valid input.
@@ -147,6 +141,12 @@ public class ItemStackReader {
         }
       }
     }
+  }
+
+  public static void registerParser(String regex, ItemParser parser) {
+    Pattern pattern = Pattern
+        .compile("^(?i)" + regex); // Case insensitive and only at the beginning
+    parserMap.put(pattern, parser);
   }
 
   public Material getMaterial() {

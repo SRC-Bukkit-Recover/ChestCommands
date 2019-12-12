@@ -30,5 +30,6 @@ public class PotionParser implements ItemParser {
             new PotionEffect(PotionEffectType.getByName(data[0]), Integer.parseInt(data[1]),
                 Integer.parseInt(data[2])), true);
       }
-    }  }
+    }
+  }
 }
