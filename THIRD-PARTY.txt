@@ -15,3 +15,7 @@ License: MIT License
 [EvalEx]
 URL: https://github.com/uklimaschewski/EvalEx
 License: MIT License
+
+[JarLoaderAPI]
+URL: https://github.com/MrIvanPlays/JarLoaderAPI
+License: null
