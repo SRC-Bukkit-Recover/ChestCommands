@@ -25,8 +25,8 @@ import org.bukkit.plugin.Plugin;
  */
 public class PluginConfig extends YamlConfiguration {
 
-  private File file;
-  private Plugin plugin;
+  private final File file;
+  private final Plugin plugin;
 
   public PluginConfig(Plugin plugin, File file) {
     super();

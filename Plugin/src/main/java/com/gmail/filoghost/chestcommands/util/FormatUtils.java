@@ -7,7 +7,7 @@ import org.bukkit.ChatColor;
 
 public final class FormatUtils {
 
-  private static DecimalFormat decimalFormat = new DecimalFormat("0.##");
+  private static final DecimalFormat decimalFormat = new DecimalFormat("0.##");
 
   private FormatUtils() {
 

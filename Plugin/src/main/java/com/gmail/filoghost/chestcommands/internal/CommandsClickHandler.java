@@ -28,9 +28,9 @@ import org.bukkit.event.inventory.ClickType;
 
 public class CommandsClickHandler implements ClickHandler {
 
-  private Map<ClickType, List<IconCommand>> commandsPerClickType = Utils.newHashMap();
+  private final Map<ClickType, List<IconCommand>> commandsPerClickType = Utils.newHashMap();
   private List<IconCommand> defaultCommands = Utils.newArrayList();
-  private boolean closeOnClick;
+  private final boolean closeOnClick;
 
   public CommandsClickHandler(boolean closeOnClick) {
     this.closeOnClick = closeOnClick;

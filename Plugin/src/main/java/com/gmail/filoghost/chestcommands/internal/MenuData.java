@@ -23,9 +23,9 @@ import org.bukkit.event.inventory.InventoryType;
 public class MenuData {
 
   // Required data
-  private String title;
-  private InventoryType inventoryType;
-  private int slots;
+  private final String title;
+  private final InventoryType inventoryType;
+  private final int slots;
 
   // Optional data
   private String[] commands;

@@ -22,10 +22,10 @@ import org.bukkit.inventory.ItemStack;
 
 public class BoundItem {
 
-  private ExtendedIconMenu menu;
-  private Material material;
+  private final ExtendedIconMenu menu;
+  private final Material material;
   private short data;
-  private ClickType clickType;
+  private final ClickType clickType;
 
   public BoundItem(ExtendedIconMenu menu, Material material, ClickType clickType) {
     Validate.notNull(material, "Material cannot be null");

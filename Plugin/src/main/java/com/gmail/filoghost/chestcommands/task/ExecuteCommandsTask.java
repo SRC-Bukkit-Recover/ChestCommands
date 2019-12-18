@@ -20,9 +20,9 @@ import org.bukkit.event.inventory.ClickType;
 
 public class ExecuteCommandsTask implements Runnable {
 
-  private Player player;
-  private Icon icon;
-  private ClickType clickType;
+  private final Player player;
+  private final Icon icon;
+  private final ClickType clickType;
 
 
   public ExecuteCommandsTask(Player player, Icon icon, ClickType clickType) {

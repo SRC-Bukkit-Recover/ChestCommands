@@ -24,7 +24,7 @@ import org.bukkit.ChatColor;
 
 public class ErrorLoggerTask implements Runnable {
 
-  private ErrorLogger errorLogger;
+  private final ErrorLogger errorLogger;
 
   public ErrorLoggerTask(ErrorLogger errorLogger) {
     this.errorLogger = errorLogger;

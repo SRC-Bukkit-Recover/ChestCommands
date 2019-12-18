@@ -23,9 +23,9 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class RefreshMenusTask extends BukkitRunnable {
 
-  private Player player;
-  private ExtendedIconMenu extMenu;
-  private BukkitTask task;
+  private final Player player;
+  private final ExtendedIconMenu extMenu;
+  private final BukkitTask task;
 
   private long elapsedTenths;
 

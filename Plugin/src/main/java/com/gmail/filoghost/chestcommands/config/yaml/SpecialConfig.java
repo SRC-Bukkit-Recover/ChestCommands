@@ -31,7 +31,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
  */
 public class SpecialConfig {
 
-  private PluginConfig config;
+  private final PluginConfig config;
   private String header;
   private Map<String, Object> defaultValuesMap;
 

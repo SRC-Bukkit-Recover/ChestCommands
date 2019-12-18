@@ -24,8 +24,8 @@ import org.bukkit.event.inventory.ClickType;
 
 public class ExtendedIcon extends Icon {
 
-  private Requirements requirements = new Requirements();
-  private Cooldown cooldown = new Cooldown();
+  private final Requirements requirements = new Requirements();
+  private final Cooldown cooldown = new Cooldown();
 
   public ExtendedIcon() {
     super();

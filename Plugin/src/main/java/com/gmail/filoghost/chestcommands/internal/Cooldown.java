@@ -8,10 +8,10 @@ import org.bukkit.event.inventory.ClickType;
 
 public class Cooldown {
 
-  private Map<ClickType, Long> cooldownTimePerType = Utils.newHashMap();
+  private final Map<ClickType, Long> cooldownTimePerType = Utils.newHashMap();
   private long defaultCooldownTime = 0;
-  private Map<ClickType, Map<Player, Long>> cooldownListPerType = Utils.newHashMap();
-  private Map<Player, Long> defaultCooldownList = Utils.newHashMap();
+  private final Map<ClickType, Map<Player, Long>> cooldownListPerType = Utils.newHashMap();
+  private final Map<Player, Long> defaultCooldownList = Utils.newHashMap();
   private String cooldownMessage;
 
   public boolean isCooldown(Player player, ClickType clickType) {

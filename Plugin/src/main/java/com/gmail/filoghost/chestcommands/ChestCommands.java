@@ -81,7 +81,7 @@ public class ChestCommands extends JavaPlugin {
 
   private static TaskChainFactory taskChainFactory;
 
-  private static Random random = new Random();
+  private static final Random random = new Random();
 
   public static void closeAllMenus() {
     for (Player player : BukkitUtils.getOnlinePlayers()) {

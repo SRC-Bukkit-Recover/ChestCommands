@@ -22,7 +22,7 @@ import org.bukkit.enchantments.Enchantment;
 
 public class EnchantmentSerializer {
 
-  private static Map<String, Enchantment> enchantmentsMap = new HashMap<>();
+  private static final Map<String, Enchantment> enchantmentsMap = new HashMap<>();
 
   static {
     enchantmentsMap.put(formatLowercase("Protection"), Enchantment.PROTECTION_ENVIRONMENTAL);

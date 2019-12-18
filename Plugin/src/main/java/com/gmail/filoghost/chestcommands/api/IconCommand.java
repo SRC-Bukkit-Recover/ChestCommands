@@ -21,8 +21,8 @@ import org.bukkit.entity.Player;
 
 public abstract class IconCommand {
 
-  protected String command;
-  protected boolean hasVariables;
+  protected final String command;
+  protected final boolean hasVariables;
 
   public IconCommand(String command) {
     this.command = AsciiPlaceholders.placeholdersToSymbols(command).trim();

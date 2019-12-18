@@ -43,8 +43,8 @@ import org.bukkit.inventory.Inventory;
 
 public class InventoryListener implements Listener {
 
-  private static Map<Player, Long> antiClickSpam = Utils.newHashMap();
-  private static Map<Player, RefreshMenusTask> refreshMenusTaskMap = Utils.newHashMap();
+  private static final Map<Player, Long> antiClickSpam = Utils.newHashMap();
+  private static final Map<Player, RefreshMenusTask> refreshMenusTaskMap = Utils.newHashMap();
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onInteract(PlayerInteractEvent event) {

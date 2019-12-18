@@ -31,7 +31,7 @@ import org.bukkit.configuration.ConfigurationSection;
 
 public class RequirementSerializer {
 
-  private static Map<String, Class<? extends IconRequirement>> requirementTypesMap = Utils
+  private static final Map<String, Class<? extends IconRequirement>> requirementTypesMap = Utils
       .newHashMap();
 
   static {

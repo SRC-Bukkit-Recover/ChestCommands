@@ -24,7 +24,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class RequiredItem {
 
-  private ItemStackReader itemReader;
+  private final ItemStackReader itemReader;
   private boolean isDurabilityRestrictive = false;
 
   public RequiredItem(ItemStackReader itemReader) {

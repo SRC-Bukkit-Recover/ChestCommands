@@ -42,7 +42,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ItemStackReader {
 
-  private static Map<Pattern, ItemParser> parserMap = Utils.newHashMap();
+  private static final Map<Pattern, ItemParser> parserMap = Utils.newHashMap();
 
   static {
     registerParser("base-color:", new BaseColorParser());

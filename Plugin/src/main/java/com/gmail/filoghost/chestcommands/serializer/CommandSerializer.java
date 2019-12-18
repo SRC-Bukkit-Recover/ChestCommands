@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
 
 public class CommandSerializer {
 
-  private static Map<Pattern, Class<? extends IconCommand>> commandTypesMap = Utils.newHashMap();
+  private static final Map<Pattern, Class<? extends IconCommand>> commandTypesMap = Utils.newHashMap();
 
   static {
     register("console:", ConsoleIconCommand.class);

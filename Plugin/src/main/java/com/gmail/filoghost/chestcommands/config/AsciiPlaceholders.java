@@ -31,7 +31,7 @@ import org.apache.commons.lang.StringEscapeUtils;
  */
 public class AsciiPlaceholders {
 
-  private static Map<String, String> placeholders = Utils.newHashMap();
+  private static final Map<String, String> placeholders = Utils.newHashMap();
 
   private AsciiPlaceholders() {
 

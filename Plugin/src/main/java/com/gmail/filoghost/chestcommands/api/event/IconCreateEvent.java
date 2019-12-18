@@ -10,11 +10,11 @@ public class IconCreateEvent extends Event {
 
   private static final HandlerList HANDLERS = new HandlerList();
 
-  private ExtendedIcon extendedIcon;
-  private ConfigurationSection configurationSection;
-  private ErrorLogger errorLogger;
-  private String iconName;
-  private String menuFileName;
+  private final ExtendedIcon extendedIcon;
+  private final ConfigurationSection configurationSection;
+  private final ErrorLogger errorLogger;
+  private final String iconName;
+  private final String menuFileName;
 
   public IconCreateEvent(ExtendedIcon extendedIcon, String iconName, String menuFileName,
       ConfigurationSection configurationSection, ErrorLogger errorLogger) {

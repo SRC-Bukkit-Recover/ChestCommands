@@ -190,7 +190,7 @@ public enum Variable {
     }
   };
 
-  private String text;
+  private final String text;
 
   Variable(String text) {
     this.text = text;

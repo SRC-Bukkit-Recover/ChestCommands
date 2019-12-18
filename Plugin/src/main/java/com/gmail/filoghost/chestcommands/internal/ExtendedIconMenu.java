@@ -34,8 +34,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ExtendedIconMenu extends IconMenu {
 
-  private String fileName;
-  private String permission;
+  private final String fileName;
+  private final String permission;
   private List<IconCommand> openActions;
   private List<IconCommand> closeActions;
 

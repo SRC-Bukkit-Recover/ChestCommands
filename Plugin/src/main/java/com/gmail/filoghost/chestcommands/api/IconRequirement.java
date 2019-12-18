@@ -11,7 +11,7 @@ public abstract class IconRequirement {
 
   protected String failMessage;
   protected String value;
-  private ValueType valueType;
+  private final ValueType valueType;
   private boolean canTake;
 
   public IconRequirement(boolean canTake, ValueType valueType) {
