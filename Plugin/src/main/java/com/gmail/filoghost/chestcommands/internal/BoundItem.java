@@ -24,8 +24,8 @@ public class BoundItem {
 
   private final ExtendedIconMenu menu;
   private final Material material;
-  private short data;
   private final ClickType clickType;
+  private short data;
 
   public BoundItem(ExtendedIconMenu menu, Material material, ClickType clickType) {
     Validate.notNull(material, "Material cannot be null");

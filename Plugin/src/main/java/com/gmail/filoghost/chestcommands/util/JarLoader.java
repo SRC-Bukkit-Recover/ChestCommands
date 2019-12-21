@@ -41,11 +41,12 @@ public class JarLoader {
    * @param file       loaded file
    * @param superClass super class, used to initialize the loaded jar's providers.
    *                   <b>Required because we can't require instance of the super class</b>
-   * @param <T> super class, used to initialize the loaded jar's providers
+   * @param <T>        super class, used to initialize the loaded jar's providers
    * @return super class if load was accomplished
    * @throws NullPointerException        if file does not exist
    * @throws NotJarException             if file isn't jar
-   * @throws FileCannotBeLoadedException if file cannot be loaded (does not contain any files which extend the super class)
+   * @throws FileCannotBeLoadedException if file cannot be loaded (does not contain any files which
+   *                                     extend the super class)
    */
   public <T> T load(File file, Class<T> superClass) {
     try {
@@ -54,7 +55,8 @@ public class JarLoader {
     } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
       e.printStackTrace();
     }
-    throw new FileCannotBeLoadedException("File '" + file.getAbsolutePath() + "' cannot be loaded. Reason: unknown");
+    throw new FileCannotBeLoadedException(
+        "File '" + file.getAbsolutePath() + "' cannot be loaded. Reason: unknown");
   }
 
   /**
@@ -63,11 +65,12 @@ public class JarLoader {
    * @param file       loaded file
    * @param superClass super class, used to initialize the loaded jar's providers.
    *                   <b>Required because we can't require instance of the super class</b>
-   * @param <T> super class, used to initialize the loaded jar's providers
+   * @param <T>        super class, used to initialize the loaded jar's providers
    * @return class that extends super class if load was accomplished
    * @throws NullPointerException        if file does not exist
    * @throws NotJarException             if file isn't jar
-   * @throws FileCannotBeLoadedException if file cannot be loaded (does not contain any files which extend the super class)
+   * @throws FileCannotBeLoadedException if file cannot be loaded (does not contain any files which
+   *                                     extend the super class)
    */
   public <T> Class<? extends T> getRawClass(File file, Class<T> superClass) {
     if (!file.exists()) {
@@ -86,7 +89,8 @@ public class JarLoader {
         }
         classes.add(entry.getName().substring(0, entry.getName().length() - 6).replace("/", "."));
       }
-      ClassLoader classLoader = URLClassLoader.newInstance(new URL[]{file.toURI().toURL()}, getClass().getClassLoader());
+      ClassLoader classLoader = URLClassLoader
+          .newInstance(new URL[]{file.toURI().toURL()}, getClass().getClassLoader());
       for (String className : classes) {
         Class<?> loaded = Class.forName(className, true, classLoader);
         if (loaded.isAssignableFrom(superClass)) {
@@ -96,7 +100,9 @@ public class JarLoader {
     } catch (IOException | ClassNotFoundException e) {
       e.printStackTrace();
     }
-    throw new FileCannotBeLoadedException("File '" + file.getAbsolutePath() + "' cannot be loaded. No classes were found extending subclass '" + superClass.getSimpleName() + "'");
+    throw new FileCannotBeLoadedException("File '" + file.getAbsolutePath()
+        + "' cannot be loaded. No classes were found extending subclass '" + superClass
+        .getSimpleName() + "'");
   }
 
   /**

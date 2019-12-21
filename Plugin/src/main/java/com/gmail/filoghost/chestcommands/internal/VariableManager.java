@@ -1,20 +1,98 @@
 package com.gmail.filoghost.chestcommands.internal;
 
+import com.gmail.filoghost.chestcommands.api.Variable;
 import com.gmail.filoghost.chestcommands.bridge.PlaceholderAPIBridge;
+import com.gmail.filoghost.chestcommands.bridge.VaultBridge;
+import com.gmail.filoghost.chestcommands.bridge.currency.PlayerPointsBridge;
+import com.gmail.filoghost.chestcommands.bridge.currency.TokenManagerBridge;
+import com.gmail.filoghost.chestcommands.util.BukkitUtils;
+import com.gmail.filoghost.chestcommands.util.Utils;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class VariableManager {
 
+  private static final Pattern pattern = Pattern.compile("[^{]+(?=})");
+  private static Map<String, Variable> variables = Utils.newHashMap();
+
+  static {
+    if (PlayerPointsBridge.hasValidPlugin()) {
+      register("points",
+          (executor, identifier) -> String.valueOf(PlayerPointsBridge.getPoints(executor)));
+    }
+    if (TokenManagerBridge.hasValidPlugin()) {
+      register("tokens",
+          (executor, identifier) -> String.valueOf(TokenManagerBridge.getTokens(executor)));
+    }
+    if (VaultBridge.hasValidEconomy()) {
+      register("money",
+          (executor, identifier) -> VaultBridge.formatMoney(VaultBridge.getMoney(executor)));
+    }
+    if (VaultBridge.hasValidPermission()) {
+      register("group", (executor, identifier) -> VaultBridge.getPrimaryGroup(executor));
+    }
+
+    register("player", (executor, identifier) -> executor.getName());
+    register("online", (executor, identifier) -> String.valueOf(CachedGetters.getOnlinePlayers()));
+    register("max_players", (executor, identifier) -> String.valueOf(Bukkit.getMaxPlayers()));
+    register("world", (executor, identifier) -> executor.getWorld().getName());
+    register("x", (executor, identifier) -> String.valueOf(executor.getLocation().getX()));
+    register("y", (executor, identifier) -> String.valueOf(executor.getLocation().getY()));
+    register("z", (executor, identifier) -> String.valueOf(executor.getLocation().getZ()));
+    register("bed_world",
+        (executor, identifier) -> executor.getBedSpawnLocation().getWorld().getName());
+    register("bed_x",
+        (executor, identifier) -> String.valueOf(executor.getBedSpawnLocation().getX()));
+    register("bed_y",
+        (executor, identifier) -> String.valueOf(executor.getBedSpawnLocation().getY()));
+    register("bed_z",
+        (executor, identifier) -> String.valueOf(executor.getBedSpawnLocation().getZ()));
+    register("exp", (executor, identifier) -> String.valueOf(executor.getTotalExperience()));
+    register("level", (executor, identifier) -> String.valueOf(executor.getLevel()));
+    register("exp_to_level", (executor, identifier) -> String.valueOf(executor.getExpToLevel()));
+    register("food_level", (executor, identifier) -> String.valueOf(executor.getFoodLevel()));
+    register("ip", (executor, identifier) -> executor.getAddress().getAddress().getHostAddress());
+    register("biome",
+        (executor, identifier) -> String.valueOf(executor.getLocation().getBlock().getBiome()));
+    register("ping", ((executor, identifier) -> BukkitUtils.getPing(executor)));
+    register("rainbow", (executor, identifier) -> {
+      ChatColor[] values = ChatColor.values();
+      ChatColor color = null;
+      while (color == null
+          || color.equals(ChatColor.BOLD)
+          || color.equals(ChatColor.ITALIC)
+          || color.equals(ChatColor.STRIKETHROUGH)
+          || color.equals(ChatColor.RESET)
+          || color.equals(ChatColor.MAGIC)
+          || color.equals(ChatColor.UNDERLINE)) {
+        color = values[ThreadLocalRandom.current().nextInt(values.length - 1)];
+      }
+      return "&" + color.getChar();
+    });
+  }
+
   private VariableManager() {
 
+  }
+
+  public static void register(String prefix, Variable variable) {
+    variables.put(prefix, variable);
   }
 
   public static boolean hasVariables(String message) {
     if (message == null) {
       return false;
     }
-    for (Variable variable : Variable.values()) {
-      if (message.contains(variable.getText())) {
+    Pattern prefixPattern = Pattern.compile("(" + String.join("|", variables.keySet()) + ").*");
+    Matcher matcher = pattern.matcher(message);
+    while (matcher.find()) {
+      String identifier = matcher.group();
+      if (prefixPattern.matcher(identifier).find()) {
         return true;
       }
     }
@@ -22,9 +100,14 @@ public class VariableManager {
   }
 
   public static String setVariables(String message, Player executor) {
-    for (Variable variable : Variable.values()) {
-      if (message.contains(variable.getText())) {
-        message = message.replace(variable.getText(), variable.getReplacement(executor));
+    Matcher matcher = pattern.matcher(message);
+    while (matcher.find()) {
+      String identifier = matcher.group();
+      for (Map.Entry<String, Variable> variable : variables.entrySet()) {
+        if (identifier.startsWith(variable.getKey())) {
+          message = message.replace("{" + identifier + "}",
+              variable.getValue().getReplacement(executor, identifier));
+        }
       }
     }
     if (PlaceholderAPIBridge.hasValidPlugin()) {
@@ -32,5 +115,4 @@ public class VariableManager {
     }
     return message;
   }
-
 }

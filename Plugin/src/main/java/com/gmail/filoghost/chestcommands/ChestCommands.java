@@ -51,7 +51,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 import org.bstats.bukkit.MetricsLite;
@@ -80,8 +79,6 @@ public class ChestCommands extends JavaPlugin {
   private static String newVersion;
 
   private static TaskChainFactory taskChainFactory;
-
-  private static final Random random = new Random();
 
   public static void closeAllMenus() {
     for (Player player : BukkitUtils.getOnlinePlayers()) {
@@ -140,10 +137,6 @@ public class ChestCommands extends JavaPlugin {
 
   public static TaskChainFactory getTaskChainFactory() {
     return taskChainFactory;
-  }
-
-  public static Random getRandom() {
-    return random;
   }
 
   @Override

@@ -9,9 +9,9 @@ import org.bukkit.entity.Player;
 
 public abstract class IconRequirement {
 
+  private final ValueType valueType;
   protected String failMessage;
   protected String value;
-  private final ValueType valueType;
   private boolean canTake;
 
   public IconRequirement(boolean canTake, ValueType valueType) {

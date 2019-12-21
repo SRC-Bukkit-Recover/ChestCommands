@@ -9,8 +9,8 @@ import org.bukkit.event.inventory.ClickType;
 
 public class Requirements {
 
-  private List<IconRequirement> viewRequirements = Utils.newArrayList();
   private final Map<ClickType, List<IconRequirement>> perTypeClickRequirements = Utils.newHashMap();
+  private List<IconRequirement> viewRequirements = Utils.newArrayList();
   private List<IconRequirement> defaultClickRequirements = Utils.newArrayList();
 
   public void addClickRequirement(IconRequirement requirement, ClickType type) {
