@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 public class VariableManager {
 
   private static final Pattern pattern = Pattern.compile("[^{]+(?=})");
-  private static Map<String, Variable> variables = Utils.newHashMap();
+  private static final Map<String, Variable> variables = Utils.newHashMap();
 
   static {
     if (PlayerPointsBridge.hasValidPlugin()) {
