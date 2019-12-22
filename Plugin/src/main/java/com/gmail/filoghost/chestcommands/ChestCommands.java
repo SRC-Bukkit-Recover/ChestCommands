@@ -70,10 +70,10 @@ public class ChestCommands extends JavaPlugin {
   private static Settings settings;
   private static Lang lang;
 
-  private static Map<String, ExtendedIconMenu> fileNameToMenuMap = CaseInsensitiveMap.create();
-  private static Map<String, ExtendedIconMenu> commandsToMenuMap = CaseInsensitiveMap.create();
+  private static final Map<String, ExtendedIconMenu> fileNameToMenuMap = CaseInsensitiveMap.create();
+  private static final Map<String, ExtendedIconMenu> commandsToMenuMap = CaseInsensitiveMap.create();
 
-  private static Set<BoundItem> boundItems = Utils.newHashSet();
+  private static final Set<BoundItem> boundItems = Utils.newHashSet();
 
   private static int lastReloadErrors;
   private static String newVersion;
