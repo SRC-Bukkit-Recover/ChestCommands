@@ -30,12 +30,14 @@ import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
+import org.bukkit.block.Banner;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
+import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.FireworkEffectMeta;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -334,7 +336,18 @@ public class Icon {
       ((LeatherArmorMeta) itemMeta).setColor(color);
     }
 
-    if (bannerColor != null && itemMeta instanceof BannerMeta) {
+    if (material.name().contains("SHIELD")) {
+      BlockStateMeta blockStateMeta = (BlockStateMeta) itemMeta;
+      Banner banner = (Banner) blockStateMeta.getBlockState();
+      if (bannerColor != null) {
+        banner.setBaseColor(bannerColor);
+      }
+      if (bannerPatterns != null) {
+        banner.setPatterns(bannerPatterns);
+      }
+      banner.update();
+      blockStateMeta.setBlockState(banner);
+    } else if (bannerColor != null && itemMeta instanceof BannerMeta) {
       BannerMeta bannerMeta = (BannerMeta) itemMeta;
       bannerMeta.setBaseColor(bannerColor);
       if (bannerPatterns != null) {
