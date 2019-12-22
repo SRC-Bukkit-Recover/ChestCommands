@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 
 public class VariableManager {
 
-  private static final Pattern pattern = Pattern.compile("[^{]+(?=})");
+  private static final Pattern pattern = Pattern.compile("[{]([^{}]+)[}]");
   private static final Map<String, Variable> variables = Utils.newHashMap();
 
   static {
@@ -110,13 +110,14 @@ public class VariableManager {
   public static String setVariables(String message, Player executor) {
     Matcher matcher = pattern.matcher(message);
     while (matcher.find()) {
-      String identifier = matcher.group().trim();
+      String identifier = matcher.group(1).trim();
       for (Map.Entry<String, Variable> variable : variables.entrySet()) {
         if (identifier.startsWith(variable.getKey())) {
           String replace = variable.getValue()
-              .getReplacement(executor, identifier.replace(variable.getKey(), ""));
+              .getReplacement(executor, identifier.substring(variable.getKey().length()));
           if (replace != null) {
-            message = message.replace("{" + identifier + "}", replace);
+            message = message
+                .replaceAll(Pattern.quote(matcher.group()), Matcher.quoteReplacement(replace));
           }
         }
       }
