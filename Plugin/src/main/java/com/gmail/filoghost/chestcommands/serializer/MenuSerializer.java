@@ -103,8 +103,6 @@ public class MenuSerializer {
             + "\" contains an illegal inventory type, it will be CHEST by default");
       }
       switch (inventoryType) {
-        // TODO: Figure out why Anvil doesn't work
-        // case ANVIL:
         case FURNACE:
           slots = 3;
           break;
