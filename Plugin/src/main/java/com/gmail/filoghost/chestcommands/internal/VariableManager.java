@@ -113,7 +113,8 @@ public class VariableManager {
       String identifier = matcher.group().trim();
       for (Map.Entry<String, Variable> variable : variables.entrySet()) {
         if (identifier.startsWith(variable.getKey())) {
-          String replace = variable.getValue().getReplacement(executor, identifier.replace(variable.getKey(), ""));
+          String replace = variable.getValue()
+              .getReplacement(executor, identifier.replace(variable.getKey(), ""));
           if (replace != null) {
             message = message.replace("{" + identifier + "}", replace);
           }
