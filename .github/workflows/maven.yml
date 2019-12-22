@@ -42,4 +42,4 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: Legacy Support
-          path: ./Addon/LegacySupport/target/
+          path: ./LegacySupport/target/
