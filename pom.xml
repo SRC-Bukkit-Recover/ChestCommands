@@ -26,7 +26,7 @@
   <modelVersion>4.0.0</modelVersion>
   <modules>
     <module>Plugin</module>
-    <module>LegacySupport</module>
+    <module>Addon/LegacySupport</module>
   </modules>
   <name>ChestCommands Parent</name>
 
