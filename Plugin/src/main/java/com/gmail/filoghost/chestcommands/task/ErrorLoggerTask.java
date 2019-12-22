@@ -16,7 +16,6 @@ package com.gmail.filoghost.chestcommands.task;
 
 import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.util.ErrorLogger;
-import com.gmail.filoghost.chestcommands.util.StringUtils;
 import com.gmail.filoghost.chestcommands.util.Utils;
 import java.util.List;
 import org.bukkit.Bukkit;
@@ -48,7 +47,7 @@ public class ErrorLoggerTask implements Runnable {
     lines.add(
         ChatColor.RED + "#----------------------------------------------------------------------#");
 
-    String output = StringUtils.join(lines, "\n");
+    String output = String.join("\n", lines);
 
     if (!ChestCommands.getSettings().use_console_colors) {
       output = ChatColor.stripColor(output);

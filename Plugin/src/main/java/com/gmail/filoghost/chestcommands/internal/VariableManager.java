@@ -44,14 +44,21 @@ public class VariableManager {
     register("x", (executor, identifier) -> String.valueOf(executor.getLocation().getX()));
     register("y", (executor, identifier) -> String.valueOf(executor.getLocation().getY()));
     register("z", (executor, identifier) -> String.valueOf(executor.getLocation().getZ()));
-    register("bed_world",
-        (executor, identifier) -> executor.getBedSpawnLocation().getWorld().getName());
-    register("bed_x",
-        (executor, identifier) -> String.valueOf(executor.getBedSpawnLocation().getX()));
-    register("bed_y",
-        (executor, identifier) -> String.valueOf(executor.getBedSpawnLocation().getY()));
-    register("bed_z",
-        (executor, identifier) -> String.valueOf(executor.getBedSpawnLocation().getZ()));
+    register("bed_", ((executor, identifier) -> {
+      if (executor.getBedSpawnLocation() == null) {
+        return identifier;
+      } else if (identifier.equalsIgnoreCase("world")) {
+        return executor.getBedSpawnLocation().getWorld().getName();
+      } else if (identifier.equalsIgnoreCase("x")) {
+        return String.valueOf(executor.getBedSpawnLocation().getX());
+      } else if (identifier.equalsIgnoreCase("y")) {
+        return String.valueOf(executor.getBedSpawnLocation().getY());
+      } else if (identifier.equalsIgnoreCase("z")) {
+        return String.valueOf(executor.getBedSpawnLocation().getZ());
+      } else {
+        return identifier;
+      }
+    }));
     register("exp", (executor, identifier) -> String.valueOf(executor.getTotalExperience()));
     register("level", (executor, identifier) -> String.valueOf(executor.getLevel()));
     register("exp_to_level", (executor, identifier) -> String.valueOf(executor.getExpToLevel()));
@@ -91,7 +98,7 @@ public class VariableManager {
     Pattern prefixPattern = Pattern.compile("(" + String.join("|", variables.keySet()) + ").*");
     Matcher matcher = pattern.matcher(message);
     while (matcher.find()) {
-      String identifier = matcher.group();
+      String identifier = matcher.group().trim();
       if (prefixPattern.matcher(identifier).find()) {
         return true;
       }
@@ -102,11 +109,11 @@ public class VariableManager {
   public static String setVariables(String message, Player executor) {
     Matcher matcher = pattern.matcher(message);
     while (matcher.find()) {
-      String identifier = matcher.group();
+      String identifier = matcher.group().trim();
       for (Map.Entry<String, Variable> variable : variables.entrySet()) {
         if (identifier.startsWith(variable.getKey())) {
           message = message.replace("{" + identifier + "}",
-              variable.getValue().getReplacement(executor, identifier));
+              variable.getValue().getReplacement(executor, identifier.replace(variable.getKey(), "")));
         }
       }
     }
