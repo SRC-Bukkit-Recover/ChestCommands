@@ -345,7 +345,7 @@ public class ChestCommands extends JavaPlugin {
         }
       }
 
-      iconMenu.setRefreshTicks(data.getRefreshTenths());
+      iconMenu.setRefreshTicks(data.getRefreshTicks());
 
       if (data.getOpenActions() != null) {
         iconMenu.setOpenActions(data.getOpenActions());

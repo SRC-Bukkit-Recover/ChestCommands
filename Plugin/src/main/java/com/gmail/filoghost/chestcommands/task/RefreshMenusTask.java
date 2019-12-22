@@ -27,12 +27,11 @@ public class RefreshMenusTask extends BukkitRunnable {
   private final ExtendedIconMenu extMenu;
   private final BukkitTask task;
 
-  private long elapsedTenths;
-
   public RefreshMenusTask(Player player, ExtendedIconMenu extMenu) {
     this.player = player;
     this.extMenu = extMenu;
-    task = runTaskTimerAsynchronously(ChestCommands.getInstance(), 2L, 2L);
+    task = runTaskTimerAsynchronously(ChestCommands.getInstance(), extMenu.getRefreshTicks(),
+        extMenu.getRefreshTicks());
   }
 
   @Override
@@ -42,12 +41,8 @@ public class RefreshMenusTask extends BukkitRunnable {
       cancel();
     }
 
-    if (elapsedTenths % extMenu.getRefreshTicks() == 0) {
-      extMenu.refresh(player, player.getOpenInventory().getTopInventory());
-      player.updateInventory();
-    }
-
-    elapsedTenths++;
+    extMenu.refresh(player, player.getOpenInventory().getTopInventory());
+    player.updateInventory();
   }
 
   public ExtendedIconMenu getExtMenu() {

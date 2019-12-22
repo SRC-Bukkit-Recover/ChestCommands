@@ -34,7 +34,7 @@ public class MenuData {
   private ClickType clickType;
   private List<IconCommand> openActions;
   private List<IconCommand> closeActions;
-  private int refreshTenths;
+  private int refreshTicks;
 
   public MenuData(String title, int slots, InventoryType inventoryType) {
     this.title = title;
@@ -103,12 +103,12 @@ public class MenuData {
     this.openActions = openAction;
   }
 
-  public int getRefreshTenths() {
-    return refreshTenths;
+  public int getRefreshTicks() {
+    return refreshTicks;
   }
 
-  public void setRefreshTenths(int refreshTenths) {
-    this.refreshTenths = refreshTenths;
+  public void setRefreshTicks(int refreshTicks) {
+    this.refreshTicks = refreshTicks;
   }
 
   public InventoryType getInventoryType() {

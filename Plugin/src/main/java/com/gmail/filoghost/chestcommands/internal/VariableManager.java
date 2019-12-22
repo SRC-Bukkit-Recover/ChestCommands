@@ -6,6 +6,7 @@ import com.gmail.filoghost.chestcommands.bridge.VaultBridge;
 import com.gmail.filoghost.chestcommands.bridge.currency.PlayerPointsBridge;
 import com.gmail.filoghost.chestcommands.bridge.currency.TokenManagerBridge;
 import com.gmail.filoghost.chestcommands.util.BukkitUtils;
+import com.gmail.filoghost.chestcommands.util.FormatUtils;
 import com.gmail.filoghost.chestcommands.util.Utils;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
@@ -79,7 +80,7 @@ public class VariableManager {
           || color.equals(ChatColor.UNDERLINE)) {
         color = values[ThreadLocalRandom.current().nextInt(values.length - 1)];
       }
-      return "&" + color.getChar();
+      return FormatUtils.addColors("&" + color.getChar());
     });
   }
 

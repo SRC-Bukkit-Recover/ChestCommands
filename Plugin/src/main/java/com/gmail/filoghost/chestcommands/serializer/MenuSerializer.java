@@ -171,11 +171,11 @@ public class MenuSerializer {
     }
 
     if (config.isSet(Nodes.AUTO_REFRESH)) {
-      int tenthsToRefresh = (int) (config.getDouble(Nodes.AUTO_REFRESH) * 10.0);
-      if (tenthsToRefresh < 1) {
-        tenthsToRefresh = 1;
+      int ticksToRefresh = (int) (config.getDouble(Nodes.AUTO_REFRESH) * 20.0);
+      if (ticksToRefresh < 1) {
+        ticksToRefresh = 1;
       }
-      menuData.setRefreshTenths(tenthsToRefresh);
+      menuData.setRefreshTicks(ticksToRefresh);
     }
 
     return menuData;
