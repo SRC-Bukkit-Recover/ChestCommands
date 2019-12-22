@@ -15,8 +15,10 @@
 package com.gmail.filoghost.chestcommands.api;
 
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 public interface Variable {
 
+  @Nullable
   String getReplacement(Player executor, String identifier);
 }

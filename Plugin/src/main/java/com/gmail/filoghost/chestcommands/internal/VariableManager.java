@@ -46,7 +46,7 @@ public class VariableManager {
     register("z", (executor, identifier) -> String.valueOf(executor.getLocation().getZ()));
     register("bed_", ((executor, identifier) -> {
       if (executor.getBedSpawnLocation() == null) {
-        return identifier;
+        return null;
       } else if (identifier.equalsIgnoreCase("world")) {
         return executor.getBedSpawnLocation().getWorld().getName();
       } else if (identifier.equalsIgnoreCase("x")) {
@@ -56,7 +56,7 @@ public class VariableManager {
       } else if (identifier.equalsIgnoreCase("z")) {
         return String.valueOf(executor.getBedSpawnLocation().getZ());
       } else {
-        return identifier;
+        return null;
       }
     }));
     register("exp", (executor, identifier) -> String.valueOf(executor.getTotalExperience()));
@@ -112,8 +112,10 @@ public class VariableManager {
       String identifier = matcher.group().trim();
       for (Map.Entry<String, Variable> variable : variables.entrySet()) {
         if (identifier.startsWith(variable.getKey())) {
-          message = message.replace("{" + identifier + "}",
-              variable.getValue().getReplacement(executor, identifier.replace(variable.getKey(), "")));
+          String replace = variable.getValue().getReplacement(executor, identifier.replace(variable.getKey(), ""));
+          if (replace != null) {
+            message = message.replace("{" + identifier + "}", replace);
+          }
         }
       }
     }
