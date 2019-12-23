@@ -1,5 +1,6 @@
 package me.hsgamer.chestcommandslegacysupport;
 
+import com.gmail.filoghost.chestcommands.api.Addon;
 import com.gmail.filoghost.chestcommands.api.event.IconCreateEvent;
 import com.gmail.filoghost.chestcommands.internal.icon.ExtendedIcon;
 import com.gmail.filoghost.chestcommands.internal.requirement.Requirements;
@@ -10,35 +11,26 @@ import com.gmail.filoghost.chestcommands.internal.requirement.requirement.MoneyI
 import com.gmail.filoghost.chestcommands.internal.requirement.requirement.PermissionIconRequirement;
 import com.gmail.filoghost.chestcommands.internal.requirement.requirement.PointIconRequirement;
 import com.gmail.filoghost.chestcommands.internal.requirement.requirement.TokenIconRequirement;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.plugin.java.JavaPlugin;
 
-public final class ChestCommandsLegacySupport extends JavaPlugin implements Listener {
+public final class ChestCommandsLegacySupport extends Addon implements Listener {
+
+  public ChestCommandsLegacySupport() {
+    super("ChestCommandsLegacySupport");
+  }
 
   @Override
   public void onEnable() {
-    try {
-      Class.forName("com.gmail.filoghost.chestcommands.api.IconRequirement");
-    } catch (ClassNotFoundException e) {
-      Bukkit.getConsoleSender().sendMessage(ChatColor.RED +
-          "This is not Chest Commands GUI - Forked. Disabling...");
-      Bukkit.getConsoleSender().sendMessage(ChatColor.RED
-          + "Link: https://www.spigotmc.org/resources/chest-commands-gui-forked.69014/");
-      getServer().getPluginManager().disablePlugin(this);
-      return;
-    }
-    getServer().getPluginManager().registerEvents(this, this);
+    getPlugin().getServer().getPluginManager().registerEvents(this, getPlugin());
   }
 
   @Override
   public void onDisable() {
-    HandlerList.unregisterAll((Listener) this);
+    HandlerList.unregisterAll(this);
   }
 
   @EventHandler

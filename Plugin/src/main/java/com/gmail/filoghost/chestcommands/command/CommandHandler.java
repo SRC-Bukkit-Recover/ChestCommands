@@ -66,6 +66,7 @@ public class CommandHandler extends CommandFramework {
       ChestCommands.closeAllMenus();
 
       ErrorLogger errorLogger = new ErrorLogger();
+      ChestCommands.getAddonManager().reloadAddons(errorLogger);
       ChestCommands.getInstance().load(errorLogger);
 
       ChestCommands.setLastReloadErrors(errorLogger.getSize());

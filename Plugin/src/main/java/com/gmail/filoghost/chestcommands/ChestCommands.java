@@ -43,6 +43,7 @@ import com.gmail.filoghost.chestcommands.serializer.CommandSerializer;
 import com.gmail.filoghost.chestcommands.serializer.MenuSerializer;
 import com.gmail.filoghost.chestcommands.serializer.RequirementSerializer;
 import com.gmail.filoghost.chestcommands.task.ErrorLoggerTask;
+import com.gmail.filoghost.chestcommands.util.AddonManager;
 import com.gmail.filoghost.chestcommands.util.BukkitUtils;
 import com.gmail.filoghost.chestcommands.util.CaseInsensitiveMap;
 import com.gmail.filoghost.chestcommands.util.ErrorLogger;
@@ -76,7 +77,13 @@ public class ChestCommands extends JavaPlugin {
   private static int lastReloadErrors;
   private static String newVersion;
 
+  private static AddonManager addonManager;
+
   private static TaskChainFactory taskChainFactory;
+
+  public static AddonManager getAddonManager() {
+    return addonManager;
+  }
 
   public static void closeAllMenus() {
     for (Player player : BukkitUtils.getOnlinePlayers()) {
@@ -151,6 +158,7 @@ public class ChestCommands extends JavaPlugin {
     lang = new Lang(new PluginConfig(this, "lang.yml"));
 
     taskChainFactory = BukkitTaskChainFactory.create(this);
+    addonManager = new AddonManager(this);
 
     if (!VaultBridge.setupEconomy()) {
       getLogger().warning(
@@ -223,8 +231,12 @@ public class ChestCommands extends JavaPlugin {
 
     CommandFramework.register(this, new CommandHandler("chestcommands"));
 
+    ErrorLogger errorLogger = new ErrorLogger();
+
+    addonManager.loadAddons(errorLogger);
+    addonManager.enableAddons();
+
     Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
-      ErrorLogger errorLogger = new ErrorLogger();
       load(errorLogger);
 
       lastReloadErrors = errorLogger.getSize();
@@ -237,6 +249,7 @@ public class ChestCommands extends JavaPlugin {
   @Override
   public void onDisable() {
     closeAllMenus();
+    addonManager.disableAddons();
   }
 
   public void load(ErrorLogger errorLogger) {
