@@ -65,16 +65,14 @@ public class ChestCommands extends JavaPlugin {
   public static final String CHAT_PREFIX =
       ChatColor.DARK_GREEN + "[" + ChatColor.GREEN + "ChestCommands" + ChatColor.DARK_GREEN + "] "
           + ChatColor.GREEN;
-
+  private static final Map<String, ExtendedIconMenu> fileNameToMenuMap = CaseInsensitiveMap
+      .create();
+  private static final Map<String, ExtendedIconMenu> commandsToMenuMap = CaseInsensitiveMap
+      .create();
+  private static final Set<BoundItem> boundItems = Utils.newHashSet();
   private static ChestCommands instance;
   private static Settings settings;
   private static Lang lang;
-
-  private static final Map<String, ExtendedIconMenu> fileNameToMenuMap = CaseInsensitiveMap.create();
-  private static final Map<String, ExtendedIconMenu> commandsToMenuMap = CaseInsensitiveMap.create();
-
-  private static final Set<BoundItem> boundItems = Utils.newHashSet();
-
   private static int lastReloadErrors;
   private static String newVersion;
 

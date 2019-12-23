@@ -31,6 +31,7 @@ import org.bukkit.DyeColor;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.block.Banner;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -336,22 +337,27 @@ public class Icon {
       ((LeatherArmorMeta) itemMeta).setColor(color);
     }
 
-    if (material.name().contains("SHIELD")) {
+    if (itemMeta instanceof BlockStateMeta) {
       BlockStateMeta blockStateMeta = (BlockStateMeta) itemMeta;
-      Banner banner = (Banner) blockStateMeta.getBlockState();
-      if (bannerColor != null) {
-        banner.setBaseColor(bannerColor);
+      BlockState blockState = blockStateMeta.getBlockState();
+      if (blockState instanceof Banner) {
+        Banner banner = (Banner) blockState;
+        if (bannerColor != null) {
+          banner.setBaseColor(bannerColor);
+        }
+        if (bannerPatterns != null) {
+          banner.setPatterns(bannerPatterns);
+        }
+        banner.update();
+        blockStateMeta.setBlockState(banner);
       }
-      if (bannerPatterns != null) {
-        banner.setPatterns(bannerPatterns);
-      }
-      banner.update();
-      blockStateMeta.setBlockState(banner);
-    } else if (bannerColor != null && itemMeta instanceof BannerMeta) {
+    } else if (itemMeta instanceof BannerMeta) {
       BannerMeta bannerMeta = (BannerMeta) itemMeta;
-      bannerMeta.setBaseColor(bannerColor);
+      if (bannerColor != null) {
+        bannerMeta.setBaseColor(bannerColor);
+      }
       if (bannerPatterns != null) {
-        ((BannerMeta) itemMeta).setPatterns(bannerPatterns);
+        bannerMeta.setPatterns(bannerPatterns);
       }
     }
 
