@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import org.bukkit.plugin.Plugin;
 
 public class AddonManager {
+
   private Map<String, Addon> addons = Utils.newHashMap();
   private File addonsDir;
   private Plugin plugin;
@@ -31,10 +32,10 @@ public class AddonManager {
 
   public void loadAddons(ErrorLogger logger) {
     for (File file : addonsDir.listFiles()) {
-      try (JarFile jar = new JarFile(file);) {
+      try (JarFile jar = new JarFile(file)) {
         Set<String> classes = new HashSet<>();
         ClassLoader loader = URLClassLoader.newInstance(
-            new URL[] { file.toURI().toURL() },
+            new URL[]{file.toURI().toURL()},
             getClass().getClassLoader()
         );
         Enumeration<JarEntry> entries = jar.entries();
