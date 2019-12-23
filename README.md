@@ -1,6 +1,7 @@
-ChestCommands
+Chest Commands GUI - FORKED
 ===================
 
-Bukkit Page: http://dev.bukkit.org/bukkit-plugins/chest-commands
+Bukkit Page (Original plugin): http://dev.bukkit.org/bukkit-plugins/chest-commands
+Spigot Page (Forked plugin): https://www.spigotmc.org/resources/chest-commands-gui-forked.69014/
 
 Chest Commands is free software/open source, and is distributed under the [GPL 3.0 License](https://opensource.org/licenses/GPL-3.0). It contains third-party code, see the included THIRD-PARTY.txt file for the license information on third-party code.
