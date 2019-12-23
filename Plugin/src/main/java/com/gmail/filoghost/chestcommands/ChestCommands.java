@@ -231,12 +231,11 @@ public class ChestCommands extends JavaPlugin {
 
     CommandFramework.register(this, new CommandHandler("chestcommands"));
 
-    ErrorLogger errorLogger = new ErrorLogger();
-
-    addonManager.loadAddons(errorLogger);
-    addonManager.enableAddons();
-
     Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
+      ErrorLogger errorLogger = new ErrorLogger();
+
+      addonManager.loadAddons(errorLogger);
+      addonManager.enableAddons();
       load(errorLogger);
 
       lastReloadErrors = errorLogger.getSize();
