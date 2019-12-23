@@ -57,7 +57,7 @@ public class AddonManager {
         }
       } catch (ClassNotFoundException e) {
         // Ignored
-      } catch (IOException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
+      } catch (NoClassDefFoundError | IOException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
         plugin.getLogger().log(Level.WARNING, "Error when loading jar", e);
         logger.addError("A problem occurred when loading " + file.getName());
       }
