@@ -99,7 +99,7 @@ public class VariableManager {
     Pattern prefixPattern = Pattern.compile("(" + String.join("|", variables.keySet()) + ").*");
     Matcher matcher = pattern.matcher(message);
     while (matcher.find()) {
-      String identifier = matcher.group().trim();
+      String identifier = matcher.group(1).trim();
       if (prefixPattern.matcher(identifier).find()) {
         return true;
       }
