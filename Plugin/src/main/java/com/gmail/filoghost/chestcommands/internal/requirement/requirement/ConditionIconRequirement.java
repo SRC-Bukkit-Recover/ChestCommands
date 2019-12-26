@@ -12,15 +12,13 @@ public class ConditionIconRequirement extends IconRequirement {
 
   @Override
   public boolean check(Player player) {
-    for (Object value : getParsedValue(player)) {
-      if (!(boolean) value) {
-        if (failMessage != null) {
-          player.sendMessage(failMessage);
-        } else {
-          player.sendMessage(ChestCommands.getLang().default_no_requirement_message);
-        }
-        return false;
+    if (getParsedValue(player).contains(Boolean.FALSE)) {
+      if (failMessage != null) {
+        player.sendMessage(failMessage);
+      } else {
+        player.sendMessage(ChestCommands.getLang().default_no_requirement_message);
       }
+      return false;
     }
     return true;
   }
