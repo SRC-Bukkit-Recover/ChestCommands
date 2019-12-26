@@ -71,11 +71,15 @@ public class RequirementSerializer {
       if (section.isConfigurationSection(requirementType)) {
         IconRequirement requirement = getRequirement(requirementType);
         if (requirement != null) {
-          if (section.isSet(requirementType + ".VALUE")) {
-            requirement.setValue(section.getString(requirementType + ".VALUE"));
+          if (section.isSet(requirementType + Settings.VALUE)) {
+            if (section.isList(requirementType + Settings.VALUE)) {
+              requirement.setValues(section.getStringList(requirementType + Settings.VALUE));
+            } else {
+              requirement.setValues(section.getString(requirementType + Settings.VALUE));
+            }
             requirement.setFailMessage(
-                FormatUtils.addColors(section.getString(requirementType + ".MESSAGE")));
-            requirement.canTake(section.getBoolean(requirementType + ".TAKE", true));
+                FormatUtils.addColors(section.getString(requirementType + Settings.MESSAGE)));
+            requirement.canTake(section.getBoolean(requirementType + Settings.TAKE, true));
           } else {
             errorLogger.addError(
                 "The requirement \"" + requirementType + "\" in the icon \"" + iconName
@@ -88,7 +92,11 @@ public class RequirementSerializer {
       } else if (section.isSet(requirementType)) {
         IconRequirement requirement = getRequirement(requirementType);
         if (requirement != null) {
-          requirement.setValue(section.getString(requirementType));
+          if (section.isList(requirementType)) {
+            requirement.setValues(section.getStringList(requirementType));
+          } else {
+            requirement.setValues(section.getString(requirementType));
+          }
           requirements.add(requirement);
         }
       }
@@ -112,5 +120,12 @@ public class RequirementSerializer {
 
   public static void register(String type, Class<? extends IconRequirement> clazz) {
     requirementTypesMap.put(type, clazz);
+  }
+
+  private static class Settings {
+
+    static final String VALUE = ".VALUE";
+    static final String MESSAGE = ".MESSAGE";
+    static final String TAKE = ".TAKE";
   }
 }

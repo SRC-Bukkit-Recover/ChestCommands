@@ -3,6 +3,7 @@ package com.gmail.filoghost.chestcommands.internal.requirement.requirement;
 import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.api.IconRequirement;
 import java.math.BigDecimal;
+import java.util.List;
 import org.bukkit.entity.Player;
 
 public class ExpLevelIconRequirement extends IconRequirement {
@@ -13,25 +14,29 @@ public class ExpLevelIconRequirement extends IconRequirement {
 
   @Override
   public boolean check(Player player) {
-    if (getParsedValue(player) == null) {
+    List<Object> values = getParsedValue(player);
+    if (values.isEmpty()) {
       return false;
     }
-    int expLevelsPrice = ((BigDecimal) getParsedValue(player)).intValue();
-    if (expLevelsPrice > 0 && player.getLevel() < expLevelsPrice) {
-      if (failMessage != null) {
-        player.sendMessage(
-            failMessage.replace("{levels}", Integer.toString(expLevelsPrice)));
-      } else {
-        player.sendMessage(
-            ChestCommands.getLang().no_exp.replace("{levels}", Integer.toString(expLevelsPrice)));
+    for (Object value : values) {
+      int expLevelsPrice = ((BigDecimal) value).intValue();
+      if (expLevelsPrice > 0 && player.getLevel() < expLevelsPrice) {
+        if (failMessage != null) {
+          player.sendMessage(
+              failMessage.replace("{levels}", Integer.toString(expLevelsPrice)));
+        } else {
+          player.sendMessage(
+              ChestCommands.getLang().no_exp.replace("{levels}", Integer.toString(expLevelsPrice)));
+        }
+        return false;
       }
-      return false;
     }
     return true;
   }
 
   @Override
   public void take(Player player) {
-    player.setLevel(player.getLevel() - ((BigDecimal) getParsedValue(player)).intValue());
+    getParsedValue(player)
+        .forEach(value -> player.setLevel(player.getLevel() - ((BigDecimal) value).intValue()));
   }
 }

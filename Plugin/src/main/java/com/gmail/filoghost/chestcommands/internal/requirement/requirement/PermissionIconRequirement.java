@@ -12,20 +12,21 @@ public class PermissionIconRequirement extends IconRequirement {
 
   @Override
   public boolean check(Player player) {
-    if (!hasPermission(player)) {
-      if (failMessage != null) {
-        player.sendMessage(failMessage.replace("{permission}", (String) getParsedValue(player)));
-      } else {
-        player.sendMessage(ChestCommands.getLang().default_no_icon_permission
-            .replace("{permission}", (String) getParsedValue(player)));
+    for (Object value : getParsedValue(player)) {
+      if (!hasPermission(player, (String) value)) {
+        if (failMessage != null) {
+          player.sendMessage(failMessage.replace("{permission}", (String) value));
+        } else {
+          player.sendMessage(ChestCommands.getLang().default_no_icon_permission
+              .replace("{permission}", (String) value));
+        }
+        return false;
       }
-      return false;
     }
     return true;
   }
 
-  private boolean hasPermission(Player player) {
-    String permission = (String) getParsedValue(player);
+  private boolean hasPermission(Player player, String permission) {
     if (permission.startsWith("-")) {
       return !player.hasPermission(permission.substring(1).trim());
     } else {

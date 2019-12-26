@@ -4,6 +4,7 @@ import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.api.IconRequirement;
 import com.gmail.filoghost.chestcommands.bridge.currency.TokenManagerBridge;
 import java.math.BigDecimal;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -15,26 +16,29 @@ public class TokenIconRequirement extends IconRequirement {
 
   @Override
   public boolean check(Player player) {
-    if (getParsedValue(player) != null) {
+    List<Object> values = getParsedValue(player);
+    if (values.isEmpty()) {
       return false;
     }
-    long tokenManagerPrice = ((BigDecimal) getParsedValue(player)).longValue();
-    if (tokenManagerPrice > 0) {
-      if (!TokenManagerBridge.hasValidPlugin()) {
-        player.sendMessage(ChatColor.RED
-            + "This command has a price in tokens, but the plugin TokenManager was not found. For security, the command has been blocked. Please inform the staff.");
-        return false;
-      }
-
-      if (!TokenManagerBridge.hasTokens(player, tokenManagerPrice)) {
-        if (failMessage != null) {
-          player.sendMessage(failMessage
-              .replace("{tokens}", Long.toString(tokenManagerPrice)));
-        } else {
-          player.sendMessage(ChestCommands.getLang().no_tokens
-              .replace("{tokens}", Long.toString(tokenManagerPrice)));
+    for (Object value : values) {
+      long tokenManagerPrice = ((BigDecimal) value).longValue();
+      if (tokenManagerPrice > 0) {
+        if (!TokenManagerBridge.hasValidPlugin()) {
+          player.sendMessage(ChatColor.RED
+              + "This command has a price in tokens, but the plugin TokenManager was not found. For security, the command has been blocked. Please inform the staff.");
+          return false;
         }
-        return false;
+
+        if (!TokenManagerBridge.hasTokens(player, tokenManagerPrice)) {
+          if (failMessage != null) {
+            player.sendMessage(failMessage
+                .replace("{tokens}", Long.toString(tokenManagerPrice)));
+          } else {
+            player.sendMessage(ChestCommands.getLang().no_tokens
+                .replace("{tokens}", Long.toString(tokenManagerPrice)));
+          }
+          return false;
+        }
       }
     }
     return true;

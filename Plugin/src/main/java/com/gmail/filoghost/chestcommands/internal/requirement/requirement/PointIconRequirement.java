@@ -4,6 +4,7 @@ import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.api.IconRequirement;
 import com.gmail.filoghost.chestcommands.bridge.currency.PlayerPointsBridge;
 import java.math.BigDecimal;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -15,26 +16,29 @@ public class PointIconRequirement extends IconRequirement {
 
   @Override
   public boolean check(Player player) {
-    if (getParsedValue(player) == null) {
+    List<Object> values = getParsedValue(player);
+    if (values.isEmpty()) {
       return false;
     }
-    int playerPointsPrice = ((BigDecimal) getParsedValue(player)).intValue();
-    if (playerPointsPrice > 0) {
-      if (!PlayerPointsBridge.hasValidPlugin()) {
-        player.sendMessage(ChatColor.RED
-            + "This command has a price in points, but the plugin PlayerPoints was not found. For security, the command has been blocked. Please inform the staff.");
-        return false;
-      }
-
-      if (!PlayerPointsBridge.hasPoints(player, playerPointsPrice)) {
-        if (failMessage != null) {
-          player.sendMessage(failMessage
-              .replace("{points}", Integer.toString(playerPointsPrice)));
-        } else {
-          player.sendMessage(ChestCommands.getLang().no_points
-              .replace("{points}", Integer.toString(playerPointsPrice)));
+    for (Object value : values) {
+      int playerPointsPrice = ((BigDecimal) value).intValue();
+      if (playerPointsPrice > 0) {
+        if (!PlayerPointsBridge.hasValidPlugin()) {
+          player.sendMessage(ChatColor.RED
+              + "This command has a price in points, but the plugin PlayerPoints was not found. For security, the command has been blocked. Please inform the staff.");
+          return false;
         }
-        return false;
+
+        if (!PlayerPointsBridge.hasPoints(player, playerPointsPrice)) {
+          if (failMessage != null) {
+            player.sendMessage(failMessage
+                .replace("{points}", Integer.toString(playerPointsPrice)));
+          } else {
+            player.sendMessage(ChestCommands.getLang().no_points
+                .replace("{points}", Integer.toString(playerPointsPrice)));
+          }
+          return false;
+        }
       }
     }
     return true;

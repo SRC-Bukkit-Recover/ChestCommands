@@ -4,6 +4,7 @@ import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.api.IconRequirement;
 import com.gmail.filoghost.chestcommands.bridge.VaultBridge;
 import java.math.BigDecimal;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -15,26 +16,29 @@ public class MoneyIconRequirement extends IconRequirement {
 
   @Override
   public boolean check(Player player) {
-    if (getParsedValue(player) == null) {
+    List<Object> values = getParsedValue(player);
+    if (values.isEmpty()) {
       return false;
     }
-    double moneyPrice = ((BigDecimal) getParsedValue(player)).doubleValue();
-    if (moneyPrice > 0) {
-      if (!VaultBridge.hasValidEconomy()) {
-        player.sendMessage(ChatColor.RED
-            + "This command has a price, but Vault with a compatible economy plugin was not found. For security, the command has been blocked. Please inform the staff.");
-        return false;
-      }
-
-      if (!VaultBridge.hasMoney(player, moneyPrice)) {
-        if (failMessage != null) {
-          player.sendMessage(failMessage
-              .replace("{money}", VaultBridge.formatMoney(moneyPrice)));
-        } else {
-          player.sendMessage(ChestCommands.getLang().no_money
-              .replace("{money}", VaultBridge.formatMoney(moneyPrice)));
+    for (Object value : values) {
+      double moneyPrice = ((BigDecimal) value).doubleValue();
+      if (moneyPrice > 0) {
+        if (!VaultBridge.hasValidEconomy()) {
+          player.sendMessage(ChatColor.RED
+              + "This command has a price, but Vault with a compatible economy plugin was not found. For security, the command has been blocked. Please inform the staff.");
+          return false;
         }
-        return false;
+
+        if (!VaultBridge.hasMoney(player, moneyPrice)) {
+          if (failMessage != null) {
+            player.sendMessage(failMessage
+                .replace("{money}", VaultBridge.formatMoney(moneyPrice)));
+          } else {
+            player.sendMessage(ChestCommands.getLang().no_money
+                .replace("{money}", VaultBridge.formatMoney(moneyPrice)));
+          }
+          return false;
+        }
       }
     }
     return true;
@@ -47,9 +51,11 @@ public class MoneyIconRequirement extends IconRequirement {
           + "This command has a price, but Vault with a compatible economy plugin was not found. For security, the command has been blocked. Please inform the staff.");
       return;
     }
-    if (!VaultBridge.takeMoney(player, ((BigDecimal) getParsedValue(player)).doubleValue())) {
-      player.sendMessage(ChatColor.RED
-          + "Error: the transaction couldn't be executed. Please inform the staff.");
-    }
+    getParsedValue(player).forEach(value -> {
+      if (!VaultBridge.takeMoney(player, ((BigDecimal) value).doubleValue())) {
+        player.sendMessage(ChatColor.RED
+            + "Error: the transaction couldn't be executed. Please inform the staff.");
+      }
+    });
   }
 }

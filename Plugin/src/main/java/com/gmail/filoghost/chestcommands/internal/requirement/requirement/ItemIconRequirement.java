@@ -9,8 +9,6 @@ import com.gmail.filoghost.chestcommands.util.MaterialsRegistry;
 import com.gmail.filoghost.chestcommands.util.Utils;
 import com.gmail.filoghost.chestcommands.util.itemreader.ItemStackReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -79,16 +77,9 @@ public class ItemIconRequirement extends IconRequirement {
   }
 
   @Override
-  public void setValue(String value) {
-    List<String> requiredItemsStrings;
-    if (value.contains(";")) {
-      requiredItemsStrings = Arrays.asList(value.split(";"));
-    } else {
-      requiredItemsStrings = Collections.singletonList(value);
-    }
-
+  public void setValues(List<String> values) {
     List<RequiredItem> requiredItemList = new ArrayList<>();
-    for (String requiredItemText : requiredItemsStrings) {
+    for (String requiredItemText : values) {
       try {
         ItemStackReader itemReader = new ItemStackReader(requiredItemText, true);
         RequiredItem requiredItem = new RequiredItem(itemReader);
@@ -96,7 +87,7 @@ public class ItemIconRequirement extends IconRequirement {
         requiredItemList.add(requiredItem);
       } catch (FormatException e) {
         ChestCommands.getInstance().getLogger()
-            .log(Level.WARNING, "There is an invalid item requirement: " + requiredItemsStrings);
+            .log(Level.WARNING, "There is an invalid item requirement: " + values);
       }
     }
     this.requiredItems = requiredItemList;
