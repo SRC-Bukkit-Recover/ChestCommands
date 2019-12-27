@@ -370,11 +370,6 @@ public class ChestCommands extends JavaPlugin {
         boundItems.add(boundItem);
       }
     }
-
-    // Register the BungeeCord plugin channel
-    if (!Bukkit.getMessenger().isOutgoingChannelRegistered(this, "BungeeCord")) {
-      Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-    }
   }
 
   /**
