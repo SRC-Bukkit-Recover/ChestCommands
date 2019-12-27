@@ -30,7 +30,6 @@ import com.gmail.filoghost.chestcommands.internal.icon.command.OpIconCommand;
 import com.gmail.filoghost.chestcommands.internal.icon.command.OpenIconCommand;
 import com.gmail.filoghost.chestcommands.internal.icon.command.PlayerIconCommand;
 import com.gmail.filoghost.chestcommands.internal.icon.command.RefreshIconCommand;
-import com.gmail.filoghost.chestcommands.internal.icon.command.ServerIconCommand;
 import com.gmail.filoghost.chestcommands.internal.icon.command.SoundIconCommand;
 import com.gmail.filoghost.chestcommands.internal.icon.command.TellIconCommand;
 import com.gmail.filoghost.chestcommands.internal.icon.command.TitleIconCommand;
@@ -52,7 +51,6 @@ public class CommandSerializer {
     register("op:", OpIconCommand.class);
     register("(open|menu):", OpenIconCommand.class);
     register("refresh:", RefreshIconCommand.class);
-    register("server:?", ServerIconCommand.class); // The colon is optional
     register("tell:", TellIconCommand.class);
     register("broadcast:", BroadcastIconCommand.class);
     register("give:", GiveIconCommand.class);
