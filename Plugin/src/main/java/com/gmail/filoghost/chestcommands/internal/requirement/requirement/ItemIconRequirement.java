@@ -7,6 +7,7 @@ import com.gmail.filoghost.chestcommands.internal.RequiredItem;
 import com.gmail.filoghost.chestcommands.util.ItemUtils;
 import com.gmail.filoghost.chestcommands.util.MaterialsRegistry;
 import com.gmail.filoghost.chestcommands.util.Utils;
+import com.gmail.filoghost.chestcommands.util.VersionUtils;
 import com.gmail.filoghost.chestcommands.util.itemreader.ItemStackReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class ItemIconRequirement extends IconRequirement {
               .replace("{amount}", Integer.toString(requiredItem.getAmount()))
               .replace("{datavalue}", requiredItem.hasRestrictiveDataValue() ? Short
                   .toString(requiredItem.getDataValue()) : ChestCommands.getLang().any);
-          if (ChestCommands.isSpigot() && ChestCommands
+          if (VersionUtils.isSpigot() && ChestCommands
               .getSettings().use_hover_event_on_required_item_message) {
             String itemJson = ItemUtils.convertItemStackToJson(requiredItem.createItemStack());
 
