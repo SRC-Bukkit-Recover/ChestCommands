@@ -17,6 +17,7 @@ package com.gmail.filoghost.chestcommands.serializer;
 import com.gmail.filoghost.chestcommands.api.Icon;
 import com.gmail.filoghost.chestcommands.api.IconCommand;
 import com.gmail.filoghost.chestcommands.api.event.IconCreateEvent;
+import com.gmail.filoghost.chestcommands.api.event.IconPreCreateEvent;
 import com.gmail.filoghost.chestcommands.config.AsciiPlaceholders;
 import com.gmail.filoghost.chestcommands.exception.FormatException;
 import com.gmail.filoghost.chestcommands.internal.CommandsClickHandler;
@@ -48,6 +49,10 @@ public class IconSerializer {
 
     // The icon is valid even without a Material
     ExtendedIcon icon = new ExtendedIcon();
+
+    // Call the event for further setting
+    Bukkit.getPluginManager()
+        .callEvent(new IconPreCreateEvent(icon, iconName, menuFileName, section, errorLogger));
 
     if (section.isSet(Nodes.ID)) {
       try {

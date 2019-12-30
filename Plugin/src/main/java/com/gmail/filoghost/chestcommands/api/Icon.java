@@ -53,7 +53,7 @@ public class Icon {
   private short dataValue;
   private String nbtData;
   private String name;
-  private List<String> lore;
+  private List<String> lore = Utils.newArrayList();
   private Map<Enchantment, Integer> enchantments;
   private Color color;
   private String skullOwner;
@@ -63,7 +63,7 @@ public class Icon {
   private ClickHandler clickHandler;
 
   private boolean nameHasVariables;
-  private boolean[] loreLinesWithVariables;
+  private boolean[] loreLinesWithVariables = null;
   private boolean skullOwnerHasVariables;
   private ItemStack cachedItem; // When there are no variables, we don't recreate the item
 
@@ -146,17 +146,14 @@ public class Icon {
   }
 
   public void setLore(List<String> lore) {
-    this.lore = lore;
-    this.loreLinesWithVariables = null;
+    this.lore.addAll(lore);
 
-    if (lore != null) {
-      for (int i = 0; i < lore.size(); i++) {
-        if (VariableManager.hasVariables(lore.get(i))) {
-          if (this.loreLinesWithVariables == null) {
-            this.loreLinesWithVariables = new boolean[lore.size()];
-          }
-          loreLinesWithVariables[i] = true;
+    for (int i = 0; i < lore.size(); i++) {
+      if (VariableManager.hasVariables(lore.get(i))) {
+        if (this.loreLinesWithVariables == null) {
+          this.loreLinesWithVariables = new boolean[lore.size()];
         }
+        loreLinesWithVariables[i] = true;
       }
     }
   }
