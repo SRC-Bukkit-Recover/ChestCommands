@@ -51,9 +51,11 @@ public class PointIconRequirement extends IconRequirement {
           + "This command has a price in points, but the plugin PlayerPoints was not found. For security, the command has been blocked. Please inform the staff.");
       return;
     }
-    if (!PlayerPointsBridge.takePoints(player, ((BigDecimal) getParsedValue(player)).intValue())) {
-      player.sendMessage(ChatColor.RED
-          + "Error: the transaction couldn't be executed. Please inform the staff.");
-    }
+    getParsedValue(player).forEach(value -> {
+      if (!PlayerPointsBridge.takePoints(player, ((BigDecimal) value).intValue())) {
+        player.sendMessage(ChatColor.RED
+            + "Error: the transaction couldn't be executed. Please inform the staff.");
+      }
+    });
   }
 }

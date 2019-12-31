@@ -51,9 +51,11 @@ public class TokenIconRequirement extends IconRequirement {
           + "This command has a price in tokens, but the plugin TokenManager was not found. For security, the command has been blocked. Please inform the staff.");
       return;
     }
-    if (!TokenManagerBridge.takeTokens(player, ((BigDecimal) getParsedValue(player)).longValue())) {
-      player.sendMessage(ChatColor.RED
-          + "Error: the transaction couldn't be executed. Please inform the staff.");
-    }
+    getParsedValue(player).forEach(value -> {
+      if (!TokenManagerBridge.takeTokens(player, ((BigDecimal) value).longValue())) {
+        player.sendMessage(ChatColor.RED
+            + "Error: the transaction couldn't be executed. Please inform the staff.");
+      }
+    });
   }
 }
