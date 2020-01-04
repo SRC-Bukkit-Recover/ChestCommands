@@ -31,11 +31,15 @@ public class PointIconRequirement extends IconRequirement {
 
         if (!PlayerPointsBridge.hasPoints(player, playerPointsPrice)) {
           if (failMessage != null) {
-            player.sendMessage(failMessage
-                .replace("{points}", Integer.toString(playerPointsPrice)));
+            if (!failMessage.isEmpty()) {
+              player.sendMessage(failMessage
+                  .replace("{points}", Integer.toString(playerPointsPrice)));
+            }
           } else {
-            player.sendMessage(ChestCommands.getLang().no_points
-                .replace("{points}", Integer.toString(playerPointsPrice)));
+            if (!ChestCommands.getLang().no_points.isEmpty()) {
+              player.sendMessage(ChestCommands.getLang().no_points
+                  .replace("{points}", Integer.toString(playerPointsPrice)));
+            }
           }
           return false;
         }

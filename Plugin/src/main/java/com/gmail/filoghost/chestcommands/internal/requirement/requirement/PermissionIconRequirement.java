@@ -15,10 +15,14 @@ public class PermissionIconRequirement extends IconRequirement {
     for (Object value : getParsedValue(player)) {
       if (!hasPermission(player, (String) value)) {
         if (failMessage != null) {
-          player.sendMessage(failMessage.replace("{permission}", (String) value));
+          if (!failMessage.isEmpty()) {
+            player.sendMessage(failMessage.replace("{permission}", (String) value));
+          }
         } else {
-          player.sendMessage(ChestCommands.getLang().default_no_icon_permission
-              .replace("{permission}", (String) value));
+          if (!ChestCommands.getLang().default_no_icon_permission.isEmpty()) {
+            player.sendMessage(ChestCommands.getLang().default_no_icon_permission
+                .replace("{permission}", (String) value));
+          }
         }
         return false;
       }

@@ -31,11 +31,15 @@ public class TokenIconRequirement extends IconRequirement {
 
         if (!TokenManagerBridge.hasTokens(player, tokenManagerPrice)) {
           if (failMessage != null) {
-            player.sendMessage(failMessage
-                .replace("{tokens}", Long.toString(tokenManagerPrice)));
+            if (!failMessage.isEmpty()) {
+              player.sendMessage(failMessage
+                  .replace("{tokens}", Long.toString(tokenManagerPrice)));
+            }
           } else {
-            player.sendMessage(ChestCommands.getLang().no_tokens
-                .replace("{tokens}", Long.toString(tokenManagerPrice)));
+            if (!ChestCommands.getLang().no_tokens.isEmpty()) {
+              player.sendMessage(ChestCommands.getLang().no_tokens
+                  .replace("{tokens}", Long.toString(tokenManagerPrice)));
+            }
           }
           return false;
         }

@@ -22,11 +22,16 @@ public class ExpLevelIconRequirement extends IconRequirement {
       int expLevelsPrice = ((BigDecimal) value).intValue();
       if (expLevelsPrice > 0 && player.getLevel() < expLevelsPrice) {
         if (failMessage != null) {
-          player.sendMessage(
-              failMessage.replace("{levels}", Integer.toString(expLevelsPrice)));
+          if (!failMessage.isEmpty()) {
+            player.sendMessage(
+                failMessage.replace("{levels}", Integer.toString(expLevelsPrice)));
+          }
         } else {
-          player.sendMessage(
-              ChestCommands.getLang().no_exp.replace("{levels}", Integer.toString(expLevelsPrice)));
+          if (!ChestCommands.getLang().no_exp.isEmpty()) {
+            player.sendMessage(
+                ChestCommands.getLang().no_exp
+                    .replace("{levels}", Integer.toString(expLevelsPrice)));
+          }
         }
         return false;
       }

@@ -37,28 +37,31 @@ public class ItemIconRequirement extends IconRequirement {
           notHasItem = true;
           String message =
               failMessage != null ? failMessage : ChestCommands.getLang().no_required_item;
-          message = message
-              .replace("{item}",
-                  (requiredItem.hasItemMeta() && requiredItem.getItemMeta().hasDisplayName())
-                      ? requiredItem.getItemMeta().getDisplayName()
-                      : MaterialsRegistry.formatMaterial(requiredItem.getMaterial()))
-              .replace("{amount}", Integer.toString(requiredItem.getAmount()))
-              .replace("{datavalue}", requiredItem.hasRestrictiveDataValue() ? Short
-                  .toString(requiredItem.getDataValue()) : ChestCommands.getLang().any);
-          if (VersionUtils.isSpigot() && ChestCommands
-              .getSettings().use_hover_event_on_required_item_message) {
-            String itemJson = ItemUtils.convertItemStackToJson(requiredItem.createItemStack());
+          if (!message.isEmpty()) {
+            message = message
+                .replace("{item}",
+                    (requiredItem.hasItemMeta() && requiredItem.getItemMeta().hasDisplayName())
+                        ? requiredItem.getItemMeta().getDisplayName()
+                        : MaterialsRegistry.formatMaterial(requiredItem.getMaterial()))
+                .replace("{amount}", Integer.toString(requiredItem.getAmount()))
+                .replace("{datavalue}", requiredItem.hasRestrictiveDataValue() ? Short
+                    .toString(requiredItem.getDataValue()) : ChestCommands.getLang().any);
+            if (VersionUtils.isSpigot() && ChestCommands
+                .getSettings().use_hover_event_on_required_item_message) {
+              String itemJson = ItemUtils.convertItemStackToJson(requiredItem.createItemStack());
 
-            BaseComponent[] hoverEventComponents = new BaseComponent[]{new TextComponent(itemJson)};
+              BaseComponent[] hoverEventComponents = new BaseComponent[]{
+                  new TextComponent(itemJson)};
 
-            HoverEvent event = new HoverEvent(HoverEvent.Action.SHOW_ITEM, hoverEventComponents);
+              HoverEvent event = new HoverEvent(HoverEvent.Action.SHOW_ITEM, hoverEventComponents);
 
-            TextComponent component = new TextComponent(message);
-            component.setHoverEvent(event);
+              TextComponent component = new TextComponent(message);
+              component.setHoverEvent(event);
 
-            player.spigot().sendMessage(component);
-          } else {
-            player.sendMessage(message);
+              player.spigot().sendMessage(component);
+            } else {
+              player.sendMessage(message);
+            }
           }
         }
 

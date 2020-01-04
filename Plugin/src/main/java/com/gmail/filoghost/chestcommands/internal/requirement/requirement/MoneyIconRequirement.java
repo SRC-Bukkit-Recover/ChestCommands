@@ -31,11 +31,15 @@ public class MoneyIconRequirement extends IconRequirement {
 
         if (!VaultBridge.hasMoney(player, moneyPrice)) {
           if (failMessage != null) {
-            player.sendMessage(failMessage
-                .replace("{money}", VaultBridge.formatMoney(moneyPrice)));
+            if (!failMessage.isEmpty()) {
+              player.sendMessage(failMessage
+                  .replace("{money}", VaultBridge.formatMoney(moneyPrice)));
+            }
           } else {
-            player.sendMessage(ChestCommands.getLang().no_money
-                .replace("{money}", VaultBridge.formatMoney(moneyPrice)));
+            if (!ChestCommands.getLang().no_money.isEmpty()) {
+              player.sendMessage(ChestCommands.getLang().no_money
+                  .replace("{money}", VaultBridge.formatMoney(moneyPrice)));
+            }
           }
           return false;
         }
