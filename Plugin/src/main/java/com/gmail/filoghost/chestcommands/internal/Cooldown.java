@@ -3,22 +3,23 @@ package com.gmail.filoghost.chestcommands.internal;
 import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.util.Utils;
 import java.util.Map;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
 public class Cooldown {
 
   private final Map<ClickType, Long> cooldownTimePerType = Utils.newHashMap();
-  private final Map<ClickType, Map<Player, Long>> cooldownListPerType = Utils.newHashMap();
-  private final Map<Player, Long> defaultCooldownList = Utils.newHashMap();
+  private final Map<ClickType, Map<UUID, Long>> cooldownListPerType = Utils.newHashMap();
+  private final Map<UUID, Long> defaultCooldownList = Utils.newHashMap();
   private long defaultCooldownTime = 0;
   private String cooldownMessage;
 
   public boolean isCooldown(Player player, ClickType clickType) {
     long now = System.currentTimeMillis();
-    Map<Player, Long> cooldownList = cooldownListPerType
+    Map<UUID, Long> cooldownList = cooldownListPerType
         .getOrDefault(clickType, defaultCooldownList);
-    Long cooldownUntil = cooldownList.get(player);
+    Long cooldownUntil = cooldownList.get(player.getUniqueId());
     long time = cooldownTimePerType.getOrDefault(clickType, defaultCooldownTime);
     if (time > 0 && cooldownUntil != null && cooldownUntil > now) {
       if (cooldownMessage != null) {
@@ -39,10 +40,10 @@ public class Cooldown {
 
   public void startCooldown(Player player, ClickType clickType) {
     long now = System.currentTimeMillis();
-    Map<Player, Long> cooldownList = cooldownListPerType
+    Map<UUID, Long> cooldownList = cooldownListPerType
         .getOrDefault(clickType, defaultCooldownList);
     long time = cooldownTimePerType.getOrDefault(clickType, defaultCooldownTime);
-    cooldownList.put(player, now + time);
+    cooldownList.put(player.getUniqueId(), now + time);
   }
 
   public void setTime(long time, ClickType clickType) {
