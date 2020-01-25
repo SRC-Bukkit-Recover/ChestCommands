@@ -336,17 +336,19 @@ public class Icon {
 
     if (itemMeta instanceof BlockStateMeta) {
       BlockStateMeta blockStateMeta = (BlockStateMeta) itemMeta;
-      BlockState blockState = blockStateMeta.getBlockState();
-      if (blockState instanceof Banner) {
-        Banner banner = (Banner) blockState;
-        if (bannerColor != null) {
-          banner.setBaseColor(bannerColor);
+      if (blockStateMeta.hasBlockState()) {
+        BlockState blockState = blockStateMeta.getBlockState();
+        if (blockState instanceof Banner) {
+          Banner banner = (Banner) blockState;
+          if (bannerColor != null) {
+            banner.setBaseColor(bannerColor);
+          }
+          if (bannerPatterns != null) {
+            banner.setPatterns(bannerPatterns);
+          }
+          banner.update();
+          blockStateMeta.setBlockState(banner);
         }
-        if (bannerPatterns != null) {
-          banner.setPatterns(bannerPatterns);
-        }
-        banner.update();
-        blockStateMeta.setBlockState(banner);
       }
     } else if (itemMeta instanceof BannerMeta) {
       BannerMeta bannerMeta = (BannerMeta) itemMeta;

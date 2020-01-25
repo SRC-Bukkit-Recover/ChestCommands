@@ -18,13 +18,15 @@ public class PatternParser implements ItemParser {
     ItemMeta itemMeta = reader.getItemMeta();
     if (itemMeta instanceof BlockStateMeta) {
       BlockStateMeta blockStateMeta = (BlockStateMeta) itemMeta;
-      BlockState blockState = blockStateMeta.getBlockState();
-      if (blockState instanceof Banner) {
-        Banner banner = (Banner) blockState;
-        banner.setPatterns(ItemUtils.parseBannerPatternList(
-            Arrays.asList(value.replace("|", ":").split(" "))));
-        banner.update();
-        blockStateMeta.setBlockState(banner);
+      if (blockStateMeta.hasBlockState()) {
+        BlockState blockState = blockStateMeta.getBlockState();
+        if (blockState instanceof Banner) {
+          Banner banner = (Banner) blockState;
+          banner.setPatterns(ItemUtils.parseBannerPatternList(
+              Arrays.asList(value.replace("|", ":").split(" "))));
+          banner.update();
+          blockStateMeta.setBlockState(banner);
+        }
       }
     } else if (itemMeta instanceof BannerMeta) {
       ((BannerMeta) itemMeta).setPatterns(ItemUtils.parseBannerPatternList(
