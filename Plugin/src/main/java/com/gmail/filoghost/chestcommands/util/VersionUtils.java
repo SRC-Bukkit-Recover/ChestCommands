@@ -1,6 +1,7 @@
 package com.gmail.filoghost.chestcommands.util;
 
 public class VersionUtils {
+
   private VersionUtils() {
 
   }

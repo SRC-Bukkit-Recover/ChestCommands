@@ -18,7 +18,6 @@ import co.aikar.taskchain.TaskChain;
 import com.gmail.filoghost.chestcommands.ChestCommands;
 import com.gmail.filoghost.chestcommands.api.IconCommand;
 import com.gmail.filoghost.chestcommands.internal.ExtendedIconMenu;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -37,19 +36,13 @@ public class OpenIconCommand extends IconCommand {
       return;
     }
 
-    taskChain.sync(() ->
-        /*
-         * Delay the task, since this command is executed in ClickInventoryEvent
-         * and opening another inventory in the same moment is not a good idea.
-         */
-        Bukkit.getScheduler().scheduleSyncDelayedTask(ChestCommands.getInstance(), () -> {
-          if (player.hasPermission(menu.getPermission())) {
-            menu.open(player);
-          } else {
-            menu.sendNoPermissionMessage(player);
-          }
-        })
-    );
+    taskChain.sync(() -> {
+      if (player.hasPermission(menu.getPermission())) {
+        menu.open(player);
+      } else {
+        menu.sendNoPermissionMessage(player);
+      }
+    });
   }
 
 }
