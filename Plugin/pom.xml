@@ -159,7 +159,7 @@
       <artifactId>TTA</artifactId>
       <groupId>de.Herbystar</groupId>
       <scope>provided</scope>
-      <version>LATEST</version>
+      <version>4.9</version>
     </dependency>
 
     <dependency>
