@@ -218,7 +218,7 @@ public class ChestCommands extends JavaPlugin {
     }
 
     // Start bStats metrics
-    new MetricsLite(this);
+    new MetricsLite(this, 3658);
 
     Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
     Bukkit.getPluginManager().registerEvents(new InventoryListener(), this);

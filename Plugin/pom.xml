@@ -10,6 +10,7 @@
         <artifactId>maven-shade-plugin</artifactId>
         <configuration>
           <createDependencyReducedPom>false</createDependencyReducedPom>
+          <minimizeJar>true</minimizeJar>
           <filters>
             <filter>
               <artifact>*:*</artifact>
