@@ -92,7 +92,7 @@
     <dependency>
       <artifactId>bstats-bukkit-lite</artifactId>
       <groupId>org.bstats</groupId>
-      <version>1.4</version>
+      <version>1.7</version>
     </dependency>
 
     <dependency>
