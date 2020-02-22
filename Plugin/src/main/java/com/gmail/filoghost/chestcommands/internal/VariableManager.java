@@ -31,8 +31,10 @@ public class VariableManager {
           (executor, identifier) -> String.valueOf(TokenManagerBridge.getTokens(executor)));
     }
     if (VaultBridge.hasValidEconomy()) {
-      register("money",
+      register("money_formatted",
           (executor, identifier) -> VaultBridge.formatMoney(VaultBridge.getMoney(executor)));
+      register("money",
+          (executor, identifier) -> String.valueOf(VaultBridge.getMoney(executor)));
     }
     if (VaultBridge.hasValidPermission()) {
       register("group", (executor, identifier) -> VaultBridge.getPrimaryGroup(executor));
