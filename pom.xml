@@ -36,7 +36,7 @@
     <maven.compiler.target>1.6</maven.compiler.target>
     <maven.test.skip>true</maven.test.skip>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spigot-api.version>1.8.8-R0.1-SNAPSHOT</spigot-api.version>
+    <spigot-api.version>1.14.4-R0.1-SNAPSHOT</spigot-api.version>
   </properties>
 
   <scm>
