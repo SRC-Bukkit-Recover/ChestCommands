@@ -26,10 +26,6 @@ public class HeadDatabaseBridge {
     return api != null;
   }
 
-  public static boolean hasValidID(String input) {
-    return hasValidPlugin() && getItem(input) != null;
-  }
-
   public static ItemStack getItem(String input) {
     try {
       return api.getItemHead(input);

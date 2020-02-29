@@ -21,8 +21,7 @@ public class SkullUtils {
 
   public static ItemMeta parseSkull(ItemMeta itemMeta, String skullOwner) {
     if (itemMeta instanceof SkullMeta) {
-      if (skullOwner.startsWith("hdb-") && HeadDatabaseBridge
-          .hasValidID(skullOwner.replace("hdb-", ""))) {
+      if (skullOwner.startsWith("hdb-") && HeadDatabaseBridge.hasValidPlugin()) {
         itemMeta = HeadDatabaseBridge.getItem(skullOwner.replace("hdb-", "")).getItemMeta();
       } else if (skullOwner.startsWith("hp-") && HeadsPlusBridge
           .hasValidID(skullOwner.replace("hp-", ""))) {
