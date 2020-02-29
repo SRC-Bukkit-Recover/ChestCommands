@@ -22,13 +22,13 @@ public class SkullUtils {
   public static ItemMeta parseSkull(ItemMeta itemMeta, String skullOwner) {
     if (itemMeta instanceof SkullMeta) {
       if (skullOwner.startsWith("hdb-") && HeadDatabaseBridge.hasValidPlugin()) {
-        itemMeta = HeadDatabaseBridge.getItem(skullOwner.replace("hdb-", "")).getItemMeta();
+        itemMeta = HeadDatabaseBridge.getItem(skullOwner.replace("hdb-", "").trim()).getItemMeta();
       } else if (skullOwner.startsWith("hp-") && HeadsPlusBridge
           .hasValidID(skullOwner.replace("hp-", ""))) {
-        itemMeta = HeadsPlusBridge.getItem(skullOwner.replace("hp-", "")).getItemMeta();
+        itemMeta = HeadsPlusBridge.getItem(skullOwner.replace("hp-", "").trim()).getItemMeta();
       } else if (skullOwner.startsWith("eh-") && EpicHeadsBridge
           .hasValidID(skullOwner.replace("eh-", ""))) {
-        itemMeta = EpicHeadsBridge.getItem(skullOwner.replace("eh-", "")).getItemMeta();
+        itemMeta = EpicHeadsBridge.getItem(skullOwner.replace("eh-", "").trim()).getItemMeta();
       } else if (Utils.isValidURL(skullOwner)) {
         setSkullWithURL((SkullMeta) itemMeta, skullOwner);
       } else {
